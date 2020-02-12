@@ -1,0 +1,5 @@
+{
+  "python.pythonPath": "/home/justin/.virtualenvs/adzerk-decision-sdk/bin/python",
+  "python.linting.enabled": true,
+  "python.linting.pycodestyleEnabled": true
+}
