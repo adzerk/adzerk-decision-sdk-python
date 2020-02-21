@@ -5,57 +5,6 @@ from adzerk_decision_sdk.api.decision_api import DecisionApi
 from adzerk_decision_sdk.api.userdb_api import UserdbApi
 
 
-class ClientOptions(object):
-    def __init__(self, network_id, protocol='https',
-                 host=None, path=None, api_key=None,
-                 user_agent=None, logger=None):
-        self.network_id = network_id
-        self.protocol = protocol
-        self.host = host
-        self.api_key = api_key
-        self.user_agent = user_agent
-
-    @property
-    def network_id(self):
-        return self.network_id
-
-    @network_id.setter
-    def network_id(self, value):
-        self.network_id = value
-
-    @property
-    def protocol(self):
-        return self.protocol
-
-    @protocol.setter
-    def protocol(self, value):
-        self.protocol = value
-
-    @property
-    def host(self):
-        return self.host
-
-    @host.setter
-    def host(self, value):
-        self.host = value
-
-    @property
-    def api_key(self):
-        return self.api_key
-
-    @api_key.setter
-    def api_key(self, value):
-        self.api_key = value
-
-    @property
-    def user_agent(self):
-        return self.user_agent
-
-    @user_agent.setter
-    def user_agent(self, value):
-        self.user_agent = value
-
-
 class Client(object):
     class _DecisionClient(object):
         def __init__(self, api_client: ApiClient):
@@ -118,13 +67,22 @@ class Client(object):
         def read(self, network_id, user_key):
             return self.api.read(network_id, user_key)
 
-    def __init__(self, client_options: ClientOptions = None):
-        client_options = client_options or ClientOptions()
-        protocol = client_options.protocol or 'https'
-        host = client_options.host \
-            or f'e-{client_options.network_id}.adzerk.net'
+    def __init__(self, network_id, protocol='https',
+                 host=None, path=None, api_key=None,
+                 user_agent=None, logger_format=None,
+                 logger_file=None, is_debug=False,):
+        protocol = protocol or 'https'
+        host = f'e-{network_id}.adzerk.net' if host is None else host
 
-        configuration = Configuration(host, api_key=client_options.api_key)
+        configuration = Configuration(host,
+                                      api_key={'X-Adzerk-ApiKey': api_key})
+
+        if logger_format is not None:
+            configuration.logger_format = logger_format
+
+        if logger_file is not None:
+            configuration.logger_file = logger_file
+
         api_client = ApiClient(configuration)
 
         self.decision_client = self._DecisionClient(api_client)
