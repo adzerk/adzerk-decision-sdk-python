@@ -16,7 +16,7 @@ from __future__ import absolute_import
 
 __version__ = "1.0.0"
 
-from adzerk_decision_sdk.client import Client, ClientOptions
+from adzerk_decision_sdk.client import Client
 
 # import apis into sdk package
 # from adzerk_decision_sdk.api.decision_api import DecisionApi
