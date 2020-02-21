@@ -12,7 +12,7 @@ class Client(object):
             self.api = DecisionApi(api_client)
 
         def get(self, **kwargs):
-            return self.api.get_decisions(self, kwargs)
+            return self.api.get_decisions(**kwargs)
 
         def get_with_explanation(self, **kwargs):
             api_client = copy.deepclone(self.api_client)
