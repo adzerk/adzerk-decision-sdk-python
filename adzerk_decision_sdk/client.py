@@ -20,7 +20,7 @@ class Client(object):
                                           api_client.configuration.api_key)
 
             api = DecisionApi(api_client)
-            return api.get_decisions(self, kwargs)
+            return api.get_decisions(**kwargs)
 
     class _UserDbClient(object):
         def __init__(self, api_client: ApiClient):
