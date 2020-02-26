@@ -52,7 +52,7 @@ jobs:
         password: ${{ secrets.ARTIFACTORY_PASSWORD }}
         EOF
 
-        sed -i s/version=VERSION/version='"${GITHUB_REF##*/}"'/g setup.py
+        sed -i s/version=VERSION/version=\"${GITHUB_REF##*/}\"/g setup.py
 
         python -m pip install --user --upgrade setuptools wheel
         pip install -r requirements.txt
