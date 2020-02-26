@@ -43,7 +43,7 @@ jobs:
         python-version: 3.8
     - name: artifactory publish
       run: |
-        cat << EOF > /root/.pypirc
+        cat << EOF > ~/.pypirc
         [distutils]
         index-servers = local
         [local]
