@@ -23,15 +23,17 @@ import adzerk_decision_sdk
 from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
 
-# Create an instance of the API class
-api_instance = adzerk_decision_sdk.DecisionApi()
-body = {"placements": [{ "divName": "header", "networkId": 23, "siteId": 667480, "adTypes": [5] }] } # object |  (optional)
+# Enter a context with an instance of the API client
+with adzerk_decision_sdk.ApiClient() as api_client:
+    # Create an instance of the API class
+    api_instance = adzerk_decision_sdk.DecisionApi(api_client)
+    body = {"placements": [{ "divName": "header", "networkId": 23, "siteId": 667480, "adTypes": [5] }] } # object |  (optional)
 
-try:
-    api_response = api_instance.get_decisions(body=body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling DecisionApi->get_decisions: %s\n" % e)
+    try:
+        api_response = api_instance.get_decisions(body=body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling DecisionApi->get_decisions: %s\n" % e)
 ```
 
 ### Parameters
