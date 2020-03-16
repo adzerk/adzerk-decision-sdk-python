@@ -11,10 +11,16 @@ class Client(object):
             self.api_client = api_client
             self.api = DecisionApi(api_client)
 
-        def get(self, **kwargs):
+        def get(self, request, **kwargs):
+            if 'body' is not in kwargs:
+                kwargs = request if type(request) is dict else request.to_dict()
+
             return self.api.get_decisions(**kwargs)
 
-        def get_with_explanation(self, **kwargs):
+        def get_with_explanation(self, request, **kwargs):
+            if 'body' is not in kwargs:
+                kwargs = request if type(request) is dict else request.to_dict()
+
             api_client = copy.deepclone(self.api_client)
             api_client.set_default_header('X-Adzerk-Explain',
                                           api_client.configuration.api_key)
