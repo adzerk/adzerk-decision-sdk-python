@@ -59,6 +59,11 @@ class Client(object):
 
             return result
 
+        @classmethod
+        def _parse_response(cls, response):
+            for key, value in six.iteritems(response.decisions):
+                response.decisions[key] = value if isinstance(value, list) else [value]
+
     class _UserDbClient(object):
         def __init__(self, api_client: ApiClient):
             self.api = UserdbApi(api_client)
