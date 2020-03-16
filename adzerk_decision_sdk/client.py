@@ -1,4 +1,5 @@
 import copy
+import humps
 from adzerk_decision_sdk.api_client import ApiClient
 from adzerk_decision_sdk.configuration import Configuration
 from adzerk_decision_sdk.api.decision_api import DecisionApi
@@ -13,13 +14,13 @@ class Client(object):
 
         def get(self, request, **kwargs):
             if 'body' not in kwargs:
-                kwargs['body'] = request if type(request) is dict else request.to_dict()
+                kwargs['body'] = request if type(request) is dict else _DecisionClient._request_to_dict(request)
 
             return self.api.get_decisions(**kwargs)
 
         def get_with_explanation(self, request, **kwargs):
             if 'body' not in kwargs:
-                kwargs['body'] = request if type(request) is dict else request.to_dict()
+                kwargs['body'] = request if type(request) is dict else _DecisionClient._request_to_dict(request
 
             api_client = copy.deepclone(self.api_client)
             api_client.set_default_header('X-Adzerk-Explain',
@@ -27,6 +28,32 @@ class Client(object):
 
             api = DecisionApi(api_client)
             return api.get_decisions(**kwargs)
+
+        @classmethod
+        def _request_to_dict(cls, request):
+            """Returns the model properties as a dict"""
+            result = {}
+
+            for attr, _ in six.iteritems(self.openapi_types):
+                new_key = humps.camelize(attr)
+                value = getattr(self, attr)
+                if isinstance(value, list):
+                    result[new_key] = list(map(
+                        lambda x: _DecisionClient._request_to_dict(x) if hasattr(x, "to_dict") else x,
+                        value
+                    ))
+                elif hasattr(value, "to_dict"):
+                    result[new_key] = _DecisionClient._request_to_dict(value)
+                elif isinstance(value, dict):
+                    result[new_key] = dict(map(
+                        lambda item: (item[0], _DecisionClient._request_to_dict(item[1])
+                        if hasattr(item[1], "to_dict") else item,
+                        value.items()
+                    ))
+                else:
+                    result[attr] = value
+
+            return result
 
     class _UserDbClient(object):
         def __init__(self, api_client: ApiClient):
