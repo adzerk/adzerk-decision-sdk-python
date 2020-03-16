@@ -77,8 +77,7 @@ class Client(object):
                  host=None, path=None, api_key=None,
                  user_agent=None, logger_format=None,
                  logger_file=None, is_debug=False,):
-        protocol = protocol or 'https'
-        host = f'e-{network_id}.adzerk.net' if host is None else host
+        host = f'{protocol}://e-{network_id}.adzerk.net' if host is None else host
 
         configuration = Configuration(host,
                                       api_key={'X-Adzerk-ApiKey': api_key})
