@@ -43,7 +43,7 @@ class Client(object):
                 value = getattr(obj, attr)
                 if isinstance(value, list):
                     result[obj.__class__.attribute_map[attr]] = list(map(
-                        lambda x: Client._DecisionClient._to_dict(x),
+                        lambda x: Client._DecisionClient._to_dict(x) if hasattr(x, 'to_dict') else x,
                         value
                     ))
                 elif hasattr(value, 'to_dict'):
@@ -56,8 +56,6 @@ class Client(object):
                     ))
                 else:
                     result[obj.__class__.attribute_map[attr]] = value
-
-            pprint(result)
 
             return result
 
