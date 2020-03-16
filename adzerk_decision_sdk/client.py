@@ -1,9 +1,11 @@
 import copy
-import humps
+import six
 from adzerk_decision_sdk.api_client import ApiClient
 from adzerk_decision_sdk.configuration import Configuration
 from adzerk_decision_sdk.api.decision_api import DecisionApi
 from adzerk_decision_sdk.api.userdb_api import UserdbApi
+
+from pprint import pprint
 
 
 class Client(object):
@@ -14,13 +16,13 @@ class Client(object):
 
         def get(self, request, **kwargs):
             if 'body' not in kwargs:
-                kwargs['body'] = request if type(request) is dict else _DecisionClient._request_to_dict(request)
+                kwargs['body'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
             return self.api.get_decisions(**kwargs)
 
         def get_with_explanation(self, request, **kwargs):
             if 'body' not in kwargs:
-                kwargs['body'] = request if type(request) is dict else _DecisionClient._request_to_dict(request
+                kwargs['body'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
             api_client = copy.deepclone(self.api_client)
             api_client.set_default_header('X-Adzerk-Explain',
@@ -30,28 +32,32 @@ class Client(object):
             return api.get_decisions(**kwargs)
 
         @classmethod
-        def _request_to_dict(cls, request):
-            """Returns the model properties as a dict"""
+        def _to_dict(cls, obj):
+            """Patched version of the generated to_dict to properly set keys"""
             result = {}
 
-            for attr, _ in six.iteritems(self.openapi_types):
-                new_key = humps.camelize(attr)
-                value = getattr(self, attr)
+            if not hasattr(obj.__class__, 'attribute_map') or not hasattr(obj.__class__, 'openapi_types'):
+                return
+
+            for attr, _ in six.iteritems(obj.__class__.openapi_types):
+                value = getattr(obj, attr)
                 if isinstance(value, list):
-                    result[new_key] = list(map(
-                        lambda x: _DecisionClient._request_to_dict(x) if hasattr(x, "to_dict") else x,
+                    result[obj.__class__.attribute_map[attr]] = list(map(
+                        lambda x: Client._DecisionClient._to_dict(x),
                         value
                     ))
-                elif hasattr(value, "to_dict"):
-                    result[new_key] = _DecisionClient._request_to_dict(value)
+                elif hasattr(value, 'to_dict'):
+                    result[obj.__class__.attribute_map[attr]] = Client._DecisionClient._to_dict(value)
                 elif isinstance(value, dict):
-                    result[new_key] = dict(map(
-                        lambda item: (item[0], _DecisionClient._request_to_dict(item[1])
-                        if hasattr(item[1], "to_dict") else item,
+                    result[obj.__class__.attribute_map[attr]] = dict(map(
+                        lambda item: (item[0], Client._DecisionClient._to_dict(item[1]))
+                        if hasattr(item[1], 'to_dict') else item,
                         value.items()
                     ))
                 else:
-                    result[attr] = value
+                    result[obj.__class__.attribute_map[attr]] = value
+
+            pprint(result)
 
             return result
 
