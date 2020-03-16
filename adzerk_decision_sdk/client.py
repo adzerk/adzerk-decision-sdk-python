@@ -18,7 +18,7 @@ class Client(object):
             if 'body' not in kwargs:
                 kwargs['body'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
-            return self.api.get_decisions(**kwargs)
+            return Client._DecisionClient._parse_response(self.api.get_decisions(**kwargs))
 
         def get_with_explanation(self, request, **kwargs):
             if 'body' not in kwargs:
@@ -29,7 +29,7 @@ class Client(object):
                                           api_client.configuration.api_key)
 
             api = DecisionApi(api_client)
-            return api.get_decisions(**kwargs)
+            return Client._DecisionClient._parse_response(self.api.get_decisions(**kwargs))
 
         @classmethod
         def _to_dict(cls, obj):
