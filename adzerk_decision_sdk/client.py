@@ -9,8 +9,6 @@ from adzerk_decision_sdk.api.decision_api import DecisionApi
 from adzerk_decision_sdk.api.userdb_api import UserdbApi
 from adzerk_decision_sdk.models import Decision
 
-from pprint import pprint
-
 
 class Client(object):
     class _DecisionClient(object):
@@ -94,8 +92,6 @@ class Client(object):
                     m = re.match("^list\[([\w]+)\]", clas.openapi_types[obj_key])
                     child_class_name = m.group(1)
                     child_class = locate('adzerk_decision_sdk.models.' + child_class_name)
-
-                    pprint(child_class_name)
 
                     if child_class is None:
                         reversed_map[obj_key] = value
