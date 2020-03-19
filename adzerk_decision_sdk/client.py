@@ -8,6 +8,7 @@ from adzerk_decision_sdk.configuration import Configuration
 from adzerk_decision_sdk.api.decision_api import DecisionApi
 from adzerk_decision_sdk.api.userdb_api import UserdbApi
 from adzerk_decision_sdk.models import Decision
+from pprint import pprint
 
 
 class Client(object):
@@ -46,10 +47,9 @@ class Client(object):
             for attr, _ in six.iteritems(obj.__class__.openapi_types):
                 value = getattr(obj, attr)
                 if isinstance(value, list):
-                    result[obj.__class__.attribute_map[attr]] = list(map(
-                        lambda x: Client._DecisionClient._to_dict(x) if hasattr(x, 'to_dict') else x,
-                        value
-                    ))
+                    result[obj.__class__.attribute_map[attr]] = [
+                        cls._to_dict(x) if hasattr(x, 'to_dict') else x for x in value
+                    ]
                 elif hasattr(value, 'to_dict'):
                     result[obj.__class__.attribute_map[attr]] = Client._DecisionClient._to_dict(value)
                 elif isinstance(value, dict):
@@ -68,7 +68,7 @@ class Client(object):
             for key, value in six.iteritems(response.decisions):
                 response.decisions[key] = value if isinstance(value, list) else [value]
                 for index, placement in enumerate(response.decisions[key]):
-                     response.decisions[key][index] = Decision(**cls._from_dict(placement, Decision))
+                     response.decisions[key][index] = cls._from_dict(placement, Decision)
 
             return response
 
@@ -97,20 +97,16 @@ class Client(object):
                         reversed_map[obj_key] = value
                         continue
 
-                    reversed_map[obj_key] = [child_class(cls._from_dict(x, child_class)) for x in value]
+                    reversed_map[obj_key] = [cls._from_dict(x, child_class) for x in value]
                 else:
                     child_class = locate('adzerk_decision_sdk.models.' + clas.openapi_types[obj_key])
                     if child_class is None:
                         reversed_map[obj_key] = value
                         continue
 
-                    child_reversed_map = cls._from_dict(value, child_class)
-                    if child_reversed_map is None:
-                        continue
+                    reversed_map[obj_key] = cls._from_dict(value, child_class)
 
-                    reversed_map[obj_key] = child_class(**child_reversed_map)
-
-            return reversed_map
+            return clas(**reversed_map)
 
         @classmethod
         def _reverse_attribute_map(cls, attribute_map):
