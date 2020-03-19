@@ -1,15 +1,21 @@
 import copy
+import re
 import six
+from importlib import import_module
+from pydoc import locate
 from adzerk_decision_sdk.api_client import ApiClient
 from adzerk_decision_sdk.configuration import Configuration
 from adzerk_decision_sdk.api.decision_api import DecisionApi
 from adzerk_decision_sdk.api.userdb_api import UserdbApi
+from adzerk_decision_sdk.models import Decision
 
 from pprint import pprint
 
 
 class Client(object):
     class _DecisionClient(object):
+        reverse_attribute_cache = {}
+
         def __init__(self, api_client: ApiClient):
             self.api_client = api_client
             self.api = DecisionApi(api_client)
@@ -63,8 +69,60 @@ class Client(object):
         def _parse_response(cls, response):
             for key, value in six.iteritems(response.decisions):
                 response.decisions[key] = value if isinstance(value, list) else [value]
+                for index, placement in enumerate(response.decisions[key]):
+                     response.decisions[key][index] = Decision(**cls._from_dict(placement, Decision))
 
             return response
+
+        @classmethod
+        def _from_dict(cls, obj, clas):
+            if not hasattr(clas, 'attribute_map') or not hasattr(clas, 'openapi_types') or obj is None:
+                return obj
+
+            reversed_map = {}
+
+            if clas.__name__ in cls.reverse_attribute_cache:
+                attribute_map = cls.reverse_attribute_cache[clas.__name__]
+            else:
+                attribute_map = cls._reverse_attribute_map(clas.attribute_map)
+                cls.reverse_attribute_cache[clas.__name__] = attribute_map
+
+            for map_key, obj_key in six.iteritems(attribute_map):
+                value = obj[map_key] if map_key in obj else None
+
+                if isinstance(value, list):
+                    m = re.match("^list\[([\w]+)\]", clas.openapi_types[obj_key])
+                    child_class_name = m.group(1)
+                    child_class = locate('adzerk_decision_sdk.models.' + child_class_name)
+
+                    pprint(child_class_name)
+
+                    if child_class is None:
+                        reversed_map[obj_key] = value
+                        continue
+
+                    reversed_map[obj_key] = [child_class(cls._from_dict(x, child_class)) for x in value]
+                else:
+                    child_class = locate('adzerk_decision_sdk.models.' + clas.openapi_types[obj_key])
+                    if child_class is None:
+                        reversed_map[obj_key] = value
+                        continue
+
+                    child_reversed_map = cls._from_dict(value, child_class)
+                    if child_reversed_map is None:
+                        continue
+
+                    reversed_map[obj_key] = child_class(**child_reversed_map)
+
+            return reversed_map
+
+        @classmethod
+        def _reverse_attribute_map(cls, attribute_map):
+            r = {}
+            for key, value in six.iteritems(attribute_map):
+                r[value] = key
+
+            return r
 
     class _UserDbClient(object):
         def __init__(self, api_client: ApiClient):
