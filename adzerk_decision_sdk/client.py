@@ -23,7 +23,7 @@ class Client(object):
             if 'body' not in kwargs:
                 kwargs['body'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
-            return Client._DecisionClient._parse_response(self.api.get_decisions(**kwargs))
+            return self._parse_response(self.api.get_decisions(**kwargs))
 
         def get_with_explanation(self, request, **kwargs):
             if 'body' not in kwargs:
@@ -34,7 +34,7 @@ class Client(object):
                                           api_client.configuration.api_key)
 
             api = DecisionApi(api_client)
-            return Client._DecisionClient._parse_response(self.api.get_decisions(**kwargs))
+            return self._parse_response(self.api.get_decisions(**kwargs))
 
         @classmethod
         def _to_dict(cls, obj):
@@ -63,50 +63,13 @@ class Client(object):
 
             return result
 
-        @classmethod
-        def _parse_response(cls, response):
+        def _parse_response(self, response):
             for key, value in six.iteritems(response.decisions):
                 response.decisions[key] = value if isinstance(value, list) else [value]
                 for index, placement in enumerate(response.decisions[key]):
-                     response.decisions[key][index] = cls._from_dict(placement, Decision)
+                     response.decisions[key][index] = self.api_client._ApiClient__deserialize(placement, Decision)
 
             return response
-
-        @classmethod
-        def _from_dict(cls, obj, clas):
-            if not hasattr(clas, 'attribute_map') or not hasattr(clas, 'openapi_types') or obj is None:
-                return obj
-
-            reversed_map = {}
-
-            if clas.__name__ in cls.reverse_attribute_cache:
-                attribute_map = cls.reverse_attribute_cache[clas.__name__]
-            else:
-                attribute_map = cls._reverse_attribute_map(clas.attribute_map)
-                cls.reverse_attribute_cache[clas.__name__] = attribute_map
-
-            for map_key, obj_key in six.iteritems(attribute_map):
-                value = obj[map_key] if map_key in obj else None
-
-                if isinstance(value, list):
-                    m = re.match("^list\[([\w]+)\]", clas.openapi_types[obj_key])
-                    child_class_name = m.group(1)
-                    child_class = locate('adzerk_decision_sdk.models.' + child_class_name)
-
-                    if child_class is None:
-                        reversed_map[obj_key] = value
-                        continue
-
-                    reversed_map[obj_key] = [cls._from_dict(x, child_class) for x in value]
-                else:
-                    child_class = locate('adzerk_decision_sdk.models.' + clas.openapi_types[obj_key])
-                    if child_class is None:
-                        reversed_map[obj_key] = value
-                        continue
-
-                    reversed_map[obj_key] = cls._from_dict(value, child_class)
-
-            return clas(**reversed_map)
 
         @classmethod
         def _reverse_attribute_map(cls, attribute_map):
