@@ -10,6 +10,7 @@
 
 from __future__ import absolute_import
 
+import atexit
 import datetime
 from dateutil.parser import parse
 import json
@@ -67,7 +68,7 @@ class ApiClient(object):
     def __init__(self, configuration=None, header_name=None, header_value=None,
                  cookie=None, pool_threads=1):
         if configuration is None:
-            configuration = Configuration()
+            configuration = Configuration.get_default_copy()
         self.configuration = configuration
         self.pool_threads = pool_threads
 
@@ -80,11 +81,19 @@ class ApiClient(object):
         self.user_agent = 'OpenAPI-Generator/1.0.0/python'
         self.client_side_validation = configuration.client_side_validation
 
-    def __del__(self):
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+
+    def close(self):
         if self._pool:
             self._pool.close()
             self._pool.join()
             self._pool = None
+            if hasattr(atexit, 'unregister'):
+                atexit.unregister(self.close)
 
     @property
     def pool(self):
@@ -92,6 +101,7 @@ class ApiClient(object):
          avoids instantiating unused threadpool for blocking clients.
         """
         if self._pool is None:
+            atexit.register(self.close)
             self._pool = ThreadPool(self.pool_threads)
         return self._pool
 
@@ -173,10 +183,21 @@ class ApiClient(object):
             _preload_content=_preload_content,
             _request_timeout=_request_timeout)
 
+        content_type = response_data.getheader('content-type')
+
         self.last_response = response_data
 
         return_data = response_data
         if _preload_content:
+            if six.PY3:
+                if response_type not in ["file", "bytes"]:
+                    print("Parsing response data...")
+                    match = None
+                    if content_type is not None:
+                        match = re.search(r"charset=([[a-zA-Z\-\d]+)[\s\;]?", content_type)
+                    encoding = match.group(1) if match else "utf-8"
+                    response_data.data = response_data.data.decode(encoding)
+
             # deserialize response data
             if response_type:
                 return_data = self.deserialize(response_data, response_type)
@@ -513,9 +534,7 @@ class ApiClient(object):
         for auth in auth_settings:
             auth_setting = self.configuration.auth_settings().get(auth)
             if auth_setting:
-                if not auth_setting['value']:
-                    continue
-                elif auth_setting['in'] == 'cookie':
+                if auth_setting['in'] == 'cookie':
                     headers['Cookie'] = auth_setting['value']
                 elif auth_setting['in'] == 'header':
                     headers[auth_setting['key']] = auth_setting['value']

@@ -23,7 +23,7 @@ pip install git+https://github.com/GIT_USER_ID/GIT_REPO_ID.git
 
 Then import the package:
 ```python
-import adzerk_decision_sdk 
+import adzerk_decision_sdk
 ```
 
 ### Setuptools
@@ -54,16 +54,18 @@ from pprint import pprint
 
 # Defining host is optional and default to https://e-23.adzerk.net
 configuration.host = "https://e-23.adzerk.net"
-# Create an instance of the API class
-api_instance = adzerk_decision_sdk.DecisionApi(adzerk_decision_sdk.ApiClient(configuration))
-body = {"placements": [{ "divName": "header", "networkId": 23, "siteId": 667480, "adTypes": [5] }] } # object |  (optional)
+# Enter a context with an instance of the API client
+with adzerk_decision_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = adzerk_decision_sdk.DecisionApi(api_client)
+    body = {"placements": [{ "divName": "header", "networkId": 23, "siteId": 667480, "adTypes": [5] }] } # object |  (optional)
 
-try:
-    api_response = api_instance.get_decisions(body=body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling DecisionApi->get_decisions: %s\n" % e)
-
+    try:
+        api_response = api_instance.get_decisions(body=body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling DecisionApi->get_decisions: %s\n" % e)
+    
 ```
 
 ## Documentation for API Endpoints

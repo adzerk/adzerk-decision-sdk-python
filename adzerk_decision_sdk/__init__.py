@@ -16,15 +16,13 @@ from __future__ import absolute_import
 
 __version__ = "1.0.0"
 
-from adzerk_decision_sdk.client import Client
-
 # import apis into sdk package
-# from adzerk_decision_sdk.api.decision_api import DecisionApi
-# from adzerk_decision_sdk.api.userdb_api import UserdbApi
+from adzerk_decision_sdk.api.decision_api import DecisionApi
+from adzerk_decision_sdk.api.userdb_api import UserdbApi
 
 # import ApiClient
-# from adzerk_decision_sdk.api_client import ApiClient
-# from adzerk_decision_sdk.configuration import Configuration
+from adzerk_decision_sdk.api_client import ApiClient
+from adzerk_decision_sdk.configuration import Configuration
 from adzerk_decision_sdk.exceptions import OpenApiException
 from adzerk_decision_sdk.exceptions import ApiTypeError
 from adzerk_decision_sdk.exceptions import ApiValueError
@@ -43,3 +41,4 @@ from adzerk_decision_sdk.models.request import Request
 from adzerk_decision_sdk.models.request_consent import RequestConsent
 from adzerk_decision_sdk.models.response import Response
 from adzerk_decision_sdk.models.user import User
+
