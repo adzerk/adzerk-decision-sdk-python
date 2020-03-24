@@ -40,7 +40,6 @@ configuration.api_key['X-Adzerk-ApiKey'] = 'YOUR_API_KEY'
 
 # Defining host is optional and default to https://e-23.adzerk.net
 configuration.host = "https://e-23.adzerk.net"
-
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -228,7 +227,6 @@ configuration.api_key['X-Adzerk-ApiKey'] = 'YOUR_API_KEY'
 
 # Defining host is optional and default to https://e-23.adzerk.net
 configuration.host = "https://e-23.adzerk.net"
-
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -293,7 +291,6 @@ configuration.api_key['X-Adzerk-ApiKey'] = 'YOUR_API_KEY'
 
 # Defining host is optional and default to https://e-23.adzerk.net
 configuration.host = "https://e-23.adzerk.net"
-
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
