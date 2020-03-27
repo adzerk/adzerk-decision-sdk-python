@@ -88,10 +88,10 @@ class Client(object):
                                                   user_key,
                                                   body=properties)
 
-        def add_interests(self, network_id, user_key, interests: list):
+        def add_interest(self, network_id, user_key, interest):
             return self.api.add_interests(network_id,
                                           user_key,
-                                          ",".join(interests))
+                                          interest)
 
         def add_retargeting_segment(self,
                                     network_id,
