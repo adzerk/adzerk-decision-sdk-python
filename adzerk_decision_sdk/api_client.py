@@ -27,7 +27,7 @@ from six.moves.urllib.parse import quote
 from adzerk_decision_sdk.configuration import Configuration
 import adzerk_decision_sdk.models
 from adzerk_decision_sdk import rest
-from adzerk_decision_sdk.exceptions import ApiValueError
+from adzerk_decision_sdk.exceptions import ApiValueError, ApiException
 
 
 class ApiClient(object):
@@ -176,19 +176,23 @@ class ApiClient(object):
             # use server/host defined in path or operation instead
             url = _host + resource_path
 
-        # perform request and return response
-        response_data = self.request(
-            method, url, query_params=query_params, headers=header_params,
-            post_params=post_params, body=body,
-            _preload_content=_preload_content,
-            _request_timeout=_request_timeout)
+        try:
+            # perform request and return response
+            response_data = self.request(
+                method, url, query_params=query_params, headers=header_params,
+                post_params=post_params, body=body,
+                _preload_content=_preload_content,
+                _request_timeout=_request_timeout)
 
-        content_type = response_data.getheader('content-type')
+            content_type = response_data.getheader('content-type')
 
-        self.last_response = response_data
+            self.last_response = response_data
 
-        return_data = response_data
-        if _preload_content:
+            return_data = response_data
+
+            if not _preload_content:
+                return return_data
+
             if six.PY3:
                 if response_type not in ["file", "bytes"]:
                     match = None
@@ -202,6 +206,9 @@ class ApiClient(object):
                 return_data = self.deserialize(response_data, response_type)
             else:
                 return_data = None
+        except ApiException as e:
+            e.body = e.body.decode('utf-8') if six.PY3 else e.body
+            raise e
 
         if _return_http_data_only:
             return (return_data)

@@ -58,10 +58,10 @@ configuration.host = "https://e-23.adzerk.net"
 with adzerk_decision_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = adzerk_decision_sdk.DecisionApi(api_client)
-    body = {"placements": [{ "divName": "header", "networkId": 23, "siteId": 667480, "adTypes": [5] }] } # object |  (optional)
+    decision_request = {"placements": [{ "divName": "header", "networkId": 23, "siteId": 667480, "adTypes": [5] }] } # DecisionRequest |  (optional)
 
     try:
-        api_response = api_instance.get_decisions(body=body)
+        api_response = api_instance.get_decisions(decision_request=decision_request)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling DecisionApi->get_decisions: %s\n" % e)
@@ -89,17 +89,15 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
- - [Consent](docs/Consent.md)
+ - [ConsentRequest](docs/ConsentRequest.md)
  - [Content](docs/Content.md)
  - [Decision](docs/Decision.md)
  - [DecisionData](docs/DecisionData.md)
+ - [DecisionRequest](docs/DecisionRequest.md)
+ - [DecisionResponse](docs/DecisionResponse.md)
  - [Event](docs/Event.md)
- - [GdprConsent](docs/GdprConsent.md)
  - [Placement](docs/Placement.md)
  - [PricingData](docs/PricingData.md)
- - [Request](docs/Request.md)
- - [RequestConsent](docs/RequestConsent.md)
- - [Response](docs/Response.md)
  - [User](docs/User.md)
 
 

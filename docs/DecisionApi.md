@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **get_decisions**
-> Response get_decisions(body=body)
+> DecisionResponse get_decisions(decision_request=decision_request)
 
 
 
@@ -27,10 +27,10 @@ from pprint import pprint
 with adzerk_decision_sdk.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = adzerk_decision_sdk.DecisionApi(api_client)
-    body = {"placements": [{ "divName": "header", "networkId": 23, "siteId": 667480, "adTypes": [5] }] } # object |  (optional)
+    decision_request = {"placements": [{ "divName": "header", "networkId": 23, "siteId": 667480, "adTypes": [5] }] } # DecisionRequest |  (optional)
 
     try:
-        api_response = api_instance.get_decisions(body=body)
+        api_response = api_instance.get_decisions(decision_request=decision_request)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling DecisionApi->get_decisions: %s\n" % e)
@@ -40,11 +40,11 @@ with adzerk_decision_sdk.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | **object**|  | [optional] 
+ **decision_request** | [**DecisionRequest**](DecisionRequest.md)|  | [optional] 
 
 ### Return type
 
-[**Response**](Response.md)
+[**DecisionResponse**](DecisionResponse.md)
 
 ### Authorization
 
