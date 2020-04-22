@@ -20,14 +20,14 @@ class Client(object):
             self.api = DecisionApi(api_client)
 
         def get(self, request, **kwargs):
-            if 'body' not in kwargs:
-                kwargs['body'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
+            if 'decision_request' not in kwargs:
+                kwargs['decision_request'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
             return self._parse_response(self.api.get_decisions(**kwargs))
 
         def get_with_explanation(self, request, **kwargs):
-            if 'body' not in kwargs:
-                kwargs['body'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
+            if 'decision_request' not in kwargs:
+                kwargs['decision_request'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
             api_client = copy.deepclone(self.api_client)
             api_client.set_default_header('X-Adzerk-Explain',
