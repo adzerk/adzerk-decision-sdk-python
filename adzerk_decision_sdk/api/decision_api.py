@@ -46,7 +46,7 @@ class DecisionApi(object):
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param object body:
+        :param DecisionRequest decision_request:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -54,7 +54,7 @@ class DecisionApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Response
+        :return: DecisionResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -71,7 +71,7 @@ class DecisionApi(object):
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param object body:
+        :param DecisionRequest decision_request:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -81,7 +81,7 @@ class DecisionApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(Response, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(DecisionResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -89,7 +89,7 @@ class DecisionApi(object):
         local_var_params = locals()
 
         all_params = [
-            'body'
+            'decision_request'
         ]
         all_params.extend(
             [
@@ -121,8 +121,8 @@ class DecisionApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if 'decision_request' in local_var_params:
+            body_params = local_var_params['decision_request']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -142,7 +142,7 @@ class DecisionApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='Response',  # noqa: E501
+            response_type='DecisionResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501

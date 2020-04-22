@@ -270,7 +270,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **gdpr_consent**
-> file gdpr_consent(network_id, gdpr_consent=gdpr_consent)
+> file gdpr_consent(network_id, consent_request=consent_request)
 
 
 
@@ -299,10 +299,10 @@ with adzerk_decision_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = adzerk_decision_sdk.UserdbApi(api_client)
     network_id = 56 # int | Your Network Id
-gdpr_consent = adzerk_decision_sdk.GdprConsent() # GdprConsent |  (optional)
+consent_request = adzerk_decision_sdk.ConsentRequest() # ConsentRequest |  (optional)
 
     try:
-        api_response = api_instance.gdpr_consent(network_id, gdpr_consent=gdpr_consent)
+        api_response = api_instance.gdpr_consent(network_id, consent_request=consent_request)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling UserdbApi->gdpr_consent: %s\n" % e)
@@ -313,7 +313,7 @@ gdpr_consent = adzerk_decision_sdk.GdprConsent() # GdprConsent |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **network_id** | **int**| Your Network Id | 
- **gdpr_consent** | [**GdprConsent**](GdprConsent.md)|  | [optional] 
+ **consent_request** | [**ConsentRequest**](ConsentRequest.md)|  | [optional] 
 
 ### Return type
 

@@ -571,7 +571,7 @@ class UserdbApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int network_id: Your Network Id (required)
-        :param GdprConsent gdpr_consent:
+        :param ConsentRequest consent_request:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -597,7 +597,7 @@ class UserdbApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int network_id: Your Network Id (required)
-        :param GdprConsent gdpr_consent:
+        :param ConsentRequest consent_request:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -616,7 +616,7 @@ class UserdbApi(object):
 
         all_params = [
             'network_id',
-            'gdpr_consent'
+            'consent_request'
         ]
         all_params.extend(
             [
@@ -654,8 +654,8 @@ class UserdbApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'gdpr_consent' in local_var_params:
-            body_params = local_var_params['gdpr_consent']
+        if 'consent_request' in local_var_params:
+            body_params = local_var_params['consent_request']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['image/gif'])  # noqa: E501
