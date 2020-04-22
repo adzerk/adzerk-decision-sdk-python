@@ -106,8 +106,8 @@ class Client(object):
         def forget(self, network_id, user_key):
             return self.api.forget(network_id, user_key)
 
-        def gdpr_consent(self, network_id, gdpr_consent):
-            return self.api.gdpr_consent(network_id, gdpr_consent=gdpr_consent)
+        def gdpr_consent(self, network_id, consent_request):
+            return self.api.gdpr_consent(network_id, consent_request=gdpr_consent)
 
         def ip_override(self, network_id, user_key, ip):
             return self.api.ip_override(network_id, user_key, ip)
