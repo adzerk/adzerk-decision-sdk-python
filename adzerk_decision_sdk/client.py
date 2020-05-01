@@ -106,10 +106,10 @@ class Client(object):
                                           interest)
 
         def add_retargeting_segment(self,
-                                    network_id,
                                     user_key,
                                     advertiser_id,
-                                    retargeting_segment_id):
+                                    retargeting_segment_id,
+                                    **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             return self.api.add_retargeting_segment(network_id,
                                                     advertiser_id,
