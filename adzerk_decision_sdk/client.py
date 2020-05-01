@@ -8,7 +8,6 @@ from adzerk_decision_sdk.configuration import Configuration
 from adzerk_decision_sdk.api.decision_api import DecisionApi
 from adzerk_decision_sdk.api.userdb_api import UserdbApi
 from adzerk_decision_sdk.models import Decision
-from pprint import pprint
 
 
 class Client(object):
@@ -25,7 +24,7 @@ class Client(object):
             if 'decision_request' not in kwargs:
                 kwargs['decision_request'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
-            for idx, placement in enumerate(kwargs['decision_request']):
+            for idx, placement in enumerate(kwargs['decision_request']['placements']):
                 if 'network_id' not in placement:
                     placement['network_id'] = self.network_id
                 if 'site_id' not in placement:
