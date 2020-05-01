@@ -89,15 +89,18 @@ class Client(object):
             return r
 
     class _UserDbClient(object):
-        def __init__(self, api_client: ApiClient):
+        def __init__(self, network_id, api_client: ApiClient):
             self.api = UserdbApi(api_client)
+            self.network_id = network_id
 
-        def set_custom_properties(self, network_id, user_key, properties):
+        def set_custom_properties(self, user_key, properties, **kwargs):
+            network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             return self.api.add_custom_properties(network_id,
                                                   user_key,
                                                   body=properties)
 
-        def add_interest(self, network_id, user_key, interest):
+        def add_interest(self, user_key, interest, **kwargs):
+            network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             return self.api.add_interests(network_id,
                                           user_key,
                                           interest)
@@ -107,36 +110,43 @@ class Client(object):
                                     user_key,
                                     advertiser_id,
                                     retargeting_segment_id):
+            network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             return self.api.add_retargeting_segment(network_id,
                                                     advertiser_id,
                                                     retargeting_segment_id,
                                                     user_key)
 
-        def forget(self, network_id, user_key):
+        def forget(self, user_key, **kwargs):
+            network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             return self.api.forget(network_id, user_key)
 
-        def gdpr_consent(self, network_id, consent_request):
+        def gdpr_consent(self, consent_request, **kwargs):
+            network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             return self.api.gdpr_consent(network_id, consent_request=consent_request)
 
-        def ip_override(self, network_id, user_key, ip):
+        def ip_override(self, user_key, ip, **kwargs):
+            network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             return self.api.ip_override(network_id, user_key, ip)
 
-        def match_user(self, network_id, user_key, partner_id, user_id):
+        def match_user(self, user_key, partner_id, user_id, **kwargs):
+            network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             return self.api.match_user(network_id,
                                        user_key,
                                        partner_id,
                                        user_id)
 
-        def opt_out(self, network_id, user_key):
+        def opt_out(self, user_key, **kwargs):
+            network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             return self.api.opt_out(network_id, user_key)
 
-        def read(self, network_id, user_key):
+        def read(self, user_key, **kwargs):
+            network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             return self.api.read(network_id, user_key)
 
     def __init__(self, network_id, protocol='https',
                  host=None, path=None, api_key=None,
                  user_agent=None, logger_format=None,
-                 logger_file=None, is_debug=False,):
+                 logger_file=None, is_debug=False, site_id=None):
         host = f'{protocol}://e-{network_id}.adzerk.net' if host is None else host
 
         configuration = Configuration(host,
@@ -149,9 +159,10 @@ class Client(object):
             configuration.logger_file = logger_file
 
         api_client = ApiClient(configuration)
+        api_client.set_default_header('X-Adzerk-Sdk-Version', 'adzerk-decision-sdk-python:v1')
 
-        self.decision_client = self._DecisionClient(api_client)
-        self.user_db_client = self._UserDbClient(api_client)
+        self.decision_client = self._DecisionClient(network_id, site_id, api_client)
+        self.user_db_client = self._UserDbClient(network_id, api_client)
 
     @property
     def decisions(self):
