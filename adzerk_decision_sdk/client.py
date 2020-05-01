@@ -15,26 +15,35 @@ class Client(object):
     class _DecisionClient(object):
         reverse_attribute_cache = {}
 
-        def __init__(self, api_client: ApiClient):
+        def __init__(self, network_id, site_id, api_client: ApiClient):
             self.api_client = api_client
+            self.network_id = network_id
+            self.site_id = site_id
             self.api = DecisionApi(api_client)
 
         def get(self, request, **kwargs):
             if 'decision_request' not in kwargs:
                 kwargs['decision_request'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
-            return self._parse_response(self.api.get_decisions(**kwargs))
+            for idx, placement in enumerate(kwargs['decision_request']):
+                if 'network_id' not in placement:
+                    placement['network_id'] = self.network_id
+                if 'site_id' not in placement:
+                    placement['site_id'] = self.site_id
+                if 'div_name' not in placement:
+                    placement['div_name'] = f'div{idx}'
 
-        def get_with_explanation(self, request, **kwargs):
-            if 'decision_request' not in kwargs:
-                kwargs['decision_request'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
+            if ('include_explanation' in kwargs and kwargs['include_explanation']) or 'user_agent' in kwargs:
+                api_client = copy.deepclone(self.api_client)
+                if 'include_explanation' in kwargs and kwargs['include_explanation']:
+                    api_client.set_default_header('X-Adzer-Explain', api_client.configuration.api_key)
+                if 'user_agent' in kwargs:
+                    api_client.set_default_header('user-agent', kwargs['user_agent'])
+                api = DecisionApi(api_client)
+            else:
+                api = self.api
 
-            api_client = copy.deepclone(self.api_client)
-            api_client.set_default_header('X-Adzerk-Explain',
-                                          api_client.configuration.api_key)
-
-            api = DecisionApi(api_client)
-            return self._parse_response(self.api.get_decisions(**kwargs))
+            return self._parse_response(api.get_decisions(**kwargs))
 
         @classmethod
         def _to_dict(cls, obj):
@@ -83,7 +92,7 @@ class Client(object):
         def __init__(self, api_client: ApiClient):
             self.api = UserdbApi(api_client)
 
-        def add_custom_properties(self, network_id, user_key, properties):
+        def set_custom_properties(self, network_id, user_key, properties):
             return self.api.add_custom_properties(network_id,
                                                   user_key,
                                                   body=properties)
