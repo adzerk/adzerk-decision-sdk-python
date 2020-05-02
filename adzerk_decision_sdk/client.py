@@ -3,12 +3,13 @@ import re
 import six
 from importlib import import_module
 from pydoc import locate
+from urllib.parse import urlparse, parse_qsl, urlencode, ParseResult
+from adzerk_decision_sdk.rest import RESTClientObject
 from adzerk_decision_sdk.api_client import ApiClient
 from adzerk_decision_sdk.configuration import Configuration
 from adzerk_decision_sdk.api.decision_api import DecisionApi
 from adzerk_decision_sdk.api.userdb_api import UserdbApi
 from adzerk_decision_sdk.models import Decision
-
 
 class Client(object):
     class _DecisionClient(object):
@@ -142,6 +143,27 @@ class Client(object):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             return self.api.read(network_id, user_key)
 
+    class _PixelClient(object):
+        def __init__(self, configuration):
+            self.rest_client = RESTClientObject(configuration)
+
+        def fire(self, url, revenue_override=None, additional_revenue=None, **kwargs):
+            parsed_url = urlparse(url)
+            query_string_params = parse_qsl(parsed_url.query)
+            if revenue_override is not None:
+                query_string_params.append(('override', revenue_override))
+            if additional_revenue is not None:
+                query_string_params.append(('additional', additional_revenue))
+            new_query = urlencode(query_string_params)
+            full_url = ParseResult(
+                parsed_url.scheme, parsed_url.netloc, parsed_url.path,
+                parsed_url.params, new_query, parsed_url.fragment
+            ).geturl()
+
+            result = self.rest_client.GET(url)
+
+            return result.status == 200
+
     def __init__(self, network_id, protocol='https',
                  host=None, path=None, api_key=None,
                  user_agent=None, logger_format=None,
@@ -162,6 +184,7 @@ class Client(object):
 
         self.decision_client = self._DecisionClient(network_id, site_id, api_client)
         self.user_db_client = self._UserDbClient(network_id, api_client)
+        self.pixel_client = self._PixelClient(configuration)
 
     @property
     def decisions(self):
@@ -170,3 +193,7 @@ class Client(object):
     @property
     def user_db(self):
         return self.user_db_client
+
+    @property
+    def pixels(self):
+        return self.pixel_client
