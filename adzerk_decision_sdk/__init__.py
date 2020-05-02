@@ -17,6 +17,7 @@ from __future__ import absolute_import
 __version__ = "1.0.0"
 
 from adzerk_decision_sdk.client import Client
+from adzerk_decision_sdk.enums import EventType, RateType
 
 # import apis into sdk package
 from adzerk_decision_sdk.api.decision_api import DecisionApi
