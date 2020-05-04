@@ -36,7 +36,7 @@ class Client(object):
             if ('include_explanation' in kwargs and kwargs['include_explanation']) or 'user_agent' in kwargs:
                 api_client = copy.deepclone(self.api_client)
                 if 'include_explanation' in kwargs and kwargs['include_explanation']:
-                    api_client.set_default_header('X-Adzer-Explain', api_client.configuration.api_key)
+                    api_client.set_default_header('X-Adzerk-Explain', api_client.configuration.api_key)
                 if 'user_agent' in kwargs:
                     api_client.set_default_header('user-agent', kwargs['user_agent'])
                 api = DecisionApi(api_client)
