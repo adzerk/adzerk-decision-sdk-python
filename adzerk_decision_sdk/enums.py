@@ -1,7 +1,7 @@
 from enum import IntEnum
 
 
-class EvenType(IntEnum):
+class EventType(IntEnum):
     view_conversion = 1
     click_conversion = 2
     server_to_server_conversion = 3
