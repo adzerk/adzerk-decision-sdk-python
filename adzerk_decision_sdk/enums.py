@@ -16,7 +16,7 @@ class EvenType(IntEnum):
     like = 20
     share = 21
     comment = 22
-    comment reply = 101
+    comment_reply = 101
     comment_upvote = 102
     comment_downvote = 103
     visible = 30
