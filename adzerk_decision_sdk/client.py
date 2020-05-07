@@ -162,7 +162,7 @@ class Client(object):
 
             result = self.rest_client.GET(url)
 
-            return result.status == 200
+            return (result.status, result.getheader('location'))
 
     def __init__(self, network_id, protocol='https',
                  host=None, path=None, api_key=None,
@@ -171,7 +171,8 @@ class Client(object):
         host = f'{protocol}://e-{network_id}.adzerk.net' if host is None else host
 
         configuration = Configuration(host,
-                                      api_key={'X-Adzerk-ApiKey': api_key})
+                                      api_key={'X-Adzerk-ApiKey': api_key},
+                                      retries=False)
 
         if logger_format is not None:
             configuration.logger_format = logger_format
