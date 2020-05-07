@@ -175,8 +175,9 @@ class Client(object):
         host = f'{protocol}://e-{network_id}.adzerk.net' if host is None else host
 
         configuration = Configuration(host,
-                                      api_key={'X-Adzerk-ApiKey': api_key},
-                                      retries=False)
+                                      api_key={'X-Adzerk-ApiKey': api_key})
+
+        configuration.retries = False
 
         if logger_format is not None:
             configuration.logger_format = logger_format
