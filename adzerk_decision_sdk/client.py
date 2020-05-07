@@ -10,6 +10,7 @@ from adzerk_decision_sdk.configuration import Configuration
 from adzerk_decision_sdk.api.decision_api import DecisionApi
 from adzerk_decision_sdk.api.userdb_api import UserdbApi
 from adzerk_decision_sdk.models import Decision
+from adzerk_decision_sdk.exceptions import ApiValueError
 
 class Client(object):
     class _DecisionClient(object):
@@ -25,13 +26,16 @@ class Client(object):
             if 'decision_request' not in kwargs:
                 kwargs['decision_request'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
+            if len(kwargs['decision_request']['placements']) == 0:
+                raise ApiValueError("At least one placement is required for a Decision Request")
+
             for idx, placement in enumerate(kwargs['decision_request']['placements']):
-                if 'network_id' not in placement:
-                    placement['network_id'] = self.network_id
-                if 'site_id' not in placement:
-                    placement['site_id'] = self.site_id
-                if 'div_name' not in placement:
-                    placement['div_name'] = f'div{idx}'
+                if 'networkId' not in placement:
+                    placement['networkId'] = self.network_id
+                if 'siteId' not in placement:
+                    placement['siteId'] = self.site_id
+                if 'divName' not in placement:
+                    placement['divName'] = f'div{idx}'
 
             if ('include_explanation' in kwargs and kwargs['include_explanation']) or 'user_agent' in kwargs:
                 api_client = copy.deepclone(self.api_client)
