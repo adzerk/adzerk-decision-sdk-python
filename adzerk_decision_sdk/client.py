@@ -38,7 +38,7 @@ class Client(object):
                     placement['divName'] = f'div{idx}'
 
             if ('include_explanation' in kwargs and kwargs['include_explanation']) or 'user_agent' in kwargs:
-                api_client = copy.deepclone(self.api_client)
+                api_client = copy.deepcopy(self.api_client)
                 if 'include_explanation' in kwargs and kwargs['include_explanation']:
                     api_client.set_default_header('X-Adzerk-Explain', api_client.configuration.api_key)
                 if 'user_agent' in kwargs:
