@@ -16,7 +16,8 @@ class Client(object):
     class _DecisionClient(object):
         reverse_attribute_cache = {}
 
-        def __init__(self, network_id, site_id, api_client: ApiClient):
+        def __init__(self, network_id, site_id, configuration: Configuration, api_client: ApiClient):
+            self.configuration = configuration
             self.api_client = api_client
             self.network_id = network_id
             self.site_id = site_id
@@ -38,7 +39,9 @@ class Client(object):
                     placement['divName'] = f'div{idx}'
 
             if ('include_explanation' in kwargs and kwargs['include_explanation']) or 'user_agent' in kwargs:
-                api_client = copy.deepcopy(self.api_client)
+                api_client = ApiClient(self.configuration)
+                api_client.set_default_header('X-Adzerk-Sdk-Version', 'adzerk-decision-sdk-python:v1')
+
                 if 'include_explanation' in kwargs and kwargs['include_explanation']:
                     api_client.set_default_header('X-Adzerk-Explain', api_client.configuration.api_key)
                 if 'user_agent' in kwargs:
@@ -204,7 +207,7 @@ class Client(object):
         api_client = ApiClient(configuration)
         api_client.set_default_header('X-Adzerk-Sdk-Version', 'adzerk-decision-sdk-python:v1')
 
-        self.decision_client = self._DecisionClient(network_id, site_id, api_client)
+        self.decision_client = self._DecisionClient(network_id, site_id, configuration, api_client)
         self.user_db_client = self._UserDbClient(network_id, api_client)
         self.pixel_client = self._PixelClient(configuration)
 
