@@ -44,7 +44,7 @@ class Client(object):
                 api_client.set_default_header('X-Adzerk-Sdk-Version', 'adzerk-decision-sdk-python:v1')
 
                 if 'include_explanation' in kwargs and kwargs['include_explanation']:
-                    api_client.set_default_header('X-Adzerk-Explain', api_client.configuration.api_key)
+                    api_client.set_default_header('X-Adzerk-Explain', kwargs['api_key'])
                 if 'user_agent' in kwargs:
                     api_client.set_default_header('user-agent', kwargs['user_agent'])
                 api = DecisionApi(api_client)
