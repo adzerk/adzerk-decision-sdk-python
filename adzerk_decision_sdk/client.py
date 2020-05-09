@@ -159,7 +159,7 @@ class Client(object):
 
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             user_record = self.api.read(network_id, user_key)
-            [user_record.pop(key) for key in bad_keys]
+            [user_record.pop(key, None) for key in bad_keys]
             return user_record
 
 
