@@ -154,7 +154,7 @@ class Client(object):
                 'siteViewTimes',
                 'campaignViewTimes',
                 'pendingConversions',
-                'campaignConversion'
+                'campaignConversions'
             ]
 
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
