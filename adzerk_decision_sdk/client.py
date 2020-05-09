@@ -24,6 +24,7 @@ class Client(object):
             self.api = DecisionApi(api_client)
 
         def get(self, request, **kwargs):
+            optional_keyword_args = ['include_explanation', 'api_key', 'user_agent']
             if 'decision_request' not in kwargs:
                 kwargs['decision_request'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
@@ -50,6 +51,7 @@ class Client(object):
             else:
                 api = self.api
 
+            [kwargs.pop(key, None) for key in optional_keyword_args]
             return self._parse_response(api.get_decisions(**kwargs))
 
         @classmethod
