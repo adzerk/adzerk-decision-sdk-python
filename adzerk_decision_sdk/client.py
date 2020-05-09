@@ -144,8 +144,24 @@ class Client(object):
             return self.api.opt_out(network_id, user_key)
 
         def read(self, user_key, **kwargs):
+            bad_keys = [
+                'cookieMonster',
+                'dirtyCookies',
+                'isNew',
+                'adViewTimes',
+                'advertiserViewTimes',
+                'flightViewTimes',
+                'siteViewTimes',
+                'campaignViewTimes',
+                'pendingConversions',
+                'campaignConversion'
+            ]
+
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
-            return self.api.read(network_id, user_key)
+            user_record = self.api.read(network_id, user_key)
+            [user_record.pop(key) for key in bad_keys]
+            return user_record
+
 
     class _PixelClient(object):
         def __init__(self, configuration):
