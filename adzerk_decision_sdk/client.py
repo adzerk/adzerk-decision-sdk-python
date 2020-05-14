@@ -1,7 +1,6 @@
 import copy
 import re
 import six
-import logging
 from importlib import import_module
 from pydoc import locate
 from urllib.parse import urlparse, parse_qsl, urlencode, ParseResult
@@ -173,9 +172,6 @@ class Client(object):
     class _PixelClient(object):
         def __init__(self, configuration):
             self.rest_client = RESTClientObject(configuration)
-
-        def __exit__(self, exc_type, exc_value, traceback):
-            if self.rest_client
 
         def fire(self, url, revenue_override=None, additional_revenue=None, **kwargs):
             parsed_url = urlparse(url)
