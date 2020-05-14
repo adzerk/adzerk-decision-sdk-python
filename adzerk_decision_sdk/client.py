@@ -1,9 +1,11 @@
 import copy
 import re
 import six
+import logging
 from importlib import import_module
 from pydoc import locate
 from urllib.parse import urlparse, parse_qsl, urlencode, ParseResult
+from urllib.util.retry import Retry
 from adzerk_decision_sdk.rest import RESTClientObject
 from adzerk_decision_sdk.api_client import ApiClient
 from adzerk_decision_sdk.configuration import Configuration
@@ -172,6 +174,9 @@ class Client(object):
         def __init__(self, configuration):
             self.rest_client = RESTClientObject(configuration)
 
+        def __exit__(self, exc_type, exc_value, traceback):
+            if self.rest_client
+
         def fire(self, url, revenue_override=None, additional_revenue=None, **kwargs):
             parsed_url = urlparse(url)
             query_string_params = parse_qsl(parsed_url.query)
@@ -198,7 +203,7 @@ class Client(object):
         configuration = Configuration(host,
                                       api_key={'X-Adzerk-ApiKey': api_key})
 
-        configuration.retries = False
+        configuration.retries = Retry(redirect=False)
 
         if logger_format is not None:
             configuration.logger_format = logger_format
