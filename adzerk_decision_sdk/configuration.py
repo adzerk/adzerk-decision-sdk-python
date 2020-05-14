@@ -76,7 +76,6 @@ class Configuration(object):
                  api_key=None, api_key_prefix=None,
                  username=None, password=None,
                  discard_unknown_keys=False,
-                 retries=None
                  ):
         """Constructor
         """
@@ -163,7 +162,7 @@ class Configuration(object):
         self.safe_chars_for_path_param = ''
         """Safe chars for path_param
         """
-        self.retries = retries
+        self.retries = None
         """Adding retries to override urllib3 default value 3
         """
         # Disable client side validation

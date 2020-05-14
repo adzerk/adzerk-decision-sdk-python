@@ -186,7 +186,8 @@ class Client(object):
                 parsed_url.params, new_query, parsed_url.fragment
             ).geturl()
 
-            result = self.rest_client.GET(url)
+            pool = self.rest_client.pool_manager
+            result = pool.request('GET', url, retries=Retry(redirect=False))
 
             return (result.status, result.getheader('location'))
 
@@ -197,8 +198,7 @@ class Client(object):
         host = f'{protocol}://e-{network_id}.adzerk.net' if host is None else host
 
         configuration = Configuration(host,
-                                      api_key={'X-Adzerk-ApiKey': api_key},
-                                      retries=Retry(total=False, redirect=False))
+                                      api_key={'X-Adzerk-ApiKey': api_key})
 
         if logger_format is not None:
             configuration.logger_format = logger_format
