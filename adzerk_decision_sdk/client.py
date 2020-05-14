@@ -198,7 +198,7 @@ class Client(object):
 
         configuration = Configuration(host,
                                       api_key={'X-Adzerk-ApiKey': api_key},
-                                      retries=Retry(redirect=0, raise_on_redirect=False))
+                                      retries=Retry(redirect=False))
 
         if logger_format is not None:
             configuration.logger_format = logger_format
