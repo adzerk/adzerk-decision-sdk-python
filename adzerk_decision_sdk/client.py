@@ -4,7 +4,7 @@ import six
 from importlib import import_module
 from pydoc import locate
 from urllib.parse import urlparse, parse_qsl, urlencode, ParseResult
-from urllib.util.retry import Retry
+from urllib3.util.retry import Retry
 from adzerk_decision_sdk.rest import RESTClientObject
 from adzerk_decision_sdk.api_client import ApiClient
 from adzerk_decision_sdk.configuration import Configuration
