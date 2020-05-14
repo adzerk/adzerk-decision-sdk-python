@@ -4,6 +4,7 @@ import six
 from importlib import import_module
 from pydoc import locate
 from urllib.parse import urlparse, parse_qsl, urlencode, ParseResult
+from urllib3.util.retry import Retry
 from adzerk_decision_sdk.rest import RESTClientObject
 from adzerk_decision_sdk.api_client import ApiClient
 from adzerk_decision_sdk.configuration import Configuration
@@ -185,7 +186,8 @@ class Client(object):
                 parsed_url.params, new_query, parsed_url.fragment
             ).geturl()
 
-            result = self.rest_client.GET(url)
+            pool = self.rest_client.pool_manager
+            result = pool.request('GET', url, retries=Retry(redirect=False))
 
             return (result.status, result.getheader('location'))
 
@@ -197,8 +199,6 @@ class Client(object):
 
         configuration = Configuration(host,
                                       api_key={'X-Adzerk-ApiKey': api_key})
-
-        configuration.retries = False
 
         if logger_format is not None:
             configuration.logger_format = logger_format
