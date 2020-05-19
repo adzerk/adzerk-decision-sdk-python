@@ -1,6 +1,6 @@
-# Adzerk Decision Python SDK
+# Adzerk Python Decision SDK
 
-Python SDK for Adzerk Decision & UserDB APIs
+Python Software Development Kit for Adzerk Decision & UserDB APIs
 
 ## Installation
 
@@ -61,11 +61,8 @@ print(record)
 import adzerk_decision_sdk
 import os
 
-# Requires setting API key in "$ADZERK_API_KEY" environ variable
-API_KEY = os.environ["ADZERK_API_KEY"]
-
-# Demo network ID; find your own via the Adzerk UI!
-client = adzerk_decision_sdk.Client(23, api_key=API_KEY)
+# Demo network ID and API key; find your own via the Adzerk UI!
+client = adzerk_decision_sdk.Client(23, api_key="YOUR_API_KEY")
 
 props = {
   "favoriteColor": "blue",
