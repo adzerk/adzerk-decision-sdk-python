@@ -65,7 +65,7 @@ import os
 API_KEY = os.environ["ADZERK_API_KEY"]
 
 # Demo network ID; find your own via the Adzerk UI!
-client = adzerk_decision_sdk.Client(23, api_key=667480)
+client = adzerk_decision_sdk.Client(23, api_key=API_KEY)
 
 props = {
   "favoriteColor": "blue",
