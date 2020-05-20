@@ -1,10 +1,6 @@
-import copy
 import os.path
-import re
 import six
-from importlib import import_module
 from pkg_resources import get_distribution, DistributionNotFound
-from pydoc import locate
 from urllib.parse import urlparse, parse_qsl, urlencode, ParseResult
 from urllib3.util.retry import Retry
 from adzerk_decision_sdk.rest import RESTClientObject
@@ -28,6 +24,7 @@ except DistributionNotFound:
     __version__ = 'improperly-installed-version'
 else:
     __version__ = _dist.version.version
+
 
 class Client(object):
     class _DecisionClient(object):
@@ -102,7 +99,7 @@ class Client(object):
             for key, value in six.iteritems(response.decisions):
                 response.decisions[key] = value if isinstance(value, list) else [value]
                 for index, placement in enumerate(response.decisions[key]):
-                     response.decisions[key][index] = self.api_client._ApiClient__deserialize(placement, Decision)
+                    response.decisions[key][index] = self.api_client._ApiClient__deserialize(placement, Decision)
 
             return response
 
@@ -184,7 +181,6 @@ class Client(object):
             [user_record.pop(key, None) for key in bad_keys]
             return user_record
 
-
     class _PixelClient(object):
         def __init__(self, configuration):
             self.rest_client = RESTClientObject(configuration)
@@ -203,7 +199,7 @@ class Client(object):
             ).geturl()
 
             pool = self.rest_client.pool_manager
-            result = pool.request('GET', url, retries=Retry(redirect=False))
+            result = pool.request('GET', full_url, retries=Retry(redirect=False))
 
             return (result.status, result.getheader('location'))
 
