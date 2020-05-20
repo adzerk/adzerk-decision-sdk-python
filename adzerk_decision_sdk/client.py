@@ -10,7 +10,6 @@ from adzerk_decision_sdk.api.decision_api import DecisionApi
 from adzerk_decision_sdk.api.userdb_api import UserdbApi
 from adzerk_decision_sdk.models import Decision
 from adzerk_decision_sdk.exceptions import ApiValueError
-from pprint import pprint
 
 # https://stackoverflow.com/questions/17583443/what-is-the-correct-way-to-share-package-version-with-setup-py-and-the-package/17626524#17626524
 try:
@@ -18,8 +17,6 @@ try:
     # Normalize case for Windows systems
     dist_loc = os.path.normcase(_dist.location)
     here = os.path.normcase(__file__)
-    pprint(dist_loc)
-    pprint(here)
     if not here.startswith(os.path.join(dist_loc, 'adzerk_decision_sdk')):
         # not installed, but there is another version that *is*
         raise DistributionNotFound
