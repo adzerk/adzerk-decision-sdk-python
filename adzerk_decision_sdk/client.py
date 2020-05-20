@@ -55,7 +55,7 @@ class Client(object):
 
             if ('include_explanation' in kwargs and kwargs['include_explanation']) or 'user_agent' in kwargs:
                 api_client = ApiClient(self.configuration)
-                api_client.set_default_header('X-Adzerk-Sdk-Version', 'adzerk-decision-sdk-python:v1')
+                api_client.set_default_header('X-Adzerk-Sdk-Version', f'adzerk-decision-sdk-python:{__version__}')
 
                 if 'include_explanation' in kwargs and kwargs['include_explanation']:
                     api_client.set_default_header('X-Adzerk-Explain', kwargs['api_key'])
