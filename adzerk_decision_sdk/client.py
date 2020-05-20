@@ -1,7 +1,9 @@
 import copy
+import os.path
 import re
 import six
 from importlib import import_module
+from pkg_resources import get_distribution, DistributionNotFound
 from pydoc import locate
 from urllib.parse import urlparse, parse_qsl, urlencode, ParseResult
 from urllib3.util.retry import Retry
@@ -12,6 +14,20 @@ from adzerk_decision_sdk.api.decision_api import DecisionApi
 from adzerk_decision_sdk.api.userdb_api import UserdbApi
 from adzerk_decision_sdk.models import Decision
 from adzerk_decision_sdk.exceptions import ApiValueError
+
+# https://stackoverflow.com/questions/17583443/what-is-the-correct-way-to-share-package-version-with-setup-py-and-the-package/17626524#17626524
+try:
+    _dist = get_distribution('adzerk-decision-sdk')
+    # Normalize case for Windows systems
+    dist_loc = os.path.normcase(_dist.location)
+    here = os.path.normcase(__file__)
+    if not here.startswith(os.path.join(dist_loc, 'adzerk-decision-sdk')):
+        # not installed, but there is another version that *is*
+        raise DistributionNotFound
+except DistributionNotFound:
+    __version__ = 'improperly-installed-version'
+else:
+    __version__ = _dist.version.version
 
 class Client(object):
     class _DecisionClient(object):
@@ -207,7 +223,7 @@ class Client(object):
             configuration.logger_file = logger_file
 
         api_client = ApiClient(configuration)
-        api_client.set_default_header('X-Adzerk-Sdk-Version', 'adzerk-decision-sdk-python:v1')
+        api_client.set_default_header('X-Adzerk-Sdk-Version', f'adzerk-decision-sdk-python:{__version__}')
 
         self.decision_client = self._DecisionClient(network_id, site_id, configuration, api_client)
         self.user_db_client = self._UserDbClient(network_id, api_client)
