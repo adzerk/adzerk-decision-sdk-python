@@ -20,7 +20,7 @@ try:
     here = os.path.normcase(__file__)
     pprint(dist_loc)
     pprint(here)
-    if not here.startswith(os.path.join(dist_loc, 'adzerk-decision-sdk')):
+    if not here.startswith(os.path.join(dist_loc, 'adzerk_decision_sdk')):
         # not installed, but there is another version that *is*
         raise DistributionNotFound
 except DistributionNotFound:
