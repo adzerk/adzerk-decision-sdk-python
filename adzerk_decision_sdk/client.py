@@ -18,6 +18,7 @@ try:
     # Normalize case for Windows systems
     dist_loc = os.path.normcase(_dist.location)
     here = os.path.normcase(__file__)
+    pprint(dist_loc)
     pprint(here)
     if not here.startswith(os.path.join(dist_loc, 'adzerk-decision-sdk')):
         # not installed, but there is another version that *is*
