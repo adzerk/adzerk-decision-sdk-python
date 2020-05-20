@@ -23,7 +23,7 @@ try:
 except DistributionNotFound:
     __version__ = 'improperly-installed-version'
 else:
-    __version__ = _dist.version.version
+    __version__ = _dist.version
 
 
 class Client(object):
