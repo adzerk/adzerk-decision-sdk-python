@@ -46,7 +46,8 @@ class Client(object):
                 kwargs['decision_request'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
             self.logger.info('Fetching decisions from Adzerk API')
-            self.logger.info(f'Processing request: {json.dumps(kwargs['decision_request'])}')
+            request_json = json.dumps(kwargs['decision_request'])
+            self.logger.info(f'Processing request: {request_json}')
 
             if 'enableBotFiltering' not in kwargs['decision_request']:
                 kwargs['decision_request']['enableBotFiltering'] = False
@@ -84,7 +85,8 @@ class Client(object):
 
             [kwargs.pop(key, None) for key in optional_keyword_args]
 
-            self.logger.info(f'Using the processed request: {json.dumps(kwargs['decision_request'])}')
+            processed_json = json.dumps(kwargs['decision_request'])
+            self.logger.info(f'Using the processed request: {processed_json}')
             return self._parse_response(api.get_decisions(**kwargs))
 
         @classmethod
