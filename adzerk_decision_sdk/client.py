@@ -1,3 +1,5 @@
+import json
+import logging
 import os.path
 import six
 from pkg_resources import get_distribution, DistributionNotFound
@@ -36,11 +38,15 @@ class Client(object):
             self.network_id = network_id
             self.site_id = site_id
             self.api = DecisionApi(api_client)
+            self.logger = logging.getLogger("adzerk_decision_sdk")
 
         def get(self, request, **kwargs):
             optional_keyword_args = ['include_explanation', 'api_key', 'user_agent']
             if 'decision_request' not in kwargs:
                 kwargs['decision_request'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
+
+            self.logger.info('Fetching decisions from Adzerk API')
+            self.logger.info(f'Processing request: {json.dumps(kwargs['decision_request'])}')
 
             if 'enableBotFiltering' not in kwargs['decision_request']:
                 kwargs['decision_request']['enableBotFiltering'] = False
@@ -61,14 +67,24 @@ class Client(object):
                 api_client.set_default_header('X-Adzerk-Sdk-Version', f'adzerk-decision-sdk-python:{__version__}')
 
                 if 'include_explanation' in kwargs and kwargs['include_explanation']:
+                    self.logger.info("--------------------------------------------------------------")
+                    self.logger.info("              !!! WARNING - WARNING - WARNING !!!             ")
+                    self.logger.info("")
+                    self.logger.info("You have opted to include explainer details with this request!")
+                    self.logger.info("This will cause performance degradation and should not be done")
+                    self.logger.info("in production environments.")
+                    self.logger.info("--------------------------------------------------------------")
                     api_client.set_default_header('X-Adzerk-Explain', kwargs['api_key'])
                 if 'user_agent' in kwargs:
                     api_client.set_default_header('User-Agent', kwargs['user_agent'])
+
                 api = DecisionApi(api_client)
             else:
                 api = self.api
 
             [kwargs.pop(key, None) for key in optional_keyword_args]
+
+            self.logger.info(f'Using the processed request: {json.dumps(kwargs['decision_request'])}')
             return self._parse_response(api.get_decisions(**kwargs))
 
         @classmethod
