@@ -94,6 +94,9 @@ TBD: ....... -->
 To install dependencies and run the builds associated with this SDK, please use:
 
 ```
+pip install flake8
 pip install --requirement requirements.txt
-[QUESTION: how to run the build?]
+flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+python setup.py sdist bdist_wheel
 ```
