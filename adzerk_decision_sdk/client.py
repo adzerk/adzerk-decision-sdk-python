@@ -42,6 +42,9 @@ class Client(object):
             if 'decision_request' not in kwargs:
                 kwargs['decision_request'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
+            if 'enableBotFiltering' not in kwargs['decision_request']:
+                kwargs['decision_request']['enableBotFiltering'] = False
+
             for idx, placement in enumerate(kwargs['decision_request']['placements']):
                 if len(placement['adTypes']) == 0:
                     raise ApiValueError("Each placement must have at least one ad type")
