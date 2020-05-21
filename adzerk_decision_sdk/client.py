@@ -52,8 +52,15 @@ class Client(object):
             if 'enableBotFiltering' not in kwargs['decision_request']:
                 kwargs['decision_request']['enableBotFiltering'] = False
 
+            if ('placements' not in kwargs['decision_request'] or
+                    kwargs['decision_request']['placements'] is None or
+                    len(kwargs['decision_request']['placements']) == 0):
+                raise ApiValueError("A Decision Request must include at least one placement")
+
             for idx, placement in enumerate(kwargs['decision_request']['placements']):
-                if len(placement['adTypes']) == 0:
+                if ('adTypes' not in placement or
+                        placement['adTypes'] is None or
+                        len(placement['adTypes']) == 0):
                     raise ApiValueError("Each placement must have at least one ad type")
 
                 if 'networkId' not in placement:
