@@ -75,13 +75,13 @@ class Client(object):
                 api_client.set_default_header('X-Adzerk-Sdk-Version', f'adzerk-decision-sdk-python:{__version__}')
 
                 if 'include_explanation' in kwargs and kwargs['include_explanation']:
-                    self.logger.info("--------------------------------------------------------------")
-                    self.logger.info("              !!! WARNING - WARNING - WARNING !!!             ")
-                    self.logger.info("")
-                    self.logger.info("You have opted to include explainer details with this request!")
-                    self.logger.info("This will cause performance degradation and should not be done")
-                    self.logger.info("in production environments.")
-                    self.logger.info("--------------------------------------------------------------")
+                    self.logger.warning("--------------------------------------------------------------")
+                    self.logger.warning("              !!! WARNING - WARNING - WARNING !!!             ")
+                    self.logger.warning("")
+                    self.logger.warning("You have opted to include explainer details with this request!")
+                    self.logger.warning("This will cause performance degradation and should not be done")
+                    self.logger.warning("in production environments.")
+                    self.logger.warning("--------------------------------------------------------------")
                     api_client.set_default_header('X-Adzerk-Explain', kwargs['api_key'])
                 if 'user_agent' in kwargs:
                     api_client.set_default_header('User-Agent', kwargs['user_agent'])
