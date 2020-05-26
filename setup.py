@@ -7,7 +7,7 @@
 from setuptools import setup, find_packages  # noqa: H301
 
 NAME = "adzerk-decision-sdk"
-VERSION = "1.0.0-beta.2"
+VERSION = "1.0.0-beta.3"
 # To install the library, run the following
 #
 # python setup.py install
