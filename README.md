@@ -6,6 +6,8 @@ Python Software Development Kit for Adzerk Decision & UserDB APIs
 
 Requires [Python 3.7.6](https://en.wikipedia.org/wiki/History_of_Python#Table_of_versions) or higher.
 
+[PyPI Package](https://pypi.org/project/adzerk-decision-sdk/)
+
 ```shell
 pip install adzerk-decision-sdk
 ```
@@ -13,7 +15,7 @@ pip install adzerk-decision-sdk
 Or add to your `requirements.txt` file:
 
 ```
-adzerk-decision-sdk===1.0.0
+adzerk-decision-sdk===1.0.0b3
 ```
 
 ## Examples
