@@ -46,6 +46,20 @@ response = client.decisions.get(request)
 print(response)
 ```
 
+### Recording Impression & Clicks
+
+Use with the fetch ad example above.
+
+```python
+# Impression pixel; fire when user sees the ad
+client.pixels.fire(decision.impression_url)
+
+# Click pixel; fire when user clicks on the ad
+# status: HTTP status code
+# location: click target URL
+status, location = client.pixels.fire(decision.click_url)
+```
+
 ### UserDB: Reading User Record
 
 ```python
