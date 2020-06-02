@@ -75,10 +75,9 @@ print(record)
 
 ```python
 import adzerk_decision_sdk
-import os
 
-# Demo network ID and API key; find your own via the Adzerk UI!
-client = adzerk_decision_sdk.Client(23, api_key="YOUR_API_KEY")
+# Demo network ID; find your own via the Adzerk UI!
+client = adzerk_decision_sdk.Client(23)
 
 props = {
   "favoriteColor": "blue",
@@ -87,6 +86,16 @@ props = {
 }
 
 client.user_db.set_custom_properties("abc", props)
+```
+
+### UserDB: Forgetting User Record
+
+```python
+import adzerk_decision_sdk
+
+# Demo network ID and API key; find your own via the Adzerk UI!
+client = adzerk_decision_sdk.Client(23, api_key="YOUR_API_KEY")
+client.user_db.forget("abc")
 ```
 
 <!-- ### Logging Example
