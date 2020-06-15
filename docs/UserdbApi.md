@@ -32,14 +32,26 @@ import time
 import adzerk_decision_sdk
 from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
-configuration = adzerk_decision_sdk.Configuration()
+# Defining the host is optional and defaults to https://e-23.adzerk.net
+# See configuration.py for a list of all supported configuration parameters.
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['X-Adzerk-ApiKey'] = 'YOUR_API_KEY'
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net",
+    api_key = {
+        'X-Adzerk-ApiKey': 'YOUR_API_KEY'
+    }
+)
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['X-Adzerk-ApiKey'] = 'Bearer'
-
-# Defining host is optional and default to https://e-23.adzerk.net
-configuration.host = "https://e-23.adzerk.net"
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient(configuration) as api_client:
@@ -99,6 +111,12 @@ import time
 import adzerk_decision_sdk
 from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://e-23.adzerk.net
+# See configuration.py for a list of all supported configuration parameters.
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net"
+)
+
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:
@@ -158,6 +176,12 @@ import time
 import adzerk_decision_sdk
 from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://e-23.adzerk.net
+# See configuration.py for a list of all supported configuration parameters.
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net"
+)
+
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:
@@ -220,14 +244,26 @@ import time
 import adzerk_decision_sdk
 from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
-configuration = adzerk_decision_sdk.Configuration()
+# Defining the host is optional and defaults to https://e-23.adzerk.net
+# See configuration.py for a list of all supported configuration parameters.
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['X-Adzerk-ApiKey'] = 'YOUR_API_KEY'
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net",
+    api_key = {
+        'X-Adzerk-ApiKey': 'YOUR_API_KEY'
+    }
+)
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['X-Adzerk-ApiKey'] = 'Bearer'
-
-# Defining host is optional and default to https://e-23.adzerk.net
-configuration.host = "https://e-23.adzerk.net"
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient(configuration) as api_client:
@@ -285,14 +321,26 @@ import time
 import adzerk_decision_sdk
 from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
-configuration = adzerk_decision_sdk.Configuration()
+# Defining the host is optional and defaults to https://e-23.adzerk.net
+# See configuration.py for a list of all supported configuration parameters.
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['X-Adzerk-ApiKey'] = 'YOUR_API_KEY'
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net",
+    api_key = {
+        'X-Adzerk-ApiKey': 'YOUR_API_KEY'
+    }
+)
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['X-Adzerk-ApiKey'] = 'Bearer'
-
-# Defining host is optional and default to https://e-23.adzerk.net
-configuration.host = "https://e-23.adzerk.net"
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient(configuration) as api_client:
@@ -350,6 +398,12 @@ import time
 import adzerk_decision_sdk
 from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://e-23.adzerk.net
+# See configuration.py for a list of all supported configuration parameters.
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net"
+)
+
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:
@@ -409,6 +463,12 @@ import time
 import adzerk_decision_sdk
 from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://e-23.adzerk.net
+# See configuration.py for a list of all supported configuration parameters.
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net"
+)
+
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:
@@ -470,6 +530,12 @@ import time
 import adzerk_decision_sdk
 from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://e-23.adzerk.net
+# See configuration.py for a list of all supported configuration parameters.
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net"
+)
+
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:
@@ -527,6 +593,12 @@ import time
 import adzerk_decision_sdk
 from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://e-23.adzerk.net
+# See configuration.py for a list of all supported configuration parameters.
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net"
+)
+
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:
@@ -584,6 +656,12 @@ import time
 import adzerk_decision_sdk
 from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://e-23.adzerk.net
+# See configuration.py for a list of all supported configuration parameters.
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net"
+)
+
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:

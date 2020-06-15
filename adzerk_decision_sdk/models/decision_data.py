@@ -34,6 +34,7 @@ class DecisionData(object):
     """
     openapi_types = {
         'image_url': 'str',
+        'file_name': 'str',
         'title': 'str',
         'width': 'int',
         'height': 'int',
@@ -41,20 +42,22 @@ class DecisionData(object):
     }
 
     attribute_map = {
-        'image_url': 'imageURL',
+        'image_url': 'imageUrl',
+        'file_name': 'fileName',
         'title': 'title',
         'width': 'width',
         'height': 'height',
         'custom_data': 'customData'
     }
 
-    def __init__(self, image_url=None, title=None, width=None, height=None, custom_data=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, image_url=None, file_name=None, title=None, width=None, height=None, custom_data=None, local_vars_configuration=None):  # noqa: E501
         """DecisionData - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
         self._image_url = None
+        self._file_name = None
         self._title = None
         self._width = None
         self._height = None
@@ -63,6 +66,8 @@ class DecisionData(object):
 
         if image_url is not None:
             self.image_url = image_url
+        if file_name is not None:
+            self.file_name = file_name
         if title is not None:
             self.title = title
         if width is not None:
@@ -92,6 +97,27 @@ class DecisionData(object):
         """
 
         self._image_url = image_url
+
+    @property
+    def file_name(self):
+        """Gets the file_name of this DecisionData.  # noqa: E501
+
+
+        :return: The file_name of this DecisionData.  # noqa: E501
+        :rtype: str
+        """
+        return self._file_name
+
+    @file_name.setter
+    def file_name(self, file_name):
+        """Sets the file_name of this DecisionData.
+
+
+        :param file_name: The file_name of this DecisionData.  # noqa: E501
+        :type: str
+        """
+
+        self._file_name = file_name
 
     @property
     def title(self):

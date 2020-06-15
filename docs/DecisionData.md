@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **image_url** | **str** |  | [optional] 
+**file_name** | **str** |  | [optional] 
 **title** | **str** |  | [optional] 
 **width** | **int** |  | [optional] 
 **height** | **int** |  | [optional] 

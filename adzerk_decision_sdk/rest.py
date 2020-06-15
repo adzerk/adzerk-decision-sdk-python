@@ -23,7 +23,6 @@ import certifi
 import six
 from six.moves.urllib.parse import urlencode
 import urllib3
-from urllib3.util.retry import Retry
 
 from adzerk_decision_sdk.exceptions import ApiException, ApiValueError
 
@@ -75,7 +74,7 @@ class RESTClientObject(object):
             addition_pool_args['assert_hostname'] = configuration.assert_hostname  # noqa: E501
 
         if configuration.retries is not None:
-            addition_pool_args['retries'] = Retry(redirect=False)
+            addition_pool_args['retries'] = configuration.retries
 
         if maxsize is None:
             if configuration.connection_pool_maxsize is not None:

@@ -22,6 +22,12 @@ import time
 import adzerk_decision_sdk
 from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://e-23.adzerk.net
+# See configuration.py for a list of all supported configuration parameters.
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net"
+)
+
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:
