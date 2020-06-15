@@ -98,9 +98,28 @@ client = adzerk_decision_sdk.Client(23, api_key="YOUR_API_KEY")
 client.user_db.forget("abc")
 ```
 
-<!-- ### Logging Example
+### Logging
 
-TBD: ....... -->
+The Adzerk Decision SDK uses the built-in Python logging mechanism to capture log data. By default, warning and error messages will be sent to `stderr` even if no logger is configured.
+
+To configure different log levels for the SDK, you first have to configure logging for your application. A simple configuration that enables informational level logging application wide would be:
+
+```python
+import logging
+
+logging.basicConfig(level=logging.INFO)
+```
+
+Now that logging is configured for the application, you can set the log level for the SDK:
+
+```python
+client = Client(23)
+client.decisions.logger.setLevel(logging.INFO)
+```
+
+You will now see informational messages being output from the SDK.
+
+The SDK `Client` also allows you to optionally specify `logger_format` (follows the standard `logging` module format) and `logger_file`. If `logger_file` is provided, logging will continue to show using the application's logging configuration as well as the file specified. The file will only contain Adzerk Decision SDK related logs and can be helpful if communicating issues back to the Adzerk team.
 
 ## Documentation
 
