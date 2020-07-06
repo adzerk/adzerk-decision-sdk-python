@@ -32,13 +32,13 @@ class Client(object):
     class _DecisionClient(object):
         reverse_attribute_cache = {}
 
-        def __init__(self, network_id, site_id, configuration: Configuration, api_client: ApiClient):
+        def __init__(self, network_id, site_id, logger, configuration: Configuration, api_client: ApiClient):
             self.configuration = configuration
             self.api_client = api_client
             self.network_id = network_id
             self.site_id = site_id
             self.api = DecisionApi(api_client)
-            self.logger = logging.getLogger("adzerk_decision_sdk")
+            self.logger = logger
 
         def get(self, request, **kwargs):
             optional_keyword_args = ['include_explanation', 'api_key', 'user_agent']
@@ -140,18 +140,22 @@ class Client(object):
             return r
 
     class _UserDbClient(object):
-        def __init__(self, network_id, api_client: ApiClient):
+        def __init__(self, network_id, logger, api_client: ApiClient):
             self.api = UserdbApi(api_client)
             self.network_id = network_id
+            self.logger = logger
 
         def set_custom_properties(self, user_key, properties, **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
+            json = json.dumps(properties)
+            self.logger.info(f'Setting custom properties for {user_key} on network {network_id} to: {json}')
             return self.api.add_custom_properties(network_id,
                                                   user_key,
                                                   body=properties)
 
         def add_interest(self, user_key, interest, **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
+            self.logger.info(f'Adding interest {interest} for {user_key} on network {network_id}')
             return self.api.add_interests(network_id,
                                           user_key,
                                           interest)
@@ -162,6 +166,7 @@ class Client(object):
                                     retargeting_segment_id,
                                     **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
+            self.logger.info(f'Adding {advertiser_id}.{retargeting_segment_id} rt segment for {user_key} on {network_id}')
             return self.api.add_retargeting_segment(network_id,
                                                     advertiser_id,
                                                     retargeting_segment_id,
@@ -169,18 +174,23 @@ class Client(object):
 
         def forget(self, user_key, **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
+            self.logger.info(f'Forgetting {user_key} on {network_id}')
             return self.api.forget(network_id, user_key)
 
         def gdpr_consent(self, consent_request, **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
+            json = json.dumps(consent_request)
+            self.logger.info(f'Setting GDPR consent for {user_key} on {network_id} to: {json}')
             return self.api.gdpr_consent(network_id, consent_request=consent_request)
 
         def ip_override(self, user_key, ip, **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
+            self.logger.info(f'Overriding IP for {user_key} on {network_id} to {ip}')
             return self.api.ip_override(network_id, user_key, ip)
 
         def match_user(self, user_key, partner_id, user_id, **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
+            self.logger.info(f'Matching user {user_key} on {network_id} to {partner_id}.{user_id}')
             return self.api.match_user(network_id,
                                        user_key,
                                        partner_id,
@@ -188,6 +198,7 @@ class Client(object):
 
         def opt_out(self, user_key, **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
+            self.logger.info(f'Opting out for {user_key} on {network_id}')
             return self.api.opt_out(network_id, user_key)
 
         def read(self, user_key, **kwargs):
@@ -205,16 +216,23 @@ class Client(object):
             ]
 
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
+            self.logger.info(f'Requesting record for {user_key} on {network_id}')
             user_record = self.api.read(network_id, user_key)
+            json = json.dumps(user_record)
+            self.logger.info(f'Received unfiltered response of: {json}')
             [user_record.pop(key, None) for key in bad_keys]
+            json = json.dumps(user_record)
+            self.logger.info(f'Returning filtered response of: {json}')
             return user_record
 
     class _PixelClient(object):
-        def __init__(self, configuration):
+        def __init__(self, configuration, logger):
             self.rest_client = RESTClientObject(configuration)
+            self.logger = logger
 
         def fire(self, url, revenue_override=None, additional_revenue=None, **kwargs):
             parsed_url = urlparse(url)
+            self.logger.info(f'Firing Pixel at base url of: {parsed_url}')
             query_string_params = parse_qsl(parsed_url.query)
             if revenue_override is not None:
                 query_string_params.append(('override', revenue_override))
@@ -225,9 +243,11 @@ class Client(object):
                 parsed_url.scheme, parsed_url.netloc, parsed_url.path,
                 parsed_url.params, new_query, parsed_url.fragment
             ).geturl()
+            self.logger.info(f'After url building with overrides, requesting: {full_url}')
 
             pool = self.rest_client.pool_manager
             result = pool.request('GET', full_url, retries=Retry(redirect=False))
+            self.logger.info(f'Received response from pixel url: {result.status}')
 
             return (result.status, result.getheader('location'))
 
@@ -249,9 +269,11 @@ class Client(object):
         api_client = ApiClient(configuration)
         api_client.set_default_header('X-Adzerk-Sdk-Version', f'adzerk-decision-sdk-python:{__version__}')
 
-        self.decision_client = self._DecisionClient(network_id, site_id, configuration, api_client)
-        self.user_db_client = self._UserDbClient(network_id, api_client)
-        self.pixel_client = self._PixelClient(configuration)
+        self.logger = logging.getLogger("adzerk_decision_sdk")
+
+        self.decision_client = self._DecisionClient(network_id, site_id, logger, configuration, api_client)
+        self.user_db_client = self._UserDbClient(network_id, logger, api_client)
+        self.pixel_client = self._PixelClient(configuration, logger)
 
     @property
     def decisions(self):
