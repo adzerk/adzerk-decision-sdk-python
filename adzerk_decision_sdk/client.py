@@ -270,6 +270,7 @@ class Client(object):
         api_client.set_default_header('X-Adzerk-Sdk-Version', f'adzerk-decision-sdk-python:{__version__}')
 
         self.logger = logging.getLogger("adzerk_decision_sdk")
+        self.logger.setLevel(logging.INFO)
 
         self.decision_client = self._DecisionClient(network_id, site_id, logger, configuration, api_client)
         self.user_db_client = self._UserDbClient(network_id, logger, api_client)
