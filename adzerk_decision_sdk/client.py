@@ -147,8 +147,8 @@ class Client(object):
 
         def set_custom_properties(self, user_key, properties, **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
-            json = json.dumps(properties)
-            self.logger.info(f'Setting custom properties for {user_key} on network {network_id} to: {json}')
+            jsond = jsond.dumps(properties)
+            self.logger.info(f'Setting custom properties for {user_key} on network {network_id} to: {jsond}')
             return self.api.add_custom_properties(network_id,
                                                   user_key,
                                                   body=properties)
@@ -179,8 +179,8 @@ class Client(object):
 
         def gdpr_consent(self, consent_request, **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
-            json = json.dumps(consent_request)
-            self.logger.info(f'Setting GDPR consent for {user_key} on {network_id} to: {json}')
+            jsond = jsond.dumps(consent_request)
+            self.logger.info(f'Setting GDPR consent for {user_key} on {network_id} to: {jsond}')
             return self.api.gdpr_consent(network_id, consent_request=consent_request)
 
         def ip_override(self, user_key, ip, **kwargs):
@@ -218,11 +218,11 @@ class Client(object):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             self.logger.info(f'Requesting record for {user_key} on {network_id}')
             user_record = self.api.read(network_id, user_key)
-            json = json.dumps(user_record)
-            self.logger.info(f'Received unfiltered response of: {json}')
+            jsond = jsond.dumps(user_record)
+            self.logger.info(f'Received unfiltered response of: {jsond}')
             [user_record.pop(key, None) for key in bad_keys]
-            json = json.dumps(user_record)
-            self.logger.info(f'Returning filtered response of: {json}')
+            jsond = jsond.dumps(user_record)
+            self.logger.info(f'Returning filtered response of: {jsond}')
             return user_record
 
     class _PixelClient(object):
