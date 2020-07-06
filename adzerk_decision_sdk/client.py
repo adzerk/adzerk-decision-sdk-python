@@ -180,7 +180,7 @@ class Client(object):
         def gdpr_consent(self, consent_request, **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             jsond = json.dumps(consent_request)
-            self.logger.info(f'Setting GDPR consent for {user_key} on {network_id} to: {jsond}')
+            self.logger.info(f'Setting GDPR consent {network_id} with: {jsond}')
             return self.api.gdpr_consent(network_id, consent_request=consent_request)
 
         def ip_override(self, user_key, ip, **kwargs):
