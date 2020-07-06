@@ -147,7 +147,7 @@ class Client(object):
 
         def set_custom_properties(self, user_key, properties, **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
-            jsond = jsond.dumps(properties)
+            jsond = json.dumps(properties)
             self.logger.info(f'Setting custom properties for {user_key} on network {network_id} to: {jsond}')
             return self.api.add_custom_properties(network_id,
                                                   user_key,
@@ -179,7 +179,7 @@ class Client(object):
 
         def gdpr_consent(self, consent_request, **kwargs):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
-            jsond = jsond.dumps(consent_request)
+            jsond = json.dumps(consent_request)
             self.logger.info(f'Setting GDPR consent for {user_key} on {network_id} to: {jsond}')
             return self.api.gdpr_consent(network_id, consent_request=consent_request)
 
@@ -218,10 +218,10 @@ class Client(object):
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             self.logger.info(f'Requesting record for {user_key} on {network_id}')
             user_record = self.api.read(network_id, user_key)
-            jsond = jsond.dumps(user_record)
+            jsond = json.dumps(user_record)
             self.logger.info(f'Received unfiltered response of: {jsond}')
             [user_record.pop(key, None) for key in bad_keys]
-            jsond = jsond.dumps(user_record)
+            jsond = json.dumps(user_record)
             self.logger.info(f'Returning filtered response of: {jsond}')
             return user_record
 
