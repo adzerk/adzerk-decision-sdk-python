@@ -253,8 +253,8 @@ class Client(object):
 
     def __init__(self, network_id, protocol='https',
                  host=None, path=None, api_key=None,
-                 user_agent=None, logger_format=None,
-                 logger_file=None, is_debug=False, site_id=None):
+                 logger_format=None, logger_file=None,
+                 site_id=None):
         host = f'{protocol}://e-{network_id}.adzerk.net' if host is None else host
 
         configuration = Configuration(host,
@@ -269,8 +269,9 @@ class Client(object):
         api_client = ApiClient(configuration)
         api_client.set_default_header('X-Adzerk-Sdk-Version', f'adzerk-decision-sdk-python:{__version__}')
 
-        self.logger = logging.getLogger("adzerk_decision_sdk")
-        self.logger.setLevel(logging.INFO)
+        self.logger = logging.getLogger("adzerk_decision_sdk.client")
+        self.logger.setLevel(logging.DEBUG)
+        logging.getLogger("adzerk_decision_sdk.rest").setLevel(logging.DEBUG)
 
         self.decision_client = self._DecisionClient(network_id, site_id, self.logger, configuration, api_client)
         self.user_db_client = self._UserDbClient(network_id, self.logger, api_client)
