@@ -227,7 +227,9 @@ class Client(object):
             ).geturl()
 
             pool = self.rest_client.pool_manager
-            result = pool.request('GET', full_url, retries=Retry(redirect=False))
+            result = pool.request('GET', full_url, retries=Retry(redirect=False), headers={
+                'X-Adzerk-Sdk-Version': f'adzerk-decision-sdk-python:{__version__}'
+            })
 
             return (result.status, result.getheader('location'))
 
