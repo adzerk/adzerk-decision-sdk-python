@@ -213,13 +213,15 @@ class Client(object):
         def __init__(self, configuration):
             self.rest_client = RESTClientObject(configuration)
 
-        def fire(self, url, revenue_override=None, additional_revenue=None, **kwargs):
+        def fire(self, url, revenue_override=None, additional_revenue=None, event_multiplier=None, **kwargs):
             parsed_url = urlparse(url)
             query_string_params = parse_qsl(parsed_url.query)
             if revenue_override is not None:
                 query_string_params.append(('override', revenue_override))
             if additional_revenue is not None:
                 query_string_params.append(('additional', additional_revenue))
+            if event_multiplier is not None:
+                query_string_params.append(('eventMultiplier', event_multiplier))
             new_query = urlencode(query_string_params)
             full_url = ParseResult(
                 parsed_url.scheme, parsed_url.netloc, parsed_url.path,
