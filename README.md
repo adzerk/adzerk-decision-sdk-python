@@ -110,16 +110,14 @@ import logging
 logging.basicConfig(level=logging.INFO)
 ```
 
-Now that logging is configured for the application, you can set the log level for the SDK:
+Now that logging is configured for the application, you can set the log level for the SDK. By default, the SDK uses the `DEBUG` level:
 
 ```python
 client = Client(23)
-client.decisions.logger.setLevel(logging.INFO)
+client.logger.setLevel(logging.INFO)
 ```
 
 You will now see informational messages being output from the SDK.
-
-The SDK `Client` also allows you to optionally specify `logger_format` (follows the standard `logging` module format) and `logger_file`. If `logger_file` is provided, logging will continue to show using the application's logging configuration as well as the file specified. The file will only contain Adzerk Decision SDK related logs and can be helpful if communicating issues back to the Adzerk team.
 
 ## Documentation
 
