@@ -13,7 +13,6 @@ Method | HTTP request | Description
 [**match_user**](UserdbApi.md#match_user) | **GET** /udb/{networkId}/sync/i.gif | 
 [**opt_out**](UserdbApi.md#opt_out) | **GET** /udb/{networkId}/optout/i.gif | 
 [**read**](UserdbApi.md#read) | **GET** /udb/{networkId}/read | 
-[**set_user_cookie**](UserdbApi.md#set_user_cookie) | **GET** /udb/{networkId}/set/i.gif | 
 
 
 # **add_custom_properties**
@@ -638,69 +637,6 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The UserDB record |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **set_user_cookie**
-> file set_user_cookie(network_id, user_key)
-
-
-
-Set User Cookie
-
-### Example
-
-```python
-from __future__ import print_function
-import time
-import adzerk_decision_sdk
-from adzerk_decision_sdk.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to https://e-23.adzerk.net
-# See configuration.py for a list of all supported configuration parameters.
-configuration = adzerk_decision_sdk.Configuration(
-    host = "https://e-23.adzerk.net"
-)
-
-
-# Enter a context with an instance of the API client
-with adzerk_decision_sdk.ApiClient() as api_client:
-    # Create an instance of the API class
-    api_instance = adzerk_decision_sdk.UserdbApi(api_client)
-    network_id = 56 # int | Your Network Id
-user_key = 'user_key_example' # str | UserDB Id for the user
-
-    try:
-        api_response = api_instance.set_user_cookie(network_id, user_key)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling UserdbApi->set_user_cookie: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **network_id** | **int**| Your Network Id | 
- **user_key** | **str**| UserDB Id for the user | 
-
-### Return type
-
-**file**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: image/gif
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
