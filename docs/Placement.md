@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **count** | **int** | (BETA) The number of ads to return per placement. Integer between 1 and 20 | [optional] 
 **proportionality** | **bool** | (BETA) If true, fills ads in a multi-winner placement in proportion to the flight&#39;s goals | [optional] 
 **ecpm_partition** | **str** | (BETA) The name of the eCPM Partition that should be used to source eCPM data for auctions | [optional] 
+**event_multiplier** | **int** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

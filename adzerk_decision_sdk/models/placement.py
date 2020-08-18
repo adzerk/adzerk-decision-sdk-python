@@ -48,7 +48,8 @@ class Placement(object):
         'content_keys': 'dict(str, int)',
         'count': 'int',
         'proportionality': 'bool',
-        'ecpm_partition': 'str'
+        'ecpm_partition': 'str',
+        'event_multiplier': 'int'
     }
 
     attribute_map = {
@@ -67,10 +68,11 @@ class Placement(object):
         'content_keys': 'contentKeys',
         'count': 'count',
         'proportionality': 'proportionality',
-        'ecpm_partition': 'ecpmPartition'
+        'ecpm_partition': 'ecpmPartition',
+        'event_multiplier': 'eventMultiplier'
     }
 
-    def __init__(self, div_name=None, network_id=None, site_id=None, ad_types=None, zone_ids=None, campaign_id=None, flight_id=None, ad_id=None, click_url=None, properties=None, event_ids=None, overrides=None, content_keys=None, count=None, proportionality=None, ecpm_partition=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, div_name=None, network_id=None, site_id=None, ad_types=None, zone_ids=None, campaign_id=None, flight_id=None, ad_id=None, click_url=None, properties=None, event_ids=None, overrides=None, content_keys=None, count=None, proportionality=None, ecpm_partition=None, event_multiplier=None, local_vars_configuration=None):  # noqa: E501
         """Placement - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -92,6 +94,7 @@ class Placement(object):
         self._count = None
         self._proportionality = None
         self._ecpm_partition = None
+        self._event_multiplier = None
         self.discriminator = None
 
         if div_name is not None:
@@ -114,6 +117,7 @@ class Placement(object):
         self.count = count
         self.proportionality = proportionality
         self.ecpm_partition = ecpm_partition
+        self.event_multiplier = event_multiplier
 
     @property
     def div_name(self):
@@ -482,6 +486,33 @@ class Placement(object):
         """
 
         self._ecpm_partition = ecpm_partition
+
+    @property
+    def event_multiplier(self):
+        """Gets the event_multiplier of this Placement.  # noqa: E501
+
+
+        :return: The event_multiplier of this Placement.  # noqa: E501
+        :rtype: int
+        """
+        return self._event_multiplier
+
+    @event_multiplier.setter
+    def event_multiplier(self, event_multiplier):
+        """Sets the event_multiplier of this Placement.
+
+
+        :param event_multiplier: The event_multiplier of this Placement.  # noqa: E501
+        :type: int
+        """
+        if (self.local_vars_configuration.client_side_validation and
+                event_multiplier is not None and event_multiplier > 100000000):  # noqa: E501
+            raise ValueError("Invalid value for `event_multiplier`, must be a value less than or equal to `100000000`")  # noqa: E501
+        if (self.local_vars_configuration.client_side_validation and
+                event_multiplier is not None and event_multiplier < -100000000):  # noqa: E501
+            raise ValueError("Invalid value for `event_multiplier`, must be a value greater than or equal to `-100000000`")  # noqa: E501
+
+        self._event_multiplier = event_multiplier
 
     def to_dict(self):
         """Returns the model properties as a dict"""
