@@ -107,17 +107,27 @@ To configure different log levels for the SDK, you first have to configure loggi
 ```python
 import logging
 
-logging.basicConfig(level=logging.INFO)
+# This represents your logging framework being initialized, usually by Flask or
+# Django, etc.  This will create a base handler that will output to sys.stderr,
+# but you can override the config in several ways:
+# https://docs.python.org/3/library/logging.html
+logging.basicConfig()
+
+# Set both the client & rest loggers to INFO to avoid over-the-wire debug logs.
+logging.getLogger("adzerk_decision_sdk.client").setLevel(logging.INFO)
+logging.getLogger("adzerk_decision_sdk.rest").setLevel(logging.INFO)
 ```
 
-Now that logging is configured for the application, you can set the log level for the SDK. By default, the SDK uses the `DEBUG` level:
+As a convenience, you can *optionally* specify a `logger_file` parameter to the Client and it will create an _additional_ Python log handler that will send Adzerk Decision SDK logs to the named file.  A few tips:
+
+1. Depending on your app logging config this might create *duplicate logs* between this file and your normal logging destination.  
+2. It's probably a good idea to use the `logging.DEBUG` level in this case to get all the over-the-wire debug info.
+3. You can also pass in a `logger_format` parameter to control how the logs will be displayed.  This requires the `logger_file` parameter too.  More info on how to format messages: https://docs.python.org/3/library/logging.html#logrecord-attributes
 
 ```python
-client = Client(23)
-client.logger.setLevel(logging.INFO)
+# OPTIONAL use of an ADDITIONAL logger file for SDK messages only
+client = Client(23, logger_file="adzerk-python.log")
 ```
-
-You will now see informational messages being output from the SDK.
 
 ## Documentation
 
