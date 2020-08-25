@@ -126,7 +126,7 @@ As a convenience, you can *optionally* specify a `logger_file` parameter to the 
 
 ```python
 # OPTIONAL use of an ADDITIONAL logger file for SDK messages only
-client = Client(23, logger_file="adzerk-python.log")
+client = Client(23, logger_file="adzerk-python.log", logger_format="%(asctime)s %(name)s %(levelname)s %(message)s")
 ```
 
 ## Documentation
