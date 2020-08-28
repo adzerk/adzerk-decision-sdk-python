@@ -273,13 +273,17 @@ class Client(object):
         api_client = ApiClient(configuration)
         api_client.set_default_header('X-Adzerk-Sdk-Version', f'adzerk-decision-sdk-python:{__version__}')
 
-        self.logger = logging.getLogger("adzerk_decision_sdk.client")
-        self.logger.setLevel(logging.DEBUG)
-        logging.getLogger("adzerk_decision_sdk.rest").setLevel(logging.DEBUG)
+        self.__logger = logging.getLogger("adzerk_decision_sdk.client")
+        if self.__logger.level == 0:
+            self.__logger.setLevel(logging.DEBUG)
 
-        self.decision_client = self._DecisionClient(network_id, site_id, self.logger, configuration, api_client)
-        self.user_db_client = self._UserDbClient(network_id, self.logger, api_client)
-        self.pixel_client = self._PixelClient(configuration, self.logger)
+        restLogger = logging.getLogger("adzerk_decision_sdk.rest")
+        if restLogger.level == 0:
+            restLogger.setLevel(logging.DEBUG)
+
+        self.decision_client = self._DecisionClient(network_id, site_id, self.__logger, configuration, api_client)
+        self.user_db_client = self._UserDbClient(network_id, self.__logger, api_client)
+        self.pixel_client = self._PixelClient(configuration, self.__logger)
 
     @property
     def decisions(self):
