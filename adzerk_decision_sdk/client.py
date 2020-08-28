@@ -230,7 +230,7 @@ class Client(object):
             self.rest_client = RESTClientObject(configuration)
             self.__logger = logger
 
-        def fire(self, url, revenue_override=None, additional_revenue=None, **kwargs):
+        def fire(self, url, revenue_override=None, additional_revenue=None, event_multiplier=None, **kwargs):
             parsed_url = urlparse(url)
             self.__logger.info(f'Firing Pixel at base url of: {parsed_url}')
             query_string_params = parse_qsl(parsed_url.query)
@@ -238,6 +238,8 @@ class Client(object):
                 query_string_params.append(('override', revenue_override))
             if additional_revenue is not None:
                 query_string_params.append(('additional', additional_revenue))
+            if event_multiplier is not None:
+                query_string_params.append(('eventMultiplier', event_multiplier))
             new_query = urlencode(query_string_params)
             full_url = ParseResult(
                 parsed_url.scheme, parsed_url.netloc, parsed_url.path,
@@ -246,7 +248,9 @@ class Client(object):
             self.__logger.info(f'After url building with overrides, requesting: {full_url}')
 
             pool = self.rest_client.pool_manager
-            result = pool.request('GET', full_url, retries=Retry(redirect=False))
+            result = pool.request('GET', full_url, retries=Retry(redirect=False), headers={
+                'X-Adzerk-Sdk-Version': f'adzerk-decision-sdk-python:{__version__}'
+            })
             self.__logger.info(f'Received response from pixel url: {result.status}')
 
             return (result.status, result.getheader('location'))
