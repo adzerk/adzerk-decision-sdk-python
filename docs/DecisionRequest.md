@@ -17,6 +17,11 @@ Name | Type | Description | Notes
 **enable_user_dbip** | **bool** | If true, override the IP address of the request with the IP address supplied on the UserKey. If no IP address is found on the UserKey, this will fall back to the IP address on the request. Requires UserDB | [optional] 
 **consent** | [**object**](.md) | Object that sets the data consent preferences. Other consent settings are available in the GDPR settings documentation. | [optional] 
 **device_id** | **str** | RTB requests only - sets an Identifier for Advertisers (IFA or IDFA) | [optional] 
+**parallel** | **bool** |  | [optional] 
+**intended_latitude** | **str** |  | [optional] 
+**intended_longitude** | **str** |  | [optional] 
+**include_matched_points** | **bool** |  | [optional] 
+**location** | [**RequestLocation**](RequestLocation.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

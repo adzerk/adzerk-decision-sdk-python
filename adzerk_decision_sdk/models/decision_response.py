@@ -35,16 +35,18 @@ class DecisionResponse(object):
     openapi_types = {
         'user': 'User',
         'decisions': 'object',
-        'explain': 'object'
+        'explain': 'object',
+        'matched_points': 'list[MatchedPoint]'
     }
 
     attribute_map = {
         'user': 'user',
         'decisions': 'decisions',
-        'explain': 'explain'
+        'explain': 'explain',
+        'matched_points': 'matchedPoints'
     }
 
-    def __init__(self, user=None, decisions=None, explain=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, user=None, decisions=None, explain=None, matched_points=None, local_vars_configuration=None):  # noqa: E501
         """DecisionResponse - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -53,6 +55,7 @@ class DecisionResponse(object):
         self._user = None
         self._decisions = None
         self._explain = None
+        self._matched_points = None
         self.discriminator = None
 
         if user is not None:
@@ -61,6 +64,8 @@ class DecisionResponse(object):
             self.decisions = decisions
         if explain is not None:
             self.explain = explain
+        if matched_points is not None:
+            self.matched_points = matched_points
 
     @property
     def user(self):
@@ -124,6 +129,27 @@ class DecisionResponse(object):
         """
 
         self._explain = explain
+
+    @property
+    def matched_points(self):
+        """Gets the matched_points of this DecisionResponse.  # noqa: E501
+
+
+        :return: The matched_points of this DecisionResponse.  # noqa: E501
+        :rtype: list[MatchedPoint]
+        """
+        return self._matched_points
+
+    @matched_points.setter
+    def matched_points(self, matched_points):
+        """Sets the matched_points of this DecisionResponse.
+
+
+        :param matched_points: The matched_points of this DecisionResponse.  # noqa: E501
+        :type: list[MatchedPoint]
+        """
+
+        self._matched_points = matched_points
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -1,12 +1,10 @@
-# DecisionResponse
+# RequestLocation
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**user** | [**User**](User.md) |  | [optional] 
-**decisions** | [**object**](.md) |  | [optional] 
-**explain** | [**object**](.md) |  | [optional] 
-**matched_points** | [**list[MatchedPoint]**](MatchedPoint.md) |  | [optional] 
+**latitude** | **str** |  | [optional] 
+**longitude** | **str** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -46,7 +46,12 @@ class DecisionRequest(object):
         'enable_bot_filtering': 'bool',
         'enable_user_dbip': 'bool',
         'consent': 'object',
-        'device_id': 'str'
+        'device_id': 'str',
+        'parallel': 'bool',
+        'intended_latitude': 'str',
+        'intended_longitude': 'str',
+        'include_matched_points': 'bool',
+        'location': 'RequestLocation'
     }
 
     attribute_map = {
@@ -63,10 +68,15 @@ class DecisionRequest(object):
         'enable_bot_filtering': 'enableBotFiltering',
         'enable_user_dbip': 'enableUserDBIP',
         'consent': 'consent',
-        'device_id': 'deviceID'
+        'device_id': 'deviceID',
+        'parallel': 'parallel',
+        'intended_latitude': 'intendedLatitude',
+        'intended_longitude': 'intendedLongitude',
+        'include_matched_points': 'includeMatchedPoints',
+        'location': 'location'
     }
 
-    def __init__(self, placements=None, user=None, keywords=None, url=None, referrer=None, ip=None, blocked_creatives=None, is_mobile=None, include_pricing_data=None, notrack=None, enable_bot_filtering=None, enable_user_dbip=None, consent=None, device_id=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, placements=None, user=None, keywords=None, url=None, referrer=None, ip=None, blocked_creatives=None, is_mobile=None, include_pricing_data=None, notrack=None, enable_bot_filtering=None, enable_user_dbip=None, consent=None, device_id=None, parallel=None, intended_latitude=None, intended_longitude=None, include_matched_points=None, location=None, local_vars_configuration=None):  # noqa: E501
         """DecisionRequest - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -86,6 +96,11 @@ class DecisionRequest(object):
         self._enable_user_dbip = None
         self._consent = None
         self._device_id = None
+        self._parallel = None
+        self._intended_latitude = None
+        self._intended_longitude = None
+        self._include_matched_points = None
+        self._location = None
         self.discriminator = None
 
         self.placements = placements
@@ -103,6 +118,12 @@ class DecisionRequest(object):
         self.enable_user_dbip = enable_user_dbip
         self.consent = consent
         self.device_id = device_id
+        self.parallel = parallel
+        self.intended_latitude = intended_latitude
+        self.intended_longitude = intended_longitude
+        self.include_matched_points = include_matched_points
+        if location is not None:
+            self.location = location
 
     @property
     def placements(self):
@@ -425,6 +446,111 @@ class DecisionRequest(object):
         """
 
         self._device_id = device_id
+
+    @property
+    def parallel(self):
+        """Gets the parallel of this DecisionRequest.  # noqa: E501
+
+
+        :return: The parallel of this DecisionRequest.  # noqa: E501
+        :rtype: bool
+        """
+        return self._parallel
+
+    @parallel.setter
+    def parallel(self, parallel):
+        """Sets the parallel of this DecisionRequest.
+
+
+        :param parallel: The parallel of this DecisionRequest.  # noqa: E501
+        :type: bool
+        """
+
+        self._parallel = parallel
+
+    @property
+    def intended_latitude(self):
+        """Gets the intended_latitude of this DecisionRequest.  # noqa: E501
+
+
+        :return: The intended_latitude of this DecisionRequest.  # noqa: E501
+        :rtype: str
+        """
+        return self._intended_latitude
+
+    @intended_latitude.setter
+    def intended_latitude(self, intended_latitude):
+        """Sets the intended_latitude of this DecisionRequest.
+
+
+        :param intended_latitude: The intended_latitude of this DecisionRequest.  # noqa: E501
+        :type: str
+        """
+
+        self._intended_latitude = intended_latitude
+
+    @property
+    def intended_longitude(self):
+        """Gets the intended_longitude of this DecisionRequest.  # noqa: E501
+
+
+        :return: The intended_longitude of this DecisionRequest.  # noqa: E501
+        :rtype: str
+        """
+        return self._intended_longitude
+
+    @intended_longitude.setter
+    def intended_longitude(self, intended_longitude):
+        """Sets the intended_longitude of this DecisionRequest.
+
+
+        :param intended_longitude: The intended_longitude of this DecisionRequest.  # noqa: E501
+        :type: str
+        """
+
+        self._intended_longitude = intended_longitude
+
+    @property
+    def include_matched_points(self):
+        """Gets the include_matched_points of this DecisionRequest.  # noqa: E501
+
+
+        :return: The include_matched_points of this DecisionRequest.  # noqa: E501
+        :rtype: bool
+        """
+        return self._include_matched_points
+
+    @include_matched_points.setter
+    def include_matched_points(self, include_matched_points):
+        """Sets the include_matched_points of this DecisionRequest.
+
+
+        :param include_matched_points: The include_matched_points of this DecisionRequest.  # noqa: E501
+        :type: bool
+        """
+
+        self._include_matched_points = include_matched_points
+
+    @property
+    def location(self):
+        """Gets the location of this DecisionRequest.  # noqa: E501
+
+
+        :return: The location of this DecisionRequest.  # noqa: E501
+        :rtype: RequestLocation
+        """
+        return self._location
+
+    @location.setter
+    def location(self, location):
+        """Sets the location of this DecisionRequest.
+
+
+        :param location: The location of this DecisionRequest.  # noqa: E501
+        :type: RequestLocation
+        """
+
+        self._location = location
 
     def to_dict(self):
         """Returns the model properties as a dict"""

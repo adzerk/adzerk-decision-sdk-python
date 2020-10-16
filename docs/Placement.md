@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **proportionality** | **bool** | (BETA) If true, fills ads in a multi-winner placement in proportion to the flight&#39;s goals | [optional] 
 **ecpm_partition** | **str** | (BETA) The name of the eCPM Partition that should be used to source eCPM data for auctions | [optional] 
 **event_multiplier** | **int** |  | [optional] 
+**skip_selection** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

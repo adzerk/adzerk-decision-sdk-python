@@ -49,7 +49,8 @@ class Placement(object):
         'count': 'int',
         'proportionality': 'bool',
         'ecpm_partition': 'str',
-        'event_multiplier': 'int'
+        'event_multiplier': 'int',
+        'skip_selection': 'bool'
     }
 
     attribute_map = {
@@ -69,10 +70,11 @@ class Placement(object):
         'count': 'count',
         'proportionality': 'proportionality',
         'ecpm_partition': 'ecpmPartition',
-        'event_multiplier': 'eventMultiplier'
+        'event_multiplier': 'eventMultiplier',
+        'skip_selection': 'skipSelection'
     }
 
-    def __init__(self, div_name=None, network_id=None, site_id=None, ad_types=None, zone_ids=None, campaign_id=None, flight_id=None, ad_id=None, click_url=None, properties=None, event_ids=None, overrides=None, content_keys=None, count=None, proportionality=None, ecpm_partition=None, event_multiplier=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, div_name=None, network_id=None, site_id=None, ad_types=None, zone_ids=None, campaign_id=None, flight_id=None, ad_id=None, click_url=None, properties=None, event_ids=None, overrides=None, content_keys=None, count=None, proportionality=None, ecpm_partition=None, event_multiplier=None, skip_selection=None, local_vars_configuration=None):  # noqa: E501
         """Placement - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -95,6 +97,7 @@ class Placement(object):
         self._proportionality = None
         self._ecpm_partition = None
         self._event_multiplier = None
+        self._skip_selection = None
         self.discriminator = None
 
         if div_name is not None:
@@ -118,6 +121,7 @@ class Placement(object):
         self.proportionality = proportionality
         self.ecpm_partition = ecpm_partition
         self.event_multiplier = event_multiplier
+        self.skip_selection = skip_selection
 
     @property
     def div_name(self):
@@ -513,6 +517,27 @@ class Placement(object):
             raise ValueError("Invalid value for `event_multiplier`, must be a value greater than or equal to `-100000000`")  # noqa: E501
 
         self._event_multiplier = event_multiplier
+
+    @property
+    def skip_selection(self):
+        """Gets the skip_selection of this Placement.  # noqa: E501
+
+
+        :return: The skip_selection of this Placement.  # noqa: E501
+        :rtype: bool
+        """
+        return self._skip_selection
+
+    @skip_selection.setter
+    def skip_selection(self, skip_selection):
+        """Sets the skip_selection of this Placement.
+
+
+        :param skip_selection: The skip_selection of this Placement.  # noqa: E501
+        :type: bool
+        """
+
+        self._skip_selection = skip_selection
 
     def to_dict(self):
         """Returns the model properties as a dict"""
