@@ -42,6 +42,7 @@ class Decision(object):
         'contents': 'list[Content]',
         'impression_url': 'str',
         'events': 'list[Event]',
+        'matched_points': 'list[MatchedPoint]',
         'pricing': 'PricingData'
     }
 
@@ -55,10 +56,11 @@ class Decision(object):
         'contents': 'contents',
         'impression_url': 'impressionUrl',
         'events': 'events',
+        'matched_points': 'matchedPoints',
         'pricing': 'pricing'
     }
 
-    def __init__(self, ad_id=None, creative_id=None, flight_id=None, campaign_id=None, priority_id=None, click_url=None, contents=None, impression_url=None, events=None, pricing=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, ad_id=None, creative_id=None, flight_id=None, campaign_id=None, priority_id=None, click_url=None, contents=None, impression_url=None, events=None, matched_points=None, pricing=None, local_vars_configuration=None):  # noqa: E501
         """Decision - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -73,6 +75,7 @@ class Decision(object):
         self._contents = None
         self._impression_url = None
         self._events = None
+        self._matched_points = None
         self._pricing = None
         self.discriminator = None
 
@@ -94,6 +97,8 @@ class Decision(object):
             self.impression_url = impression_url
         if events is not None:
             self.events = events
+        if matched_points is not None:
+            self.matched_points = matched_points
         if pricing is not None:
             self.pricing = pricing
 
@@ -285,6 +290,27 @@ class Decision(object):
         """
 
         self._events = events
+
+    @property
+    def matched_points(self):
+        """Gets the matched_points of this Decision.  # noqa: E501
+
+
+        :return: The matched_points of this Decision.  # noqa: E501
+        :rtype: list[MatchedPoint]
+        """
+        return self._matched_points
+
+    @matched_points.setter
+    def matched_points(self, matched_points):
+        """Sets the matched_points of this Decision.
+
+
+        :param matched_points: The matched_points of this Decision.  # noqa: E501
+        :type: list[MatchedPoint]
+        """
+
+        self._matched_points = matched_points
 
     @property
     def pricing(self):

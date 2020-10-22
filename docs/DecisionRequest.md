@@ -21,7 +21,6 @@ Name | Type | Description | Notes
 **intended_latitude** | **str** |  | [optional] 
 **intended_longitude** | **str** |  | [optional] 
 **include_matched_points** | **bool** |  | [optional] 
-**location** | [**RequestLocation**](RequestLocation.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
