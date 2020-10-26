@@ -34,28 +34,28 @@ class MatchedPoint(object):
     """
     openapi_types = {
         'lat': 'str',
-        'long': 'str'
+        'lon': 'str'
     }
 
     attribute_map = {
         'lat': 'lat',
-        'long': 'long'
+        'lon': 'lon'
     }
 
-    def __init__(self, lat=None, long=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, lat=None, lon=None, local_vars_configuration=None):  # noqa: E501
         """MatchedPoint - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
         self._lat = None
-        self._long = None
+        self._lon = None
         self.discriminator = None
 
         if lat is not None:
             self.lat = lat
-        if long is not None:
-            self.long = long
+        if lon is not None:
+            self.lon = lon
 
     @property
     def lat(self):
@@ -79,25 +79,25 @@ class MatchedPoint(object):
         self._lat = lat
 
     @property
-    def long(self):
-        """Gets the long of this MatchedPoint.  # noqa: E501
+    def lon(self):
+        """Gets the lon of this MatchedPoint.  # noqa: E501
 
 
-        :return: The long of this MatchedPoint.  # noqa: E501
+        :return: The lon of this MatchedPoint.  # noqa: E501
         :rtype: str
         """
-        return self._long
+        return self._lon
 
-    @long.setter
-    def long(self, long):
-        """Sets the long of this MatchedPoint.
+    @lon.setter
+    def lon(self, lon):
+        """Sets the lon of this MatchedPoint.
 
 
-        :param long: The long of this MatchedPoint.  # noqa: E501
+        :param lon: The lon of this MatchedPoint.  # noqa: E501
         :type: str
         """
 
-        self._long = long
+        self._lon = lon
 
     def to_dict(self):
         """Returns the model properties as a dict"""
