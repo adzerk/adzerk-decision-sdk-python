@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **contents** | [**list[Content]**](Content.md) |  | [optional] 
 **impression_url** | **str** |  | [optional] 
 **events** | [**list[Event]**](Event.md) |  | [optional] 
+**matched_points** | [**list[MatchedPoint]**](MatchedPoint.md) |  | [optional] 
 **pricing** | [**PricingData**](PricingData.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

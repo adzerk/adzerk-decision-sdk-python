@@ -36,7 +36,7 @@ class Content(object):
         'type': 'str',
         'template': 'str',
         'custom_template': 'str',
-        'data': 'DecisionData',
+        'data': 'object',
         'body': 'str'
     }
 
@@ -141,7 +141,7 @@ class Content(object):
 
 
         :return: The data of this Content.  # noqa: E501
-        :rtype: DecisionData
+        :rtype: object
         """
         return self._data
 
@@ -151,7 +151,7 @@ class Content(object):
 
 
         :param data: The data of this Content.  # noqa: E501
-        :type: DecisionData
+        :type: object
         """
 
         self._data = data
