@@ -27,6 +27,7 @@ except DistributionNotFound:
 else:
     __version__ = _dist.version
 
+deprecated_placement_fields = [['ecpm_partition', 'ecpm_partitions']]
 
 class Client(object):
     class _DecisionClient(object):
@@ -62,6 +63,10 @@ class Client(object):
                         placement['adTypes'] is None or
                         len(placement['adTypes']) == 0):
                     raise ApiValueError("Each placement must have at least one ad type")
+
+                for [deprecated_field, replacement] in deprecated_placement_fields:
+                    if deprecated_field in placement and placement[deprecated_field] is not None:
+                        self.__logger.warning(f"DEPRECATION WARNING: {deprecated_field} has been deprecated. Please use {replacement} instead.")
 
                 if 'networkId' not in placement:
                     placement['networkId'] = self.network_id
