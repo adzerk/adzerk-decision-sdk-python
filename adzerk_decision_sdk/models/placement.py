@@ -49,8 +49,10 @@ class Placement(object):
         'count': 'int',
         'proportionality': 'bool',
         'ecpm_partition': 'str',
+        'ecpm_partitions': 'list[str]',
         'event_multiplier': 'int',
-        'skip_selection': 'bool'
+        'skip_selection': 'bool',
+        'ad_query': 'object'
     }
 
     attribute_map = {
@@ -70,11 +72,13 @@ class Placement(object):
         'count': 'count',
         'proportionality': 'proportionality',
         'ecpm_partition': 'ecpmPartition',
+        'ecpm_partitions': 'ecpmPartitions',
         'event_multiplier': 'eventMultiplier',
-        'skip_selection': 'skipSelection'
+        'skip_selection': 'skipSelection',
+        'ad_query': 'adQuery'
     }
 
-    def __init__(self, div_name=None, network_id=None, site_id=None, ad_types=None, zone_ids=None, campaign_id=None, flight_id=None, ad_id=None, click_url=None, properties=None, event_ids=None, overrides=None, content_keys=None, count=None, proportionality=None, ecpm_partition=None, event_multiplier=None, skip_selection=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, div_name=None, network_id=None, site_id=None, ad_types=None, zone_ids=None, campaign_id=None, flight_id=None, ad_id=None, click_url=None, properties=None, event_ids=None, overrides=None, content_keys=None, count=None, proportionality=None, ecpm_partition=None, ecpm_partitions=None, event_multiplier=None, skip_selection=None, ad_query=None, local_vars_configuration=None):  # noqa: E501
         """Placement - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -96,8 +100,10 @@ class Placement(object):
         self._count = None
         self._proportionality = None
         self._ecpm_partition = None
+        self._ecpm_partitions = None
         self._event_multiplier = None
         self._skip_selection = None
+        self._ad_query = None
         self.discriminator = None
 
         if div_name is not None:
@@ -120,8 +126,10 @@ class Placement(object):
         self.count = count
         self.proportionality = proportionality
         self.ecpm_partition = ecpm_partition
+        self.ecpm_partitions = ecpm_partitions
         self.event_multiplier = event_multiplier
         self.skip_selection = skip_selection
+        self.ad_query = ad_query
 
     @property
     def div_name(self):
@@ -492,6 +500,29 @@ class Placement(object):
         self._ecpm_partition = ecpm_partition
 
     @property
+    def ecpm_partitions(self):
+        """Gets the ecpm_partitions of this Placement.  # noqa: E501
+
+        (BETA) The names of the eCPM Partitions that should be used to source eCPM data for auctions  # noqa: E501
+
+        :return: The ecpm_partitions of this Placement.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._ecpm_partitions
+
+    @ecpm_partitions.setter
+    def ecpm_partitions(self, ecpm_partitions):
+        """Sets the ecpm_partitions of this Placement.
+
+        (BETA) The names of the eCPM Partitions that should be used to source eCPM data for auctions  # noqa: E501
+
+        :param ecpm_partitions: The ecpm_partitions of this Placement.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._ecpm_partitions = ecpm_partitions
+
+    @property
     def event_multiplier(self):
         """Gets the event_multiplier of this Placement.  # noqa: E501
 
@@ -538,6 +569,27 @@ class Placement(object):
         """
 
         self._skip_selection = skip_selection
+
+    @property
+    def ad_query(self):
+        """Gets the ad_query of this Placement.  # noqa: E501
+
+
+        :return: The ad_query of this Placement.  # noqa: E501
+        :rtype: object
+        """
+        return self._ad_query
+
+    @ad_query.setter
+    def ad_query(self, ad_query):
+        """Sets the ad_query of this Placement.
+
+
+        :param ad_query: The ad_query of this Placement.  # noqa: E501
+        :type: object
+        """
+
+        self._ad_query = ad_query
 
     def to_dict(self):
         """Returns the model properties as a dict"""
