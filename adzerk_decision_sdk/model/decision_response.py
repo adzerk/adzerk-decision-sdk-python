@@ -77,7 +77,7 @@ class DecisionResponse(ModelNormal):
         """
         lazy_import()
         return {
-            'user': (User,),  # noqa: E501
+            'user': (User,),  # noqa: E501,F821
             'decisions': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),  # noqa: E501
             'explain': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),  # noqa: E501
         }
