@@ -79,8 +79,8 @@ class DecisionRequest(ModelNormal):
         """
         lazy_import()
         return {
-            'placements': ([Placement],),  # noqa: E501
-            'user': (User,),  # noqa: E501
+            'placements': ([Placement],),  # noqa: E501,F821
+            'user': (User,),  # noqa: E501,F821
             'keywords': ([str], none_type,),  # noqa: E501
             'url': (str, none_type,),  # noqa: E501
             'referrer': (str, none_type,),  # noqa: E501

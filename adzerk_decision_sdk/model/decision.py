@@ -89,11 +89,11 @@ class Decision(ModelNormal):
             'campaign_id': (int,),  # noqa: E501
             'priority_id': (int,),  # noqa: E501
             'click_url': (str,),  # noqa: E501
-            'contents': ([Content],),  # noqa: E501
+            'contents': ([Content],),  # noqa: E501,F821
             'impression_url': (str,),  # noqa: E501
-            'events': ([Event],),  # noqa: E501
-            'matched_points': ([MatchedPoint],),  # noqa: E501
-            'pricing': (PricingData,),  # noqa: E501
+            'events': ([Event],),  # noqa: E501,F821
+            'matched_points': ([MatchedPoint],),  # noqa: E501,F821
+            'pricing': (PricingData,),  # noqa: E501,F821
         }
 
     @cached_property
