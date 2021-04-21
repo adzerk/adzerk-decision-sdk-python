@@ -71,6 +71,7 @@ with adzerk_decision_sdk.ApiClient(configuration) as api_client:
         print("Exception when calling UserdbApi->add_custom_properties: %s\n" % e)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -91,6 +92,7 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: image/gif
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -136,6 +138,7 @@ with adzerk_decision_sdk.ApiClient() as api_client:
         print("Exception when calling UserdbApi->add_interests: %s\n" % e)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -156,6 +159,7 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: image/gif
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -202,6 +206,7 @@ with adzerk_decision_sdk.ApiClient() as api_client:
         print("Exception when calling UserdbApi->add_retargeting_segment: %s\n" % e)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -223,6 +228,7 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: image/gif
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -277,6 +283,7 @@ with adzerk_decision_sdk.ApiClient(configuration) as api_client:
         print("Exception when calling UserdbApi->forget: %s\n" % e)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -296,6 +303,7 @@ void (empty response body)
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -363,6 +371,7 @@ with adzerk_decision_sdk.ApiClient(configuration) as api_client:
         print("Exception when calling UserdbApi->gdpr_consent: %s\n" % e)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -382,6 +391,7 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: image/gif
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -427,6 +437,7 @@ with adzerk_decision_sdk.ApiClient() as api_client:
         print("Exception when calling UserdbApi->ip_override: %s\n" % e)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -447,6 +458,7 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: image/gif
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -493,6 +505,7 @@ with adzerk_decision_sdk.ApiClient() as api_client:
         print("Exception when calling UserdbApi->match_user: %s\n" % e)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -514,6 +527,7 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: image/gif
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -558,6 +572,7 @@ with adzerk_decision_sdk.ApiClient() as api_client:
         print("Exception when calling UserdbApi->opt_out: %s\n" % e)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -577,6 +592,7 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: image/gif
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -621,6 +637,7 @@ with adzerk_decision_sdk.ApiClient() as api_client:
         print("Exception when calling UserdbApi->read: %s\n" % e)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -640,6 +657,7 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
