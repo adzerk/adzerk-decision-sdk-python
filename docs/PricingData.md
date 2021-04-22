@@ -1,6 +1,5 @@
 # PricingData
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
