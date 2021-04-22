@@ -10,7 +10,7 @@ from adzerk_decision_sdk.api_client import ApiClient
 from adzerk_decision_sdk.configuration import Configuration
 from adzerk_decision_sdk.api.decision_api import DecisionApi
 from adzerk_decision_sdk.api.userdb_api import UserdbApi
-from adzerk_decision_sdk.model.decision import Decision
+from adzerk_decision_sdk.models import Decision
 from adzerk_decision_sdk.exceptions import ApiValueError
 
 # https://stackoverflow.com/questions/17583443/what-is-the-correct-way-to-share-package-version-with-setup-py-and-the-package/17626524#17626524
