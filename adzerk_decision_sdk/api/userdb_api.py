@@ -1,3 +1,5 @@
+# coding: utf-8
+
 """
     Adzerk Decision API
 
@@ -8,20 +10,18 @@
 """
 
 
-import re  # noqa: F401
-import sys  # noqa: F401
+from __future__ import absolute_import
 
-from adzerk_decision_sdk.api_client import ApiClient, Endpoint as _Endpoint
-from adzerk_decision_sdk.model_utils import (  # noqa: F401
-    check_allowed_values,
-    check_validations,
-    date,
-    datetime,
-    file_type,
-    none_type,
-    validate_and_convert_types
+import re  # noqa: F401
+
+# python 2 and python 3 compatibility library
+import six
+
+from adzerk_decision_sdk.api_client import ApiClient
+from adzerk_decision_sdk.exceptions import (  # noqa: F401
+    ApiTypeError,
+    ApiValueError
 )
-from adzerk_decision_sdk.model.consent_request import ConsentRequest
 
 
 class UserdbApi(object):
@@ -36,1213 +36,1168 @@ class UserdbApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-        def __add_custom_properties(
-            self,
-            network_id,
-            user_key,
-            **kwargs
-        ):
-            """add_custom_properties  # noqa: E501
+    def add_custom_properties(self, network_id, user_key, **kwargs):  # noqa: E501
+        """add_custom_properties  # noqa: E501
 
-            Add Custom Properties to a User  # noqa: E501
-            This method makes a synchronous HTTP request by default. To make an
-            asynchronous HTTP request, please pass async_req=True
+        Add Custom Properties to a User  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.add_custom_properties(network_id, user_key, async_req=True)
+        >>> result = thread.get()
 
-            >>> thread = api.add_custom_properties(network_id, user_key, async_req=True)
-            >>> result = thread.get()
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param object body:
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: file
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.add_custom_properties_with_http_info(network_id, user_key, **kwargs)  # noqa: E501
 
-            Args:
-                network_id (int): Your Network Id
-                user_key (str): The User's UserDB Key
+    def add_custom_properties_with_http_info(self, network_id, user_key, **kwargs):  # noqa: E501
+        """add_custom_properties  # noqa: E501
 
-            Keyword Args:
-                body ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): [optional]
-                _return_http_data_only (bool): response data without head status
-                    code and headers. Default is True.
-                _preload_content (bool): if False, the urllib3.HTTPResponse object
-                    will be returned without reading/decoding response data.
-                    Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
-                    be a pair (tuple) of (connection, read) timeouts.
-                    Default is None.
-                _check_input_type (bool): specifies if type checking
-                    should be done one the data sent to the server.
-                    Default is True.
-                _check_return_type (bool): specifies if type checking
-                    should be done one the data received from the server.
-                    Default is True.
-                _host_index (int/None): specifies the index of the server
-                    that we want to use.
-                    Default is read from the configuration.
-                async_req (bool): execute request asynchronously
+        Add Custom Properties to a User  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.add_custom_properties_with_http_info(network_id, user_key, async_req=True)
+        >>> result = thread.get()
 
-            Returns:
-                file_type
-                    If the method is called asynchronously, returns the request
-                    thread.
-            """
-            kwargs['async_req'] = kwargs.get(
-                'async_req', False
-            )
-            kwargs['_return_http_data_only'] = kwargs.get(
-                '_return_http_data_only', True
-            )
-            kwargs['_preload_content'] = kwargs.get(
-                '_preload_content', True
-            )
-            kwargs['_request_timeout'] = kwargs.get(
-                '_request_timeout', None
-            )
-            kwargs['_check_input_type'] = kwargs.get(
-                '_check_input_type', True
-            )
-            kwargs['_check_return_type'] = kwargs.get(
-                '_check_return_type', True
-            )
-            kwargs['_host_index'] = kwargs.get('_host_index')
-            kwargs['network_id'] = \
-                network_id
-            kwargs['user_key'] = \
-                user_key
-            return self.call_with_http_info(**kwargs)
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param object body:
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(file, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
 
-        self.add_custom_properties = _Endpoint(
-            settings={
-                'response_type': (file_type,),
-                'auth': [
-                    'ApiKeyAuth'
-                ],
-                'endpoint_path': '/udb/{networkId}/custom',
-                'operation_id': 'add_custom_properties',
-                'http_method': 'POST',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'network_id',
-                    'user_key',
-                    'body',
-                ],
-                'required': [
-                    'network_id',
-                    'user_key',
-                ],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'network_id':
-                        (int,),
-                    'user_key':
-                        (str,),
-                    'body':
-                        ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),
-                },
-                'attribute_map': {
-                    'network_id': 'networkId',
-                    'user_key': 'userKey',
-                },
-                'location_map': {
-                    'network_id': 'path',
-                    'user_key': 'query',
-                    'body': 'body',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'image/gif'
-                ],
-                'content_type': [
-                    'application/json'
-                ]
-            },
-            api_client=api_client,
-            callable=__add_custom_properties
+        local_var_params = locals()
+
+        all_params = [
+            'network_id',
+            'user_key',
+            'body'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
         )
 
-        def __add_interests(
-            self,
-            network_id,
-            user_key,
-            interest,
-            **kwargs
-        ):
-            """add_interests  # noqa: E501
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method add_custom_properties" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'network_id' is set
+        if self.api_client.client_side_validation and ('network_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['network_id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `network_id` when calling `add_custom_properties`")  # noqa: E501
+        # verify the required parameter 'user_key' is set
+        if self.api_client.client_side_validation and ('user_key' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_key'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `user_key` when calling `add_custom_properties`")  # noqa: E501
 
-            Add Interests to a User  # noqa: E501
-            This method makes a synchronous HTTP request by default. To make an
-            asynchronous HTTP request, please pass async_req=True
+        collection_formats = {}
 
-            >>> thread = api.add_interests(network_id, user_key, interest, async_req=True)
-            >>> result = thread.get()
+        path_params = {}
+        if 'network_id' in local_var_params:
+            path_params['networkId'] = local_var_params['network_id']  # noqa: E501
 
-            Args:
-                network_id (int): Your Network Id
-                user_key (str): The User's UserDB Key
-                interest (str): Comma Seperated list of interests
+        query_params = []
+        if 'user_key' in local_var_params and local_var_params['user_key'] is not None:  # noqa: E501
+            query_params.append(('userKey', local_var_params['user_key']))  # noqa: E501
 
-            Keyword Args:
-                _return_http_data_only (bool): response data without head status
-                    code and headers. Default is True.
-                _preload_content (bool): if False, the urllib3.HTTPResponse object
-                    will be returned without reading/decoding response data.
-                    Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
-                    be a pair (tuple) of (connection, read) timeouts.
-                    Default is None.
-                _check_input_type (bool): specifies if type checking
-                    should be done one the data sent to the server.
-                    Default is True.
-                _check_return_type (bool): specifies if type checking
-                    should be done one the data received from the server.
-                    Default is True.
-                _host_index (int/None): specifies the index of the server
-                    that we want to use.
-                    Default is read from the configuration.
-                async_req (bool): execute request asynchronously
+        header_params = {}
 
-            Returns:
-                file_type
-                    If the method is called asynchronously, returns the request
-                    thread.
-            """
-            kwargs['async_req'] = kwargs.get(
-                'async_req', False
-            )
-            kwargs['_return_http_data_only'] = kwargs.get(
-                '_return_http_data_only', True
-            )
-            kwargs['_preload_content'] = kwargs.get(
-                '_preload_content', True
-            )
-            kwargs['_request_timeout'] = kwargs.get(
-                '_request_timeout', None
-            )
-            kwargs['_check_input_type'] = kwargs.get(
-                '_check_input_type', True
-            )
-            kwargs['_check_return_type'] = kwargs.get(
-                '_check_return_type', True
-            )
-            kwargs['_host_index'] = kwargs.get('_host_index')
-            kwargs['network_id'] = \
-                network_id
-            kwargs['user_key'] = \
-                user_key
-            kwargs['interest'] = \
-                interest
-            return self.call_with_http_info(**kwargs)
+        form_params = []
+        local_var_files = {}
 
-        self.add_interests = _Endpoint(
-            settings={
-                'response_type': (file_type,),
-                'auth': [],
-                'endpoint_path': '/udb/{networkId}/interest/i.gif',
-                'operation_id': 'add_interests',
-                'http_method': 'GET',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'network_id',
-                    'user_key',
-                    'interest',
-                ],
-                'required': [
-                    'network_id',
-                    'user_key',
-                    'interest',
-                ],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'network_id':
-                        (int,),
-                    'user_key':
-                        (str,),
-                    'interest':
-                        (str,),
-                },
-                'attribute_map': {
-                    'network_id': 'networkId',
-                    'user_key': 'userKey',
-                    'interest': 'interest',
-                },
-                'location_map': {
-                    'network_id': 'path',
-                    'user_key': 'query',
-                    'interest': 'query',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'image/gif'
-                ],
-                'content_type': [],
-            },
-            api_client=api_client,
-            callable=__add_interests
+        body_params = None
+        if 'body' in local_var_params:
+            body_params = local_var_params['body']
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['image/gif'])  # noqa: E501
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['ApiKeyAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/udb/{networkId}/custom', 'POST',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='file',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def add_interests(self, network_id, user_key, interest, **kwargs):  # noqa: E501
+        """add_interests  # noqa: E501
+
+        Add Interests to a User  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.add_interests(network_id, user_key, interest, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param str interest: Comma Seperated list of interests (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: file
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.add_interests_with_http_info(network_id, user_key, interest, **kwargs)  # noqa: E501
+
+    def add_interests_with_http_info(self, network_id, user_key, interest, **kwargs):  # noqa: E501
+        """add_interests  # noqa: E501
+
+        Add Interests to a User  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.add_interests_with_http_info(network_id, user_key, interest, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param str interest: Comma Seperated list of interests (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(file, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'network_id',
+            'user_key',
+            'interest'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
         )
 
-        def __add_retargeting_segment(
-            self,
-            network_id,
-            advertiser_id,
-            retargeting_segment_id,
-            user_key,
-            **kwargs
-        ):
-            """add_retargeting_segment  # noqa: E501
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method add_interests" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'network_id' is set
+        if self.api_client.client_side_validation and ('network_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['network_id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `network_id` when calling `add_interests`")  # noqa: E501
+        # verify the required parameter 'user_key' is set
+        if self.api_client.client_side_validation and ('user_key' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_key'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `user_key` when calling `add_interests`")  # noqa: E501
+        # verify the required parameter 'interest' is set
+        if self.api_client.client_side_validation and ('interest' not in local_var_params or  # noqa: E501
+                                                        local_var_params['interest'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `interest` when calling `add_interests`")  # noqa: E501
 
-            Add User to a Retargeting Segment  # noqa: E501
-            This method makes a synchronous HTTP request by default. To make an
-            asynchronous HTTP request, please pass async_req=True
+        collection_formats = {}
 
-            >>> thread = api.add_retargeting_segment(network_id, advertiser_id, retargeting_segment_id, user_key, async_req=True)
-            >>> result = thread.get()
+        path_params = {}
+        if 'network_id' in local_var_params:
+            path_params['networkId'] = local_var_params['network_id']  # noqa: E501
 
-            Args:
-                network_id (int): Your Network Id
-                advertiser_id (int): The Advertiser's ID
-                retargeting_segment_id (int): The Segment's ID
-                user_key (str): The User's UserDB Key
+        query_params = []
+        if 'user_key' in local_var_params and local_var_params['user_key'] is not None:  # noqa: E501
+            query_params.append(('userKey', local_var_params['user_key']))  # noqa: E501
+        if 'interest' in local_var_params and local_var_params['interest'] is not None:  # noqa: E501
+            query_params.append(('interest', local_var_params['interest']))  # noqa: E501
 
-            Keyword Args:
-                _return_http_data_only (bool): response data without head status
-                    code and headers. Default is True.
-                _preload_content (bool): if False, the urllib3.HTTPResponse object
-                    will be returned without reading/decoding response data.
-                    Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
-                    be a pair (tuple) of (connection, read) timeouts.
-                    Default is None.
-                _check_input_type (bool): specifies if type checking
-                    should be done one the data sent to the server.
-                    Default is True.
-                _check_return_type (bool): specifies if type checking
-                    should be done one the data received from the server.
-                    Default is True.
-                _host_index (int/None): specifies the index of the server
-                    that we want to use.
-                    Default is read from the configuration.
-                async_req (bool): execute request asynchronously
+        header_params = {}
 
-            Returns:
-                file_type
-                    If the method is called asynchronously, returns the request
-                    thread.
-            """
-            kwargs['async_req'] = kwargs.get(
-                'async_req', False
-            )
-            kwargs['_return_http_data_only'] = kwargs.get(
-                '_return_http_data_only', True
-            )
-            kwargs['_preload_content'] = kwargs.get(
-                '_preload_content', True
-            )
-            kwargs['_request_timeout'] = kwargs.get(
-                '_request_timeout', None
-            )
-            kwargs['_check_input_type'] = kwargs.get(
-                '_check_input_type', True
-            )
-            kwargs['_check_return_type'] = kwargs.get(
-                '_check_return_type', True
-            )
-            kwargs['_host_index'] = kwargs.get('_host_index')
-            kwargs['network_id'] = \
-                network_id
-            kwargs['advertiser_id'] = \
-                advertiser_id
-            kwargs['retargeting_segment_id'] = \
-                retargeting_segment_id
-            kwargs['user_key'] = \
-                user_key
-            return self.call_with_http_info(**kwargs)
+        form_params = []
+        local_var_files = {}
 
-        self.add_retargeting_segment = _Endpoint(
-            settings={
-                'response_type': (file_type,),
-                'auth': [],
-                'endpoint_path': '/udb/{networkId}/rt/{advertiserId}/{retargetingSegmentId}/i.gif',
-                'operation_id': 'add_retargeting_segment',
-                'http_method': 'GET',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'network_id',
-                    'advertiser_id',
-                    'retargeting_segment_id',
-                    'user_key',
-                ],
-                'required': [
-                    'network_id',
-                    'advertiser_id',
-                    'retargeting_segment_id',
-                    'user_key',
-                ],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'network_id':
-                        (int,),
-                    'advertiser_id':
-                        (int,),
-                    'retargeting_segment_id':
-                        (int,),
-                    'user_key':
-                        (str,),
-                },
-                'attribute_map': {
-                    'network_id': 'networkId',
-                    'advertiser_id': 'advertiserId',
-                    'retargeting_segment_id': 'retargetingSegmentId',
-                    'user_key': 'userKey',
-                },
-                'location_map': {
-                    'network_id': 'path',
-                    'advertiser_id': 'path',
-                    'retargeting_segment_id': 'path',
-                    'user_key': 'query',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'image/gif'
-                ],
-                'content_type': [],
-            },
-            api_client=api_client,
-            callable=__add_retargeting_segment
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['image/gif'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = []  # noqa: E501
+
+        return self.api_client.call_api(
+            '/udb/{networkId}/interest/i.gif', 'GET',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='file',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def add_retargeting_segment(self, network_id, advertiser_id, retargeting_segment_id, user_key, **kwargs):  # noqa: E501
+        """add_retargeting_segment  # noqa: E501
+
+        Add User to a Retargeting Segment  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.add_retargeting_segment(network_id, advertiser_id, retargeting_segment_id, user_key, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param int advertiser_id: The Advertiser's ID (required)
+        :param int retargeting_segment_id: The Segment's ID (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: file
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.add_retargeting_segment_with_http_info(network_id, advertiser_id, retargeting_segment_id, user_key, **kwargs)  # noqa: E501
+
+    def add_retargeting_segment_with_http_info(self, network_id, advertiser_id, retargeting_segment_id, user_key, **kwargs):  # noqa: E501
+        """add_retargeting_segment  # noqa: E501
+
+        Add User to a Retargeting Segment  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.add_retargeting_segment_with_http_info(network_id, advertiser_id, retargeting_segment_id, user_key, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param int advertiser_id: The Advertiser's ID (required)
+        :param int retargeting_segment_id: The Segment's ID (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(file, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'network_id',
+            'advertiser_id',
+            'retargeting_segment_id',
+            'user_key'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
         )
 
-        def __forget(
-            self,
-            network_id,
-            user_key,
-            **kwargs
-        ):
-            """forget  # noqa: E501
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method add_retargeting_segment" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'network_id' is set
+        if self.api_client.client_side_validation and ('network_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['network_id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `network_id` when calling `add_retargeting_segment`")  # noqa: E501
+        # verify the required parameter 'advertiser_id' is set
+        if self.api_client.client_side_validation and ('advertiser_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['advertiser_id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `advertiser_id` when calling `add_retargeting_segment`")  # noqa: E501
+        # verify the required parameter 'retargeting_segment_id' is set
+        if self.api_client.client_side_validation and ('retargeting_segment_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['retargeting_segment_id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `retargeting_segment_id` when calling `add_retargeting_segment`")  # noqa: E501
+        # verify the required parameter 'user_key' is set
+        if self.api_client.client_side_validation and ('user_key' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_key'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `user_key` when calling `add_retargeting_segment`")  # noqa: E501
 
-            Forget User  # noqa: E501
-            This method makes a synchronous HTTP request by default. To make an
-            asynchronous HTTP request, please pass async_req=True
+        collection_formats = {}
 
-            >>> thread = api.forget(network_id, user_key, async_req=True)
-            >>> result = thread.get()
+        path_params = {}
+        if 'network_id' in local_var_params:
+            path_params['networkId'] = local_var_params['network_id']  # noqa: E501
+        if 'advertiser_id' in local_var_params:
+            path_params['advertiserId'] = local_var_params['advertiser_id']  # noqa: E501
+        if 'retargeting_segment_id' in local_var_params:
+            path_params['retargetingSegmentId'] = local_var_params['retargeting_segment_id']  # noqa: E501
 
-            Args:
-                network_id (int): Your Network Id
-                user_key (str): The User's UserDB Key
+        query_params = []
+        if 'user_key' in local_var_params and local_var_params['user_key'] is not None:  # noqa: E501
+            query_params.append(('userKey', local_var_params['user_key']))  # noqa: E501
 
-            Keyword Args:
-                _return_http_data_only (bool): response data without head status
-                    code and headers. Default is True.
-                _preload_content (bool): if False, the urllib3.HTTPResponse object
-                    will be returned without reading/decoding response data.
-                    Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
-                    be a pair (tuple) of (connection, read) timeouts.
-                    Default is None.
-                _check_input_type (bool): specifies if type checking
-                    should be done one the data sent to the server.
-                    Default is True.
-                _check_return_type (bool): specifies if type checking
-                    should be done one the data received from the server.
-                    Default is True.
-                _host_index (int/None): specifies the index of the server
-                    that we want to use.
-                    Default is read from the configuration.
-                async_req (bool): execute request asynchronously
+        header_params = {}
 
-            Returns:
-                None
-                    If the method is called asynchronously, returns the request
-                    thread.
-            """
-            kwargs['async_req'] = kwargs.get(
-                'async_req', False
-            )
-            kwargs['_return_http_data_only'] = kwargs.get(
-                '_return_http_data_only', True
-            )
-            kwargs['_preload_content'] = kwargs.get(
-                '_preload_content', True
-            )
-            kwargs['_request_timeout'] = kwargs.get(
-                '_request_timeout', None
-            )
-            kwargs['_check_input_type'] = kwargs.get(
-                '_check_input_type', True
-            )
-            kwargs['_check_return_type'] = kwargs.get(
-                '_check_return_type', True
-            )
-            kwargs['_host_index'] = kwargs.get('_host_index')
-            kwargs['network_id'] = \
-                network_id
-            kwargs['user_key'] = \
-                user_key
-            return self.call_with_http_info(**kwargs)
+        form_params = []
+        local_var_files = {}
 
-        self.forget = _Endpoint(
-            settings={
-                'response_type': None,
-                'auth': [
-                    'ApiKeyAuth'
-                ],
-                'endpoint_path': '/udb/{networkId}',
-                'operation_id': 'forget',
-                'http_method': 'DELETE',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'network_id',
-                    'user_key',
-                ],
-                'required': [
-                    'network_id',
-                    'user_key',
-                ],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'network_id':
-                        (int,),
-                    'user_key':
-                        (str,),
-                },
-                'attribute_map': {
-                    'network_id': 'networkId',
-                    'user_key': 'userKey',
-                },
-                'location_map': {
-                    'network_id': 'path',
-                    'user_key': 'query',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [],
-                'content_type': [],
-            },
-            api_client=api_client,
-            callable=__forget
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['image/gif'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = []  # noqa: E501
+
+        return self.api_client.call_api(
+            '/udb/{networkId}/rt/{advertiserId}/{retargetingSegmentId}/i.gif', 'GET',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='file',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def forget(self, network_id, user_key, **kwargs):  # noqa: E501
+        """forget  # noqa: E501
+
+        Forget User  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.forget(network_id, user_key, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.forget_with_http_info(network_id, user_key, **kwargs)  # noqa: E501
+
+    def forget_with_http_info(self, network_id, user_key, **kwargs):  # noqa: E501
+        """forget  # noqa: E501
+
+        Forget User  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.forget_with_http_info(network_id, user_key, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'network_id',
+            'user_key'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
         )
 
-        def __gdpr_consent(
-            self,
-            network_id,
-            **kwargs
-        ):
-            """gdpr_consent  # noqa: E501
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method forget" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'network_id' is set
+        if self.api_client.client_side_validation and ('network_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['network_id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `network_id` when calling `forget`")  # noqa: E501
+        # verify the required parameter 'user_key' is set
+        if self.api_client.client_side_validation and ('user_key' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_key'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `user_key` when calling `forget`")  # noqa: E501
 
-            GDPR Consent  # noqa: E501
-            This method makes a synchronous HTTP request by default. To make an
-            asynchronous HTTP request, please pass async_req=True
+        collection_formats = {}
 
-            >>> thread = api.gdpr_consent(network_id, async_req=True)
-            >>> result = thread.get()
+        path_params = {}
+        if 'network_id' in local_var_params:
+            path_params['networkId'] = local_var_params['network_id']  # noqa: E501
 
-            Args:
-                network_id (int): Your Network Id
+        query_params = []
+        if 'user_key' in local_var_params and local_var_params['user_key'] is not None:  # noqa: E501
+            query_params.append(('userKey', local_var_params['user_key']))  # noqa: E501
 
-            Keyword Args:
-                consent_request (ConsentRequest): [optional]
-                _return_http_data_only (bool): response data without head status
-                    code and headers. Default is True.
-                _preload_content (bool): if False, the urllib3.HTTPResponse object
-                    will be returned without reading/decoding response data.
-                    Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
-                    be a pair (tuple) of (connection, read) timeouts.
-                    Default is None.
-                _check_input_type (bool): specifies if type checking
-                    should be done one the data sent to the server.
-                    Default is True.
-                _check_return_type (bool): specifies if type checking
-                    should be done one the data received from the server.
-                    Default is True.
-                _host_index (int/None): specifies the index of the server
-                    that we want to use.
-                    Default is read from the configuration.
-                async_req (bool): execute request asynchronously
+        header_params = {}
 
-            Returns:
-                file_type
-                    If the method is called asynchronously, returns the request
-                    thread.
-            """
-            kwargs['async_req'] = kwargs.get(
-                'async_req', False
-            )
-            kwargs['_return_http_data_only'] = kwargs.get(
-                '_return_http_data_only', True
-            )
-            kwargs['_preload_content'] = kwargs.get(
-                '_preload_content', True
-            )
-            kwargs['_request_timeout'] = kwargs.get(
-                '_request_timeout', None
-            )
-            kwargs['_check_input_type'] = kwargs.get(
-                '_check_input_type', True
-            )
-            kwargs['_check_return_type'] = kwargs.get(
-                '_check_return_type', True
-            )
-            kwargs['_host_index'] = kwargs.get('_host_index')
-            kwargs['network_id'] = \
-                network_id
-            return self.call_with_http_info(**kwargs)
+        form_params = []
+        local_var_files = {}
 
-        self.gdpr_consent = _Endpoint(
-            settings={
-                'response_type': (file_type,),
-                'auth': [
-                    'ApiKeyAuth'
-                ],
-                'endpoint_path': '/udb/{networkId}/consent',
-                'operation_id': 'gdpr_consent',
-                'http_method': 'POST',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'network_id',
-                    'consent_request',
-                ],
-                'required': [
-                    'network_id',
-                ],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'network_id':
-                        (int,),
-                    'consent_request':
-                        (ConsentRequest,),
-                },
-                'attribute_map': {
-                    'network_id': 'networkId',
-                },
-                'location_map': {
-                    'network_id': 'path',
-                    'consent_request': 'body',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'image/gif'
-                ],
-                'content_type': [
-                    'application/json'
-                ]
-            },
-            api_client=api_client,
-            callable=__gdpr_consent
+        body_params = None
+        # Authentication setting
+        auth_settings = ['ApiKeyAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/udb/{networkId}', 'DELETE',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type=None,  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def gdpr_consent(self, network_id, **kwargs):  # noqa: E501
+        """gdpr_consent  # noqa: E501
+
+        GDPR Consent  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.gdpr_consent(network_id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param ConsentRequest consent_request:
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: file
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.gdpr_consent_with_http_info(network_id, **kwargs)  # noqa: E501
+
+    def gdpr_consent_with_http_info(self, network_id, **kwargs):  # noqa: E501
+        """gdpr_consent  # noqa: E501
+
+        GDPR Consent  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.gdpr_consent_with_http_info(network_id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param ConsentRequest consent_request:
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(file, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'network_id',
+            'consent_request'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
         )
 
-        def __ip_override(
-            self,
-            network_id,
-            user_key,
-            ip,
-            **kwargs
-        ):
-            """ip_override  # noqa: E501
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method gdpr_consent" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'network_id' is set
+        if self.api_client.client_side_validation and ('network_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['network_id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `network_id` when calling `gdpr_consent`")  # noqa: E501
 
-            IP Address Override  # noqa: E501
-            This method makes a synchronous HTTP request by default. To make an
-            asynchronous HTTP request, please pass async_req=True
+        collection_formats = {}
 
-            >>> thread = api.ip_override(network_id, user_key, ip, async_req=True)
-            >>> result = thread.get()
+        path_params = {}
+        if 'network_id' in local_var_params:
+            path_params['networkId'] = local_var_params['network_id']  # noqa: E501
 
-            Args:
-                network_id (int): Your Network Id
-                user_key (str): The User's UserDB Key
-                ip (str): This is the IP to exclude
+        query_params = []
 
-            Keyword Args:
-                _return_http_data_only (bool): response data without head status
-                    code and headers. Default is True.
-                _preload_content (bool): if False, the urllib3.HTTPResponse object
-                    will be returned without reading/decoding response data.
-                    Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
-                    be a pair (tuple) of (connection, read) timeouts.
-                    Default is None.
-                _check_input_type (bool): specifies if type checking
-                    should be done one the data sent to the server.
-                    Default is True.
-                _check_return_type (bool): specifies if type checking
-                    should be done one the data received from the server.
-                    Default is True.
-                _host_index (int/None): specifies the index of the server
-                    that we want to use.
-                    Default is read from the configuration.
-                async_req (bool): execute request asynchronously
+        header_params = {}
 
-            Returns:
-                file_type
-                    If the method is called asynchronously, returns the request
-                    thread.
-            """
-            kwargs['async_req'] = kwargs.get(
-                'async_req', False
-            )
-            kwargs['_return_http_data_only'] = kwargs.get(
-                '_return_http_data_only', True
-            )
-            kwargs['_preload_content'] = kwargs.get(
-                '_preload_content', True
-            )
-            kwargs['_request_timeout'] = kwargs.get(
-                '_request_timeout', None
-            )
-            kwargs['_check_input_type'] = kwargs.get(
-                '_check_input_type', True
-            )
-            kwargs['_check_return_type'] = kwargs.get(
-                '_check_return_type', True
-            )
-            kwargs['_host_index'] = kwargs.get('_host_index')
-            kwargs['network_id'] = \
-                network_id
-            kwargs['user_key'] = \
-                user_key
-            kwargs['ip'] = \
-                ip
-            return self.call_with_http_info(**kwargs)
+        form_params = []
+        local_var_files = {}
 
-        self.ip_override = _Endpoint(
-            settings={
-                'response_type': (file_type,),
-                'auth': [],
-                'endpoint_path': '/udb/{networkId}/ip/i.gif',
-                'operation_id': 'ip_override',
-                'http_method': 'GET',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'network_id',
-                    'user_key',
-                    'ip',
-                ],
-                'required': [
-                    'network_id',
-                    'user_key',
-                    'ip',
-                ],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'network_id':
-                        (int,),
-                    'user_key':
-                        (str,),
-                    'ip':
-                        (str,),
-                },
-                'attribute_map': {
-                    'network_id': 'networkId',
-                    'user_key': 'userKey',
-                    'ip': 'ip',
-                },
-                'location_map': {
-                    'network_id': 'path',
-                    'user_key': 'query',
-                    'ip': 'query',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'image/gif'
-                ],
-                'content_type': [],
-            },
-            api_client=api_client,
-            callable=__ip_override
+        body_params = None
+        if 'consent_request' in local_var_params:
+            body_params = local_var_params['consent_request']
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['image/gif'])  # noqa: E501
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['ApiKeyAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/udb/{networkId}/consent', 'POST',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='file',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def ip_override(self, network_id, user_key, ip, **kwargs):  # noqa: E501
+        """ip_override  # noqa: E501
+
+        IP Address Override  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.ip_override(network_id, user_key, ip, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param str ip: This is the IP to exclude (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: file
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.ip_override_with_http_info(network_id, user_key, ip, **kwargs)  # noqa: E501
+
+    def ip_override_with_http_info(self, network_id, user_key, ip, **kwargs):  # noqa: E501
+        """ip_override  # noqa: E501
+
+        IP Address Override  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.ip_override_with_http_info(network_id, user_key, ip, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param str ip: This is the IP to exclude (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(file, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'network_id',
+            'user_key',
+            'ip'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
         )
 
-        def __match_user(
-            self,
-            network_id,
-            user_key,
-            partner_id,
-            user_id,
-            **kwargs
-        ):
-            """match_user  # noqa: E501
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method ip_override" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'network_id' is set
+        if self.api_client.client_side_validation and ('network_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['network_id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `network_id` when calling `ip_override`")  # noqa: E501
+        # verify the required parameter 'user_key' is set
+        if self.api_client.client_side_validation and ('user_key' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_key'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `user_key` when calling `ip_override`")  # noqa: E501
+        # verify the required parameter 'ip' is set
+        if self.api_client.client_side_validation and ('ip' not in local_var_params or  # noqa: E501
+                                                        local_var_params['ip'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `ip` when calling `ip_override`")  # noqa: E501
 
-            User Matching  # noqa: E501
-            This method makes a synchronous HTTP request by default. To make an
-            asynchronous HTTP request, please pass async_req=True
+        collection_formats = {}
 
-            >>> thread = api.match_user(network_id, user_key, partner_id, user_id, async_req=True)
-            >>> result = thread.get()
+        path_params = {}
+        if 'network_id' in local_var_params:
+            path_params['networkId'] = local_var_params['network_id']  # noqa: E501
 
-            Args:
-                network_id (int): Your Network Id
-                user_key (str): The User's UserDB Key
-                partner_id (int): The ID of the RTB provider in Adzerk. Contact Support if you don't have the ID.
-                user_id (int): This is the UserID the individual RTB provider has of the user. This is NOT the UserDB userkey.
+        query_params = []
+        if 'user_key' in local_var_params and local_var_params['user_key'] is not None:  # noqa: E501
+            query_params.append(('userKey', local_var_params['user_key']))  # noqa: E501
+        if 'ip' in local_var_params and local_var_params['ip'] is not None:  # noqa: E501
+            query_params.append(('ip', local_var_params['ip']))  # noqa: E501
 
-            Keyword Args:
-                _return_http_data_only (bool): response data without head status
-                    code and headers. Default is True.
-                _preload_content (bool): if False, the urllib3.HTTPResponse object
-                    will be returned without reading/decoding response data.
-                    Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
-                    be a pair (tuple) of (connection, read) timeouts.
-                    Default is None.
-                _check_input_type (bool): specifies if type checking
-                    should be done one the data sent to the server.
-                    Default is True.
-                _check_return_type (bool): specifies if type checking
-                    should be done one the data received from the server.
-                    Default is True.
-                _host_index (int/None): specifies the index of the server
-                    that we want to use.
-                    Default is read from the configuration.
-                async_req (bool): execute request asynchronously
+        header_params = {}
 
-            Returns:
-                file_type
-                    If the method is called asynchronously, returns the request
-                    thread.
-            """
-            kwargs['async_req'] = kwargs.get(
-                'async_req', False
-            )
-            kwargs['_return_http_data_only'] = kwargs.get(
-                '_return_http_data_only', True
-            )
-            kwargs['_preload_content'] = kwargs.get(
-                '_preload_content', True
-            )
-            kwargs['_request_timeout'] = kwargs.get(
-                '_request_timeout', None
-            )
-            kwargs['_check_input_type'] = kwargs.get(
-                '_check_input_type', True
-            )
-            kwargs['_check_return_type'] = kwargs.get(
-                '_check_return_type', True
-            )
-            kwargs['_host_index'] = kwargs.get('_host_index')
-            kwargs['network_id'] = \
-                network_id
-            kwargs['user_key'] = \
-                user_key
-            kwargs['partner_id'] = \
-                partner_id
-            kwargs['user_id'] = \
-                user_id
-            return self.call_with_http_info(**kwargs)
+        form_params = []
+        local_var_files = {}
 
-        self.match_user = _Endpoint(
-            settings={
-                'response_type': (file_type,),
-                'auth': [],
-                'endpoint_path': '/udb/{networkId}/sync/i.gif',
-                'operation_id': 'match_user',
-                'http_method': 'GET',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'network_id',
-                    'user_key',
-                    'partner_id',
-                    'user_id',
-                ],
-                'required': [
-                    'network_id',
-                    'user_key',
-                    'partner_id',
-                    'user_id',
-                ],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'network_id':
-                        (int,),
-                    'user_key':
-                        (str,),
-                    'partner_id':
-                        (int,),
-                    'user_id':
-                        (int,),
-                },
-                'attribute_map': {
-                    'network_id': 'networkId',
-                    'user_key': 'userKey',
-                    'partner_id': 'partnerId',
-                    'user_id': 'userId',
-                },
-                'location_map': {
-                    'network_id': 'path',
-                    'user_key': 'query',
-                    'partner_id': 'query',
-                    'user_id': 'query',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'image/gif'
-                ],
-                'content_type': [],
-            },
-            api_client=api_client,
-            callable=__match_user
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['image/gif'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = []  # noqa: E501
+
+        return self.api_client.call_api(
+            '/udb/{networkId}/ip/i.gif', 'GET',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='file',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def match_user(self, network_id, user_key, partner_id, user_id, **kwargs):  # noqa: E501
+        """match_user  # noqa: E501
+
+        User Matching  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.match_user(network_id, user_key, partner_id, user_id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param int partner_id: The ID of the RTB provider in Adzerk. Contact Support if you don't have the ID. (required)
+        :param int user_id: This is the UserID the individual RTB provider has of the user. This is NOT the UserDB userkey. (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: file
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.match_user_with_http_info(network_id, user_key, partner_id, user_id, **kwargs)  # noqa: E501
+
+    def match_user_with_http_info(self, network_id, user_key, partner_id, user_id, **kwargs):  # noqa: E501
+        """match_user  # noqa: E501
+
+        User Matching  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.match_user_with_http_info(network_id, user_key, partner_id, user_id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param int partner_id: The ID of the RTB provider in Adzerk. Contact Support if you don't have the ID. (required)
+        :param int user_id: This is the UserID the individual RTB provider has of the user. This is NOT the UserDB userkey. (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(file, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'network_id',
+            'user_key',
+            'partner_id',
+            'user_id'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
         )
 
-        def __opt_out(
-            self,
-            network_id,
-            user_key,
-            **kwargs
-        ):
-            """opt_out  # noqa: E501
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method match_user" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'network_id' is set
+        if self.api_client.client_side_validation and ('network_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['network_id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `network_id` when calling `match_user`")  # noqa: E501
+        # verify the required parameter 'user_key' is set
+        if self.api_client.client_side_validation and ('user_key' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_key'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `user_key` when calling `match_user`")  # noqa: E501
+        # verify the required parameter 'partner_id' is set
+        if self.api_client.client_side_validation and ('partner_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['partner_id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `partner_id` when calling `match_user`")  # noqa: E501
+        # verify the required parameter 'user_id' is set
+        if self.api_client.client_side_validation and ('user_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `user_id` when calling `match_user`")  # noqa: E501
 
-            Opt-Out a User  # noqa: E501
-            This method makes a synchronous HTTP request by default. To make an
-            asynchronous HTTP request, please pass async_req=True
+        collection_formats = {}
 
-            >>> thread = api.opt_out(network_id, user_key, async_req=True)
-            >>> result = thread.get()
+        path_params = {}
+        if 'network_id' in local_var_params:
+            path_params['networkId'] = local_var_params['network_id']  # noqa: E501
 
-            Args:
-                network_id (int): Your Network Id
-                user_key (str): The User's UserDB Key
+        query_params = []
+        if 'user_key' in local_var_params and local_var_params['user_key'] is not None:  # noqa: E501
+            query_params.append(('userKey', local_var_params['user_key']))  # noqa: E501
+        if 'partner_id' in local_var_params and local_var_params['partner_id'] is not None:  # noqa: E501
+            query_params.append(('partnerId', local_var_params['partner_id']))  # noqa: E501
+        if 'user_id' in local_var_params and local_var_params['user_id'] is not None:  # noqa: E501
+            query_params.append(('userId', local_var_params['user_id']))  # noqa: E501
 
-            Keyword Args:
-                _return_http_data_only (bool): response data without head status
-                    code and headers. Default is True.
-                _preload_content (bool): if False, the urllib3.HTTPResponse object
-                    will be returned without reading/decoding response data.
-                    Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
-                    be a pair (tuple) of (connection, read) timeouts.
-                    Default is None.
-                _check_input_type (bool): specifies if type checking
-                    should be done one the data sent to the server.
-                    Default is True.
-                _check_return_type (bool): specifies if type checking
-                    should be done one the data received from the server.
-                    Default is True.
-                _host_index (int/None): specifies the index of the server
-                    that we want to use.
-                    Default is read from the configuration.
-                async_req (bool): execute request asynchronously
+        header_params = {}
 
-            Returns:
-                file_type
-                    If the method is called asynchronously, returns the request
-                    thread.
-            """
-            kwargs['async_req'] = kwargs.get(
-                'async_req', False
-            )
-            kwargs['_return_http_data_only'] = kwargs.get(
-                '_return_http_data_only', True
-            )
-            kwargs['_preload_content'] = kwargs.get(
-                '_preload_content', True
-            )
-            kwargs['_request_timeout'] = kwargs.get(
-                '_request_timeout', None
-            )
-            kwargs['_check_input_type'] = kwargs.get(
-                '_check_input_type', True
-            )
-            kwargs['_check_return_type'] = kwargs.get(
-                '_check_return_type', True
-            )
-            kwargs['_host_index'] = kwargs.get('_host_index')
-            kwargs['network_id'] = \
-                network_id
-            kwargs['user_key'] = \
-                user_key
-            return self.call_with_http_info(**kwargs)
+        form_params = []
+        local_var_files = {}
 
-        self.opt_out = _Endpoint(
-            settings={
-                'response_type': (file_type,),
-                'auth': [],
-                'endpoint_path': '/udb/{networkId}/optout/i.gif',
-                'operation_id': 'opt_out',
-                'http_method': 'GET',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'network_id',
-                    'user_key',
-                ],
-                'required': [
-                    'network_id',
-                    'user_key',
-                ],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'network_id':
-                        (int,),
-                    'user_key':
-                        (str,),
-                },
-                'attribute_map': {
-                    'network_id': 'networkId',
-                    'user_key': 'userKey',
-                },
-                'location_map': {
-                    'network_id': 'path',
-                    'user_key': 'query',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'image/gif'
-                ],
-                'content_type': [],
-            },
-            api_client=api_client,
-            callable=__opt_out
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['image/gif'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = []  # noqa: E501
+
+        return self.api_client.call_api(
+            '/udb/{networkId}/sync/i.gif', 'GET',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='file',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def opt_out(self, network_id, user_key, **kwargs):  # noqa: E501
+        """opt_out  # noqa: E501
+
+        Opt-Out a User  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.opt_out(network_id, user_key, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: file
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.opt_out_with_http_info(network_id, user_key, **kwargs)  # noqa: E501
+
+    def opt_out_with_http_info(self, network_id, user_key, **kwargs):  # noqa: E501
+        """opt_out  # noqa: E501
+
+        Opt-Out a User  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.opt_out_with_http_info(network_id, user_key, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(file, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'network_id',
+            'user_key'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
         )
 
-        def __read(
-            self,
-            network_id,
-            user_key,
-            **kwargs
-        ):
-            """read  # noqa: E501
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method opt_out" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'network_id' is set
+        if self.api_client.client_side_validation and ('network_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['network_id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `network_id` when calling `opt_out`")  # noqa: E501
+        # verify the required parameter 'user_key' is set
+        if self.api_client.client_side_validation and ('user_key' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_key'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `user_key` when calling `opt_out`")  # noqa: E501
 
-            Read a User's UserDB Record  # noqa: E501
-            This method makes a synchronous HTTP request by default. To make an
-            asynchronous HTTP request, please pass async_req=True
+        collection_formats = {}
 
-            >>> thread = api.read(network_id, user_key, async_req=True)
-            >>> result = thread.get()
+        path_params = {}
+        if 'network_id' in local_var_params:
+            path_params['networkId'] = local_var_params['network_id']  # noqa: E501
 
-            Args:
-                network_id (int): Your Network Id
-                user_key (str): The User's UserDB Key
+        query_params = []
+        if 'user_key' in local_var_params and local_var_params['user_key'] is not None:  # noqa: E501
+            query_params.append(('userKey', local_var_params['user_key']))  # noqa: E501
 
-            Keyword Args:
-                _return_http_data_only (bool): response data without head status
-                    code and headers. Default is True.
-                _preload_content (bool): if False, the urllib3.HTTPResponse object
-                    will be returned without reading/decoding response data.
-                    Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
-                    be a pair (tuple) of (connection, read) timeouts.
-                    Default is None.
-                _check_input_type (bool): specifies if type checking
-                    should be done one the data sent to the server.
-                    Default is True.
-                _check_return_type (bool): specifies if type checking
-                    should be done one the data received from the server.
-                    Default is True.
-                _host_index (int/None): specifies the index of the server
-                    that we want to use.
-                    Default is read from the configuration.
-                async_req (bool): execute request asynchronously
+        header_params = {}
 
-            Returns:
-                {str: (bool, date, datetime, dict, float, int, list, str, none_type)}
-                    If the method is called asynchronously, returns the request
-                    thread.
-            """
-            kwargs['async_req'] = kwargs.get(
-                'async_req', False
-            )
-            kwargs['_return_http_data_only'] = kwargs.get(
-                '_return_http_data_only', True
-            )
-            kwargs['_preload_content'] = kwargs.get(
-                '_preload_content', True
-            )
-            kwargs['_request_timeout'] = kwargs.get(
-                '_request_timeout', None
-            )
-            kwargs['_check_input_type'] = kwargs.get(
-                '_check_input_type', True
-            )
-            kwargs['_check_return_type'] = kwargs.get(
-                '_check_return_type', True
-            )
-            kwargs['_host_index'] = kwargs.get('_host_index')
-            kwargs['network_id'] = \
-                network_id
-            kwargs['user_key'] = \
-                user_key
-            return self.call_with_http_info(**kwargs)
+        form_params = []
+        local_var_files = {}
 
-        self.read = _Endpoint(
-            settings={
-                'response_type': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),
-                'auth': [],
-                'endpoint_path': '/udb/{networkId}/read',
-                'operation_id': 'read',
-                'http_method': 'GET',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'network_id',
-                    'user_key',
-                ],
-                'required': [
-                    'network_id',
-                    'user_key',
-                ],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'network_id':
-                        (int,),
-                    'user_key':
-                        (str,),
-                },
-                'attribute_map': {
-                    'network_id': 'networkId',
-                    'user_key': 'userKey',
-                },
-                'location_map': {
-                    'network_id': 'path',
-                    'user_key': 'query',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'application/json'
-                ],
-                'content_type': [],
-            },
-            api_client=api_client,
-            callable=__read
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['image/gif'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = []  # noqa: E501
+
+        return self.api_client.call_api(
+            '/udb/{networkId}/optout/i.gif', 'GET',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='file',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def read(self, network_id, user_key, **kwargs):  # noqa: E501
+        """read  # noqa: E501
+
+        Read a User's UserDB Record  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.read(network_id, user_key, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: object
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.read_with_http_info(network_id, user_key, **kwargs)  # noqa: E501
+
+    def read_with_http_info(self, network_id, user_key, **kwargs):  # noqa: E501
+        """read  # noqa: E501
+
+        Read a User's UserDB Record  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.read_with_http_info(network_id, user_key, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int network_id: Your Network Id (required)
+        :param str user_key: The User's UserDB Key (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'network_id',
+            'user_key'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
         )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method read" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'network_id' is set
+        if self.api_client.client_side_validation and ('network_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['network_id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `network_id` when calling `read`")  # noqa: E501
+        # verify the required parameter 'user_key' is set
+        if self.api_client.client_side_validation and ('user_key' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_key'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `user_key` when calling `read`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'network_id' in local_var_params:
+            path_params['networkId'] = local_var_params['network_id']  # noqa: E501
+
+        query_params = []
+        if 'user_key' in local_var_params and local_var_params['user_key'] is not None:  # noqa: E501
+            query_params.append(('userKey', local_var_params['user_key']))  # noqa: E501
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = []  # noqa: E501
+
+        return self.api_client.call_api(
+            '/udb/{networkId}/read', 'GET',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='object',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)

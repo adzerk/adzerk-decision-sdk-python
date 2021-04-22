@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 
 # **add_custom_properties**
-> file_type add_custom_properties(network_id, user_key)
+> file add_custom_properties(network_id, user_key, body=body)
 
 
 
@@ -26,9 +26,10 @@ Add Custom Properties to a User
 
 * Api Key Authentication (ApiKeyAuth):
 ```python
+from __future__ import print_function
 import time
 import adzerk_decision_sdk
-from adzerk_decision_sdk.api import userdb_api
+from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to https://e-23.adzerk.net
 # See configuration.py for a list of all supported configuration parameters.
@@ -42,47 +43,41 @@ configuration = adzerk_decision_sdk.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net",
+    api_key = {
+        'X-Adzerk-ApiKey': 'YOUR_API_KEY'
+    }
+)
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['X-Adzerk-ApiKey'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = userdb_api.UserdbApi(api_client)
-    network_id = 1 # int | Your Network Id
-    user_key = "userKey_example" # str | The User's UserDB Key
-    body = {} # {str: (bool, date, datetime, dict, float, int, list, str, none_type)} |  (optional)
+    api_instance = adzerk_decision_sdk.UserdbApi(api_client)
+    network_id = 56 # int | Your Network Id
+user_key = 'user_key_example' # str | The User's UserDB Key
+body = None # object |  (optional)
 
-    # example passing only required values which don't have defaults set
-    try:
-        api_response = api_instance.add_custom_properties(network_id, user_key)
-        pprint(api_response)
-    except adzerk_decision_sdk.ApiException as e:
-        print("Exception when calling UserdbApi->add_custom_properties: %s\n" % e)
-
-    # example passing only required values which don't have defaults set
-    # and optional values
     try:
         api_response = api_instance.add_custom_properties(network_id, user_key, body=body)
         pprint(api_response)
-    except adzerk_decision_sdk.ApiException as e:
+    except ApiException as e:
         print("Exception when calling UserdbApi->add_custom_properties: %s\n" % e)
 ```
-
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **network_id** | **int**| Your Network Id |
- **user_key** | **str**| The User&#39;s UserDB Key |
- **body** | **{str: (bool, date, datetime, dict, float, int, list, str, none_type)}**|  | [optional]
+ **network_id** | **int**| Your Network Id | 
+ **user_key** | **str**| The User&#39;s UserDB Key | 
+ **body** | **object**|  | [optional] 
 
 ### Return type
 
-**file_type**
+**file**
 
 ### Authorization
 
@@ -93,7 +88,6 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: image/gif
 
-
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -102,7 +96,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **add_interests**
-> file_type add_interests(network_id, user_key, interest)
+> file add_interests(network_id, user_key, interest)
 
 
 
@@ -111,9 +105,10 @@ Add Interests to a User
 ### Example
 
 ```python
+from __future__ import print_function
 import time
 import adzerk_decision_sdk
-from adzerk_decision_sdk.api import userdb_api
+from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to https://e-23.adzerk.net
 # See configuration.py for a list of all supported configuration parameters.
@@ -125,31 +120,29 @@ configuration = adzerk_decision_sdk.Configuration(
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:
     # Create an instance of the API class
-    api_instance = userdb_api.UserdbApi(api_client)
-    network_id = 1 # int | Your Network Id
-    user_key = "userKey_example" # str | The User's UserDB Key
-    interest = "interest_example" # str | Comma Seperated list of interests
+    api_instance = adzerk_decision_sdk.UserdbApi(api_client)
+    network_id = 56 # int | Your Network Id
+user_key = 'user_key_example' # str | The User's UserDB Key
+interest = 'interest_example' # str | Comma Seperated list of interests
 
-    # example passing only required values which don't have defaults set
     try:
         api_response = api_instance.add_interests(network_id, user_key, interest)
         pprint(api_response)
-    except adzerk_decision_sdk.ApiException as e:
+    except ApiException as e:
         print("Exception when calling UserdbApi->add_interests: %s\n" % e)
 ```
-
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **network_id** | **int**| Your Network Id |
- **user_key** | **str**| The User&#39;s UserDB Key |
- **interest** | **str**| Comma Seperated list of interests |
+ **network_id** | **int**| Your Network Id | 
+ **user_key** | **str**| The User&#39;s UserDB Key | 
+ **interest** | **str**| Comma Seperated list of interests | 
 
 ### Return type
 
-**file_type**
+**file**
 
 ### Authorization
 
@@ -159,7 +152,6 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: image/gif
-
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -169,7 +161,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **add_retargeting_segment**
-> file_type add_retargeting_segment(network_id, advertiser_id, retargeting_segment_id, user_key)
+> file add_retargeting_segment(network_id, advertiser_id, retargeting_segment_id, user_key)
 
 
 
@@ -178,9 +170,10 @@ Add User to a Retargeting Segment
 ### Example
 
 ```python
+from __future__ import print_function
 import time
 import adzerk_decision_sdk
-from adzerk_decision_sdk.api import userdb_api
+from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to https://e-23.adzerk.net
 # See configuration.py for a list of all supported configuration parameters.
@@ -192,33 +185,31 @@ configuration = adzerk_decision_sdk.Configuration(
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:
     # Create an instance of the API class
-    api_instance = userdb_api.UserdbApi(api_client)
-    network_id = 1 # int | Your Network Id
-    advertiser_id = 1 # int | The Advertiser's ID
-    retargeting_segment_id = 1 # int | The Segment's ID
-    user_key = "userKey_example" # str | The User's UserDB Key
+    api_instance = adzerk_decision_sdk.UserdbApi(api_client)
+    network_id = 56 # int | Your Network Id
+advertiser_id = 56 # int | The Advertiser's ID
+retargeting_segment_id = 56 # int | The Segment's ID
+user_key = 'user_key_example' # str | The User's UserDB Key
 
-    # example passing only required values which don't have defaults set
     try:
         api_response = api_instance.add_retargeting_segment(network_id, advertiser_id, retargeting_segment_id, user_key)
         pprint(api_response)
-    except adzerk_decision_sdk.ApiException as e:
+    except ApiException as e:
         print("Exception when calling UserdbApi->add_retargeting_segment: %s\n" % e)
 ```
-
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **network_id** | **int**| Your Network Id |
- **advertiser_id** | **int**| The Advertiser&#39;s ID |
- **retargeting_segment_id** | **int**| The Segment&#39;s ID |
- **user_key** | **str**| The User&#39;s UserDB Key |
+ **network_id** | **int**| Your Network Id | 
+ **advertiser_id** | **int**| The Advertiser&#39;s ID | 
+ **retargeting_segment_id** | **int**| The Segment&#39;s ID | 
+ **user_key** | **str**| The User&#39;s UserDB Key | 
 
 ### Return type
 
-**file_type**
+**file**
 
 ### Authorization
 
@@ -228,7 +219,6 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: image/gif
-
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -248,9 +238,10 @@ Forget User
 
 * Api Key Authentication (ApiKeyAuth):
 ```python
+from __future__ import print_function
 import time
 import adzerk_decision_sdk
-from adzerk_decision_sdk.api import userdb_api
+from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to https://e-23.adzerk.net
 # See configuration.py for a list of all supported configuration parameters.
@@ -264,32 +255,34 @@ configuration = adzerk_decision_sdk.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net",
+    api_key = {
+        'X-Adzerk-ApiKey': 'YOUR_API_KEY'
+    }
+)
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['X-Adzerk-ApiKey'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = userdb_api.UserdbApi(api_client)
-    network_id = 1 # int | Your Network Id
-    user_key = "userKey_example" # str | The User's UserDB Key
+    api_instance = adzerk_decision_sdk.UserdbApi(api_client)
+    network_id = 56 # int | Your Network Id
+user_key = 'user_key_example' # str | The User's UserDB Key
 
-    # example passing only required values which don't have defaults set
     try:
         api_instance.forget(network_id, user_key)
-    except adzerk_decision_sdk.ApiException as e:
+    except ApiException as e:
         print("Exception when calling UserdbApi->forget: %s\n" % e)
 ```
-
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **network_id** | **int**| Your Network Id |
- **user_key** | **str**| The User&#39;s UserDB Key |
+ **network_id** | **int**| Your Network Id | 
+ **user_key** | **str**| The User&#39;s UserDB Key | 
 
 ### Return type
 
@@ -304,7 +297,6 @@ void (empty response body)
  - **Content-Type**: Not defined
  - **Accept**: Not defined
 
-
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -313,7 +305,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **gdpr_consent**
-> file_type gdpr_consent(network_id)
+> file gdpr_consent(network_id, consent_request=consent_request)
 
 
 
@@ -323,10 +315,10 @@ GDPR Consent
 
 * Api Key Authentication (ApiKeyAuth):
 ```python
+from __future__ import print_function
 import time
 import adzerk_decision_sdk
-from adzerk_decision_sdk.api import userdb_api
-from adzerk_decision_sdk.model.consent_request import ConsentRequest
+from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to https://e-23.adzerk.net
 # See configuration.py for a list of all supported configuration parameters.
@@ -340,48 +332,39 @@ configuration = adzerk_decision_sdk.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
+configuration = adzerk_decision_sdk.Configuration(
+    host = "https://e-23.adzerk.net",
+    api_key = {
+        'X-Adzerk-ApiKey': 'YOUR_API_KEY'
+    }
+)
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['X-Adzerk-ApiKey'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = userdb_api.UserdbApi(api_client)
-    network_id = 1 # int | Your Network Id
-    consent_request = ConsentRequest(
-        user_key="user_key_example",
-        consent={},
-    ) # ConsentRequest |  (optional)
+    api_instance = adzerk_decision_sdk.UserdbApi(api_client)
+    network_id = 56 # int | Your Network Id
+consent_request = adzerk_decision_sdk.ConsentRequest() # ConsentRequest |  (optional)
 
-    # example passing only required values which don't have defaults set
-    try:
-        api_response = api_instance.gdpr_consent(network_id)
-        pprint(api_response)
-    except adzerk_decision_sdk.ApiException as e:
-        print("Exception when calling UserdbApi->gdpr_consent: %s\n" % e)
-
-    # example passing only required values which don't have defaults set
-    # and optional values
     try:
         api_response = api_instance.gdpr_consent(network_id, consent_request=consent_request)
         pprint(api_response)
-    except adzerk_decision_sdk.ApiException as e:
+    except ApiException as e:
         print("Exception when calling UserdbApi->gdpr_consent: %s\n" % e)
 ```
-
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **network_id** | **int**| Your Network Id |
- **consent_request** | [**ConsentRequest**](ConsentRequest.md)|  | [optional]
+ **network_id** | **int**| Your Network Id | 
+ **consent_request** | [**ConsentRequest**](ConsentRequest.md)|  | [optional] 
 
 ### Return type
 
-**file_type**
+**file**
 
 ### Authorization
 
@@ -392,7 +375,6 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: image/gif
 
-
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -401,7 +383,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ip_override**
-> file_type ip_override(network_id, user_key, ip)
+> file ip_override(network_id, user_key, ip)
 
 
 
@@ -410,9 +392,10 @@ IP Address Override
 ### Example
 
 ```python
+from __future__ import print_function
 import time
 import adzerk_decision_sdk
-from adzerk_decision_sdk.api import userdb_api
+from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to https://e-23.adzerk.net
 # See configuration.py for a list of all supported configuration parameters.
@@ -424,31 +407,29 @@ configuration = adzerk_decision_sdk.Configuration(
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:
     # Create an instance of the API class
-    api_instance = userdb_api.UserdbApi(api_client)
-    network_id = 1 # int | Your Network Id
-    user_key = "userKey_example" # str | The User's UserDB Key
-    ip = "ip_example" # str | This is the IP to exclude
+    api_instance = adzerk_decision_sdk.UserdbApi(api_client)
+    network_id = 56 # int | Your Network Id
+user_key = 'user_key_example' # str | The User's UserDB Key
+ip = 'ip_example' # str | This is the IP to exclude
 
-    # example passing only required values which don't have defaults set
     try:
         api_response = api_instance.ip_override(network_id, user_key, ip)
         pprint(api_response)
-    except adzerk_decision_sdk.ApiException as e:
+    except ApiException as e:
         print("Exception when calling UserdbApi->ip_override: %s\n" % e)
 ```
-
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **network_id** | **int**| Your Network Id |
- **user_key** | **str**| The User&#39;s UserDB Key |
- **ip** | **str**| This is the IP to exclude |
+ **network_id** | **int**| Your Network Id | 
+ **user_key** | **str**| The User&#39;s UserDB Key | 
+ **ip** | **str**| This is the IP to exclude | 
 
 ### Return type
 
-**file_type**
+**file**
 
 ### Authorization
 
@@ -458,7 +439,6 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: image/gif
-
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -468,7 +448,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **match_user**
-> file_type match_user(network_id, user_key, partner_id, user_id)
+> file match_user(network_id, user_key, partner_id, user_id)
 
 
 
@@ -477,9 +457,10 @@ User Matching
 ### Example
 
 ```python
+from __future__ import print_function
 import time
 import adzerk_decision_sdk
-from adzerk_decision_sdk.api import userdb_api
+from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to https://e-23.adzerk.net
 # See configuration.py for a list of all supported configuration parameters.
@@ -491,33 +472,31 @@ configuration = adzerk_decision_sdk.Configuration(
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:
     # Create an instance of the API class
-    api_instance = userdb_api.UserdbApi(api_client)
-    network_id = 1 # int | Your Network Id
-    user_key = "userKey_example" # str | The User's UserDB Key
-    partner_id = 1 # int | The ID of the RTB provider in Adzerk. Contact Support if you don't have the ID.
-    user_id = 1 # int | This is the UserID the individual RTB provider has of the user. This is NOT the UserDB userkey.
+    api_instance = adzerk_decision_sdk.UserdbApi(api_client)
+    network_id = 56 # int | Your Network Id
+user_key = 'user_key_example' # str | The User's UserDB Key
+partner_id = 56 # int | The ID of the RTB provider in Adzerk. Contact Support if you don't have the ID.
+user_id = 56 # int | This is the UserID the individual RTB provider has of the user. This is NOT the UserDB userkey.
 
-    # example passing only required values which don't have defaults set
     try:
         api_response = api_instance.match_user(network_id, user_key, partner_id, user_id)
         pprint(api_response)
-    except adzerk_decision_sdk.ApiException as e:
+    except ApiException as e:
         print("Exception when calling UserdbApi->match_user: %s\n" % e)
 ```
-
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **network_id** | **int**| Your Network Id |
- **user_key** | **str**| The User&#39;s UserDB Key |
- **partner_id** | **int**| The ID of the RTB provider in Adzerk. Contact Support if you don&#39;t have the ID. |
- **user_id** | **int**| This is the UserID the individual RTB provider has of the user. This is NOT the UserDB userkey. |
+ **network_id** | **int**| Your Network Id | 
+ **user_key** | **str**| The User&#39;s UserDB Key | 
+ **partner_id** | **int**| The ID of the RTB provider in Adzerk. Contact Support if you don&#39;t have the ID. | 
+ **user_id** | **int**| This is the UserID the individual RTB provider has of the user. This is NOT the UserDB userkey. | 
 
 ### Return type
 
-**file_type**
+**file**
 
 ### Authorization
 
@@ -527,7 +506,6 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: image/gif
-
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -537,7 +515,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **opt_out**
-> file_type opt_out(network_id, user_key)
+> file opt_out(network_id, user_key)
 
 
 
@@ -546,9 +524,10 @@ Opt-Out a User
 ### Example
 
 ```python
+from __future__ import print_function
 import time
 import adzerk_decision_sdk
-from adzerk_decision_sdk.api import userdb_api
+from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to https://e-23.adzerk.net
 # See configuration.py for a list of all supported configuration parameters.
@@ -560,29 +539,27 @@ configuration = adzerk_decision_sdk.Configuration(
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:
     # Create an instance of the API class
-    api_instance = userdb_api.UserdbApi(api_client)
-    network_id = 1 # int | Your Network Id
-    user_key = "userKey_example" # str | The User's UserDB Key
+    api_instance = adzerk_decision_sdk.UserdbApi(api_client)
+    network_id = 56 # int | Your Network Id
+user_key = 'user_key_example' # str | The User's UserDB Key
 
-    # example passing only required values which don't have defaults set
     try:
         api_response = api_instance.opt_out(network_id, user_key)
         pprint(api_response)
-    except adzerk_decision_sdk.ApiException as e:
+    except ApiException as e:
         print("Exception when calling UserdbApi->opt_out: %s\n" % e)
 ```
-
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **network_id** | **int**| Your Network Id |
- **user_key** | **str**| The User&#39;s UserDB Key |
+ **network_id** | **int**| Your Network Id | 
+ **user_key** | **str**| The User&#39;s UserDB Key | 
 
 ### Return type
 
-**file_type**
+**file**
 
 ### Authorization
 
@@ -593,7 +570,6 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: image/gif
 
-
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -602,7 +578,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **read**
-> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} read(network_id, user_key)
+> object read(network_id, user_key)
 
 
 
@@ -611,9 +587,10 @@ Read a User's UserDB Record
 ### Example
 
 ```python
+from __future__ import print_function
 import time
 import adzerk_decision_sdk
-from adzerk_decision_sdk.api import userdb_api
+from adzerk_decision_sdk.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to https://e-23.adzerk.net
 # See configuration.py for a list of all supported configuration parameters.
@@ -625,29 +602,27 @@ configuration = adzerk_decision_sdk.Configuration(
 # Enter a context with an instance of the API client
 with adzerk_decision_sdk.ApiClient() as api_client:
     # Create an instance of the API class
-    api_instance = userdb_api.UserdbApi(api_client)
-    network_id = 1 # int | Your Network Id
-    user_key = "userKey_example" # str | The User's UserDB Key
+    api_instance = adzerk_decision_sdk.UserdbApi(api_client)
+    network_id = 56 # int | Your Network Id
+user_key = 'user_key_example' # str | The User's UserDB Key
 
-    # example passing only required values which don't have defaults set
     try:
         api_response = api_instance.read(network_id, user_key)
         pprint(api_response)
-    except adzerk_decision_sdk.ApiException as e:
+    except ApiException as e:
         print("Exception when calling UserdbApi->read: %s\n" % e)
 ```
-
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **network_id** | **int**| Your Network Id |
- **user_key** | **str**| The User&#39;s UserDB Key |
+ **network_id** | **int**| Your Network Id | 
+ **user_key** | **str**| The User&#39;s UserDB Key | 
 
 ### Return type
 
-**{str: (bool, date, datetime, dict, float, int, list, str, none_type)}**
+**object**
 
 ### Authorization
 
@@ -657,7 +632,6 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
 
 ### HTTP response details
 | Status code | Description | Response headers |

@@ -26,3 +26,4 @@ README.md
 setup.py
 .gitlab-ci.yml
 adzerk_decision_sdk/__init__.py
+.travis.yml
