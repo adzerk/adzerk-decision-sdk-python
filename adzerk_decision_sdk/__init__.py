@@ -32,13 +32,13 @@ from adzerk_decision_sdk.exceptions import ApiValueError
 from adzerk_decision_sdk.exceptions import ApiKeyError
 from adzerk_decision_sdk.exceptions import ApiException
 # import models into sdk package
-from adzerk_decision_sdk.model.consent_request import ConsentRequest
-from adzerk_decision_sdk.model.content import Content
-from adzerk_decision_sdk.model.decision import Decision
-from adzerk_decision_sdk.model.decision_request import DecisionRequest
-from adzerk_decision_sdk.model.decision_response import DecisionResponse
-from adzerk_decision_sdk.model.event import Event
-from adzerk_decision_sdk.model.placement import Placement
-from adzerk_decision_sdk.model.pricing_data import PricingData
-from adzerk_decision_sdk.model.user import User
+from adzerk_decision_sdk.models.consent_request import ConsentRequest
+from adzerk_decision_sdk.models.content import Content
+from adzerk_decision_sdk.models.decision import Decision
+from adzerk_decision_sdk.models.decision_request import DecisionRequest
+from adzerk_decision_sdk.models.decision_response import DecisionResponse
+from adzerk_decision_sdk.models.event import Event
+from adzerk_decision_sdk.models.placement import Placement
+from adzerk_decision_sdk.models.pricing_data import PricingData
+from adzerk_decision_sdk.models.user import User
 
