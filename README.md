@@ -115,11 +115,11 @@ request = {
 }
 
 options = {
-  "includeExplanation": true,
-  "apiKey": "YOUR_API_KEY"
+  "include_explanation": True,
+  "api_key": "YOUR_API_KEY"
 }
 
-response = client.decisions.get(request, options)
+response = client.decisions.get(request, **options)
 print(response)
 ```
 
