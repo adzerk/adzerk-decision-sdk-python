@@ -92,6 +92,7 @@ client.user_db.set_custom_properties("abc", props)
 
 ```python
 import adzerk_decision_sdk
+import os
 
 # Demo network ID and API key; find your own via the Adzerk UI!
 api_key = os.environ.get("ADZERK_API_KEY")
@@ -105,6 +106,7 @@ The Decision Explainer returns information on a Decision API request explaining 
 
 ```python
 import adzerk_decision_sdk
+import os
 
 # Demo network, site, and ad type IDs; find your own via the Adzerk UI!
 api_key = os.environ.get("ADZERK_API_KEY")
