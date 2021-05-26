@@ -94,18 +94,20 @@ client.user_db.set_custom_properties("abc", props)
 import adzerk_decision_sdk
 
 # Demo network ID and API key; find your own via the Adzerk UI!
-client = adzerk_decision_sdk.Client(23, api_key="YOUR_API_KEY")
+api_key = os.environ.get("ADZERK_API_KEY")
+client = adzerk_decision_sdk.Client(23, api_key=api_key)
 client.user_db.forget("abc")
 ```
 
 ### Decision Explainer
 
-The Decision Explainer is a feature that returns information on a Decision API request explaining why each candidate ad was or was not chosen. 
+The Decision Explainer returns information on a Decision API request explaining why each candidate ad was or was not chosen. 
 
 ```python
 import adzerk_decision_sdk
 
 # Demo network, site, and ad type IDs; find your own via the Adzerk UI!
+api_key = os.environ.get("ADZERK_API_KEY")
 client = adzerk_decision_sdk.Client(23, site_id=667480)
 
 request = {
@@ -116,7 +118,7 @@ request = {
 
 options = {
   "include_explanation": True,
-  "api_key": "YOUR_API_KEY"
+  "api_key": api_key
 }
 
 response = client.decisions.get(request, **options)
