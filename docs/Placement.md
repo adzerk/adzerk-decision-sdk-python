@@ -23,6 +23,8 @@ Name | Type | Description | Notes
 **event_multiplier** | **int** |  | [optional] 
 **skip_selection** | **bool** |  | [optional] 
 **ad_query** | [**object**](.md) |  | [optional] 
+**floor_price** | **float** |  | [optional] 
+**floor_cpc** | **float** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
