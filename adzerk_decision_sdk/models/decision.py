@@ -34,6 +34,7 @@ class Decision(object):
     """
     openapi_types = {
         'ad_id': 'int',
+        'advertiser_id': 'int',
         'creative_id': 'int',
         'flight_id': 'int',
         'campaign_id': 'int',
@@ -48,6 +49,7 @@ class Decision(object):
 
     attribute_map = {
         'ad_id': 'adId',
+        'advertiser_id': 'advertiserId',
         'creative_id': 'creativeId',
         'flight_id': 'flightId',
         'campaign_id': 'campaignId',
@@ -60,13 +62,14 @@ class Decision(object):
         'pricing': 'pricing'
     }
 
-    def __init__(self, ad_id=None, creative_id=None, flight_id=None, campaign_id=None, priority_id=None, click_url=None, contents=None, impression_url=None, events=None, matched_points=None, pricing=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, ad_id=None, advertiser_id=None, creative_id=None, flight_id=None, campaign_id=None, priority_id=None, click_url=None, contents=None, impression_url=None, events=None, matched_points=None, pricing=None, local_vars_configuration=None):  # noqa: E501
         """Decision - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
         self._ad_id = None
+        self._advertiser_id = None
         self._creative_id = None
         self._flight_id = None
         self._campaign_id = None
@@ -81,6 +84,8 @@ class Decision(object):
 
         if ad_id is not None:
             self.ad_id = ad_id
+        if advertiser_id is not None:
+            self.advertiser_id = advertiser_id
         if creative_id is not None:
             self.creative_id = creative_id
         if flight_id is not None:
@@ -122,6 +127,27 @@ class Decision(object):
         """
 
         self._ad_id = ad_id
+
+    @property
+    def advertiser_id(self):
+        """Gets the advertiser_id of this Decision.  # noqa: E501
+
+
+        :return: The advertiser_id of this Decision.  # noqa: E501
+        :rtype: int
+        """
+        return self._advertiser_id
+
+    @advertiser_id.setter
+    def advertiser_id(self, advertiser_id):
+        """Sets the advertiser_id of this Decision.
+
+
+        :param advertiser_id: The advertiser_id of this Decision.  # noqa: E501
+        :type: int
+        """
+
+        self._advertiser_id = advertiser_id
 
     @property
     def creative_id(self):
