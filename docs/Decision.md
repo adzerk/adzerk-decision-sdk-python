@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ad_id** | **int** |  | [optional] 
+**advertiser_id** | **int** |  | [optional] 
 **creative_id** | **int** |  | [optional] 
 **flight_id** | **int** |  | [optional] 
 **campaign_id** | **int** |  | [optional] 
