@@ -42,7 +42,7 @@ class Client(object):
             self.__logger = logger
 
         def get(self, request, **kwargs):
-            optional_keyword_args = ['include_explanation', 'api_key', 'user_agent']
+            optional_keyword_args = ['include_explanation', 'api_key', 'user_agent', 'desired_ad']
             if 'decision_request' not in kwargs:
                 kwargs['decision_request'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
