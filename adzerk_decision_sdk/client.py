@@ -42,7 +42,7 @@ class Client(object):
             self.__logger = logger
 
         def get(self, request, **kwargs):
-            optional_keyword_args = ['include_explanation', 'api_key', 'user_agent']
+            optional_keyword_args = ['include_explanation', 'api_key', 'user_agent', 'desired_ads', 'desired_ad_map']
             if 'decision_request' not in kwargs:
                 kwargs['decision_request'] = request if type(request) is dict else Client._DecisionClient._to_dict(request)
 
@@ -87,6 +87,20 @@ class Client(object):
                     self.__logger.warning("This will cause performance degradation and should not be done")
                     self.__logger.warning("in production environments.")
                     self.__logger.warning("--------------------------------------------------------------")
+                    if 'desired_ads' in kwargs:
+                        header_object = {
+                            'api_key': kwargs['api_key'],
+                            'desired_ads': kwargs['desired_ads']
+                        }
+                        api_client.set_default_header('X-Adzerk-Explain', json.dumps(header_object))
+
+                    if 'desired_ad_map' in kwargs:
+                        header_object = {
+                            'api_key': kwargs['api_key'],
+                            'desired_ad_map': kwargs['desired_ad_map']
+                        }
+                        api_client.set_default_header('X-Adzerk-Explain', json.dumps(header_object))
+                    
                     api_client.set_default_header('X-Adzerk-Explain', kwargs['api_key'])
                 if 'user_agent' in kwargs:
                     api_client.set_default_header('User-Agent', kwargs['user_agent'])
