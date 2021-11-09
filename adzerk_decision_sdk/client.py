@@ -235,7 +235,7 @@ class Client(object):
             self.rest_client = RESTClientObject(configuration)
             self.__logger = logger
 
-        def fire(self, url, revenue_override=None, additional_revenue=None, event_multiplier=None, **kwargs):
+        def fire(self, url, revenue_override=None, additional_revenue=None, event_multiplier=None, gross_merchandise_value=None, **kwargs):
             parsed_url = urlparse(url)
             self.__logger.info(f'Firing Pixel at base url of: {parsed_url}')
             query_string_params = parse_qsl(parsed_url.query)
@@ -245,6 +245,8 @@ class Client(object):
                 query_string_params.append(('additional', additional_revenue))
             if event_multiplier is not None:
                 query_string_params.append(('eventMultiplier', event_multiplier))
+            if gross_merchandise_value is not None:
+                query_string_params.append(('gmv', gross_merchandise_value))
             new_query = urlencode(query_string_params)
             full_url = ParseResult(
                 parsed_url.scheme, parsed_url.netloc, parsed_url.path,
