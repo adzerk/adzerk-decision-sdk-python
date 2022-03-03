@@ -33,13 +33,14 @@ class Client(object):
     class _DecisionClient(object):
         reverse_attribute_cache = {}
 
-        def __init__(self, network_id, site_id, logger, configuration: Configuration, api_client: ApiClient):
+        def __init__(self, network_id, site_id, logger, configuration: Configuration, api_client: ApiClient, api_key=None):
             self.configuration = configuration
             self.api_client = api_client
             self.network_id = network_id
             self.site_id = site_id
             self.api = DecisionApi(api_client)
             self.__logger = logger
+            self.api_key = api_key
 
         def get(self, request, **kwargs):
             optional_keyword_args = ['include_explanation', 'api_key', 'user_agent', 'desired_ads', 'desired_ad_map']
@@ -293,6 +294,9 @@ class Client(object):
 
         api_client = ApiClient(configuration)
         api_client.set_default_header('X-Adzerk-Sdk-Version', f'adzerk-decision-sdk-python:{__version__}')
+
+        if api_key is not None:
+            api_client.set_default_header('X-Adzerk-ApiKey', api_key)
 
         self.__logger = logging.getLogger("adzerk_decision_sdk.client")
         if self.__logger.level == 0:
