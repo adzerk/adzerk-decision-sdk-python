@@ -45,7 +45,7 @@ class Placement(object):
         'properties': 'object',
         'event_ids': 'list[int]',
         'overrides': 'object',
-        'content_keys': 'dict(str, int)',
+        'content_keys': 'dict(str, str)',
         'count': 'int',
         'proportionality': 'bool',
         'ecpm_partition': 'str',
@@ -422,7 +422,7 @@ class Placement(object):
         A map of key/value pairs used with [ContentDB](https://dev.adzerk.com/docs/contentdb-1). The format is `\"contentKeys\": {\"schema\": \"contentKey\"}`  # noqa: E501
 
         :return: The content_keys of this Placement.  # noqa: E501
-        :rtype: dict(str, int)
+        :rtype: dict(str, str)
         """
         return self._content_keys
 
@@ -433,7 +433,7 @@ class Placement(object):
         A map of key/value pairs used with [ContentDB](https://dev.adzerk.com/docs/contentdb-1). The format is `\"contentKeys\": {\"schema\": \"contentKey\"}`  # noqa: E501
 
         :param content_keys: The content_keys of this Placement.  # noqa: E501
-        :type: dict(str, int)
+        :type: dict(str, str)
         """
 
         self._content_keys = content_keys
