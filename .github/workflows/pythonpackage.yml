@@ -54,7 +54,7 @@ jobs:
 
         sed -i s/version=VERSION/version=\"0.0.1+${GITHUB_REF##*/}\"/g setup.py
 
-        python -m pip install --user --upgrade pip setuptools wheel
+        python -m pip install --user --upgrade setuptools wheel twine
         pip install -r requirements.txt
         python setup.py sdist bdist_wheel
-        python setup.py bdist_wheel upload -r local
+        twine upload -r local ./dist/*
