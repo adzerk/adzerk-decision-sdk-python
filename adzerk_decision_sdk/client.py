@@ -103,6 +103,7 @@ class Client(object):
                         api_client.set_default_header('X-Adzerk-Explain', json.dumps(header_object))
                     
                     api_client.set_default_header('X-Adzerk-Explain', kwargs['api_key'])
+                    api_client.set_default_header('X-Adzerk-ApiKey', kwargs['api_key'])
                 if 'user_agent' in kwargs:
                     api_client.set_default_header('User-Agent', kwargs['user_agent'])
 
