@@ -101,7 +101,7 @@ class Client(object):
                             'desired_ad_map': kwargs['desired_ad_map']
                         }
                         api_client.set_default_header('X-Adzerk-Explain', json.dumps(header_object))
-                    
+
                     api_client.set_default_header('X-Adzerk-Explain', kwargs['api_key'])
                     api_client.set_default_header('X-Adzerk-ApiKey', kwargs['api_key'])
                 if 'user_agent' in kwargs:
@@ -238,7 +238,7 @@ class Client(object):
 
             network_id = kwargs['network_id'] if 'network_id' in kwargs else self.network_id
             self.__logger.info(f'Requesting record for {user_key} on {network_id}')
-            user_record = self.api.read(network_id, user_key)
+            user_record = self.api.read(network_id, user_key, **kwargs)
             jsond = json.dumps(user_record)
             self.__logger.info(f'Received unfiltered response of: {jsond}')
             [user_record.pop(key, None) for key in bad_keys]
