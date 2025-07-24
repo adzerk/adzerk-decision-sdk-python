@@ -2,7 +2,11 @@ import json
 import logging
 import os.path
 import six
-from pkg_resources import get_distribution, DistributionNotFound
+import sys
+if sys.version_info < (3, 8):
+    from pkg_resources import get_distribution, DistributionNotFound
+else:
+    import importlib.metadata as metadata
 from urllib.parse import urlparse, parse_qsl, urlencode, ParseResult
 from urllib3.util.retry import Retry
 from adzerk_decision_sdk.rest import RESTClientObject
@@ -13,19 +17,25 @@ from adzerk_decision_sdk.api.userdb_api import UserdbApi
 from adzerk_decision_sdk.models import Decision
 from adzerk_decision_sdk.exceptions import ApiValueError
 
-# https://stackoverflow.com/questions/17583443/what-is-the-correct-way-to-share-package-version-with-setup-py-and-the-package/17626524#17626524
-try:
-    _dist = get_distribution('adzerk-decision-sdk')
-    # Normalize case for Windows systems
-    dist_loc = os.path.normcase(_dist.location)
-    here = os.path.normcase(__file__)
-    if not here.startswith(os.path.join(dist_loc, 'adzerk_decision_sdk')):
-        # not installed, but there is another version that *is*
-        raise DistributionNotFound
-except DistributionNotFound:
-    __version__ = 'improperly-installed-version'
+if sys.version_info < (3, 8):
+    # https://stackoverflow.com/questions/17583443/what-is-the-correct-way-to-share-package-version-with-setup-py-and-the-package/17626524#17626524
+    try:
+        _dist = get_distribution('adzerk-decision-sdk')
+        # Normalize case for Windows systems
+        dist_loc = os.path.normcase(_dist.location)
+        here = os.path.normcase(__file__)
+        if not here.startswith(os.path.join(dist_loc, 'adzerk_decision_sdk')):
+            # not installed, but there is another version that *is*
+            raise DistributionNotFound
+    except DistributionNotFound:
+        __version__ = 'improperly-installed-version'
+    else:
+        __version__ = _dist.version
 else:
-    __version__ = _dist.version
+    try:
+        __version__ = metadata.version('adzerk-decision-sdk')
+    except metadata.PackageNotFoundError:
+        __version__ = 'improperly-installed-version'
 
 deprecated_placement_fields = [['ecpm_partition', 'ecpm_partitions']]
 
