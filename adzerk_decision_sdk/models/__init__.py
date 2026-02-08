@@ -23,4 +23,5 @@ from adzerk_decision_sdk.models.event import Event
 from adzerk_decision_sdk.models.matched_point import MatchedPoint
 from adzerk_decision_sdk.models.placement import Placement
 from adzerk_decision_sdk.models.pricing_data import PricingData
+from adzerk_decision_sdk.models.skip_filters import SkipFilters
 from adzerk_decision_sdk.models.user import User
