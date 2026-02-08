@@ -15,7 +15,7 @@ VERSION = "1.0.0-beta.19"
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil"]
+REQUIRES = ["urllib3 >= 2.0.0", "six >= 1.10", "certifi >= 2023.7.22", "python-dateutil >= 2.8.2"]
 
 setup(
     name=NAME,
