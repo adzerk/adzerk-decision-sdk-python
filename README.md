@@ -4,7 +4,7 @@ Python Software Development Kit for Adzerk Decision & UserDB APIs
 
 ## Installation
 
-Requires [Python 3.7.6](https://en.wikipedia.org/wiki/History_of_Python#Table_of_versions) or higher.
+Requires Python 3.10 or higher. Tested against [supported Python versions](https://devguide.python.org/versions/) 3.10, 3.11, 3.12, 3.13, and 3.14.
 
 [PyPI Package](https://pypi.org/project/adzerk-decision-sdk/)
 
@@ -15,7 +15,7 @@ pip install adzerk-decision-sdk
 Or add to your `requirements.txt` file:
 
 ```
-adzerk-decision-sdk===1.0.0b3
+adzerk-decision-sdk
 ```
 
 ## Examples
@@ -200,5 +200,5 @@ pip install flake8
 pip install --requirement requirements.txt
 flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-python setup.py sdist bdist_wheel
+python -m build
 ```
