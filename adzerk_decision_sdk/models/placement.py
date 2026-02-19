@@ -54,7 +54,8 @@ class Placement(object):
         'skip_selection': 'bool',
         'ad_query': 'object',
         'floor_price': 'float',
-        'floor_cpc': 'float'
+        'floor_cpc': 'float',
+        'skip_filters': 'SkipFilters'
     }
 
     attribute_map = {
@@ -79,10 +80,11 @@ class Placement(object):
         'skip_selection': 'skipSelection',
         'ad_query': 'adQuery',
         'floor_price': 'floorPrice',
-        'floor_cpc': 'floorCpc'
+        'floor_cpc': 'floorCpc',
+        'skip_filters': 'skipFilters'
     }
 
-    def __init__(self, div_name=None, network_id=None, site_id=None, ad_types=None, zone_ids=None, campaign_id=None, flight_id=None, ad_id=None, click_url=None, properties=None, event_ids=None, overrides=None, content_keys=None, count=None, proportionality=None, ecpm_partition=None, ecpm_partitions=None, event_multiplier=None, skip_selection=None, ad_query=None, floor_price=None, floor_cpc=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, div_name=None, network_id=None, site_id=None, ad_types=None, zone_ids=None, campaign_id=None, flight_id=None, ad_id=None, click_url=None, properties=None, event_ids=None, overrides=None, content_keys=None, count=None, proportionality=None, ecpm_partition=None, ecpm_partitions=None, event_multiplier=None, skip_selection=None, ad_query=None, floor_price=None, floor_cpc=None, skip_filters=None, local_vars_configuration=None):  # noqa: E501
         """Placement - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -110,6 +112,7 @@ class Placement(object):
         self._ad_query = None
         self._floor_price = None
         self._floor_cpc = None
+        self._skip_filters = None
         self.discriminator = None
 
         if div_name is not None:
@@ -138,6 +141,8 @@ class Placement(object):
         self.ad_query = ad_query
         self.floor_price = floor_price
         self.floor_cpc = floor_cpc
+        if skip_filters is not None:
+            self.skip_filters = skip_filters
 
     @property
     def div_name(self):
@@ -640,6 +645,27 @@ class Placement(object):
         """
 
         self._floor_cpc = floor_cpc
+
+    @property
+    def skip_filters(self):
+        """Gets the skip_filters of this Placement.  # noqa: E501
+
+
+        :return: The skip_filters of this Placement.  # noqa: E501
+        :rtype: SkipFilters
+        """
+        return self._skip_filters
+
+    @skip_filters.setter
+    def skip_filters(self, skip_filters):
+        """Sets the skip_filters of this Placement.
+
+
+        :param skip_filters: The skip_filters of this Placement.  # noqa: E501
+        :type: SkipFilters
+        """
+
+        self._skip_filters = skip_filters
 
     def to_dict(self):
         """Returns the model properties as a dict"""

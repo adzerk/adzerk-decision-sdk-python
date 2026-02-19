@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **intended_longitude** | **float** |  | [optional] 
 **radius** | **float** |  | [optional] 
 **include_matched_points** | **bool** |  | [optional] 
+**search_term** | **str** | A way to target ads based on shopper search terms | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -33,24 +33,29 @@ class User(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'key': 'str'
+        'key': 'str',
+        'group': 'int'
     }
 
     attribute_map = {
-        'key': 'key'
+        'key': 'key',
+        'group': 'group'
     }
 
-    def __init__(self, key=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, key=None, group=None, local_vars_configuration=None):  # noqa: E501
         """User - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
         self._key = None
+        self._group = None
         self.discriminator = None
 
         if key is not None:
             self.key = key
+        if group is not None:
+            self.group = group
 
     @property
     def key(self):
@@ -74,6 +79,29 @@ class User(object):
         """
 
         self._key = key
+
+    @property
+    def group(self):
+        """Gets the group of this User.  # noqa: E501
+
+        The assigned cohort for the User  # noqa: E501
+
+        :return: The group of this User.  # noqa: E501
+        :rtype: int
+        """
+        return self._group
+
+    @group.setter
+    def group(self, group):
+        """Sets the group of this User.
+
+        The assigned cohort for the User  # noqa: E501
+
+        :param group: The group of this User.  # noqa: E501
+        :type: int
+        """
+
+        self._group = group
 
     def to_dict(self):
         """Returns the model properties as a dict"""

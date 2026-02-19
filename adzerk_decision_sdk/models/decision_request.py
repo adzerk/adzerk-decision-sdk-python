@@ -51,7 +51,8 @@ class DecisionRequest(object):
         'intended_latitude': 'float',
         'intended_longitude': 'float',
         'radius': 'float',
-        'include_matched_points': 'bool'
+        'include_matched_points': 'bool',
+        'search_term': 'str'
     }
 
     attribute_map = {
@@ -73,10 +74,11 @@ class DecisionRequest(object):
         'intended_latitude': 'intendedLatitude',
         'intended_longitude': 'intendedLongitude',
         'radius': 'radius',
-        'include_matched_points': 'includeMatchedPoints'
+        'include_matched_points': 'includeMatchedPoints',
+        'search_term': 'searchTerm'
     }
 
-    def __init__(self, placements=None, user=None, keywords=None, url=None, referrer=None, ip=None, blocked_creatives=None, is_mobile=None, include_pricing_data=None, notrack=None, enable_bot_filtering=None, enable_user_dbip=None, consent=None, device_id=None, parallel=None, intended_latitude=None, intended_longitude=None, radius=None, include_matched_points=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, placements=None, user=None, keywords=None, url=None, referrer=None, ip=None, blocked_creatives=None, is_mobile=None, include_pricing_data=None, notrack=None, enable_bot_filtering=None, enable_user_dbip=None, consent=None, device_id=None, parallel=None, intended_latitude=None, intended_longitude=None, radius=None, include_matched_points=None, search_term=None, local_vars_configuration=None):  # noqa: E501
         """DecisionRequest - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -101,6 +103,7 @@ class DecisionRequest(object):
         self._intended_longitude = None
         self._radius = None
         self._include_matched_points = None
+        self._search_term = None
         self.discriminator = None
 
         self.placements = placements
@@ -123,6 +126,7 @@ class DecisionRequest(object):
         self.intended_longitude = intended_longitude
         self.radius = radius
         self.include_matched_points = include_matched_points
+        self.search_term = search_term
 
     @property
     def placements(self):
@@ -550,6 +554,29 @@ class DecisionRequest(object):
         """
 
         self._include_matched_points = include_matched_points
+
+    @property
+    def search_term(self):
+        """Gets the search_term of this DecisionRequest.  # noqa: E501
+
+        A way to target ads based on shopper search terms  # noqa: E501
+
+        :return: The search_term of this DecisionRequest.  # noqa: E501
+        :rtype: str
+        """
+        return self._search_term
+
+    @search_term.setter
+    def search_term(self, search_term):
+        """Sets the search_term of this DecisionRequest.
+
+        A way to target ads based on shopper search terms  # noqa: E501
+
+        :param search_term: The search_term of this DecisionRequest.  # noqa: E501
+        :type: str
+        """
+
+        self._search_term = search_term
 
     def to_dict(self):
         """Returns the model properties as a dict"""
