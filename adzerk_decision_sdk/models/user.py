@@ -34,15 +34,17 @@ class User(object):
     """
     openapi_types = {
         'key': 'str',
-        'group': 'int'
+        'group': 'int',
+        'segments': 'list[int]'
     }
 
     attribute_map = {
         'key': 'key',
-        'group': 'group'
+        'group': 'group',
+        'segments': 'segments'
     }
 
-    def __init__(self, key=None, group=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, key=None, group=None, segments=None, local_vars_configuration=None):  # noqa: E501
         """User - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -50,12 +52,15 @@ class User(object):
 
         self._key = None
         self._group = None
+        self._segments = None
         self.discriminator = None
 
         if key is not None:
             self.key = key
         if group is not None:
             self.group = group
+        if segments is not None:
+            self.segments = segments
 
     @property
     def key(self):
@@ -102,6 +107,29 @@ class User(object):
         """
 
         self._group = group
+
+    @property
+    def segments(self):
+        """Gets the segments of this User.  # noqa: E501
+
+        Array of Segment Ids that will override any set on the UserDB record for the User  # noqa: E501
+
+        :return: The segments of this User.  # noqa: E501
+        :rtype: list[int]
+        """
+        return self._segments
+
+    @segments.setter
+    def segments(self, segments):
+        """Sets the segments of this User.
+
+        Array of Segment Ids that will override any set on the UserDB record for the User  # noqa: E501
+
+        :param segments: The segments of this User.  # noqa: E501
+        :type: list[int]
+        """
+
+        self._segments = segments
 
     def to_dict(self):
         """Returns the model properties as a dict"""
