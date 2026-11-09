@@ -7,7 +7,7 @@
 from setuptools import setup, find_packages  # noqa: H301
 
 NAME = "adzerk-decision-sdk"
-VERSION = "1.0.0-beta.21"
+VERSION = "1.0.0-beta.22"
 # To install the library, run the following
 #
 # python setup.py install
@@ -15,7 +15,7 @@ VERSION = "1.0.0-beta.21"
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = ["urllib3 >= 2.0.0", "six >= 1.10", "certifi >= 2023.7.22", "python-dateutil >= 2.8.2"]
+REQUIRES = ["urllib3 >= 2.0.0", "six >= 1.10", "certifi >= 2026.10.19", "python-dateutil >= 2.8.2"]
 
 setup(
     name=NAME,
